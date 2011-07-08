@@ -1,0 +1,42 @@
+{
+	"name": "Minimalist for Everything",
+	"version": "0.1.0",
+	"description": "You live in webapps. Make them yours",
+	"icons": {
+		 "16": "img/icons/icon16.png",
+		 "48": "img/icons/icon48.png",
+		"128": "img/icons/icon128.png" },
+	"browser_action": {
+		"default_icon": "img/icons/icon19.png",
+		"default_title": "Minimalist for Everything",
+		"default_popup": "modal/browserAction.html"
+	},
+	"background_page": "background.html",
+	"content_scripts": [ {
+		"matches": [ "http://*/*", "https://*/*" ],
+		"js": [ "js/minimalist.js", "js/inject.js", "js/init.js" ],
+		"run_at": "document_start",
+		"all_frames": true
+//	}, {
+//		"matches": [ "http://userstyles.org/styles/*" ],
+//		"js": [ "js/io/userstyles.js" ],
+//		"run_at": "document_start"
+//	}, {
+//		"matches": [ "http://userscripts.org/scripts/*" ],
+//		"js": [ "js/io/userscripts.js" ],
+//		"run_at": "document_start"
+	}, {
+		"matches": [ "http://*/*", "https://*/*" ],
+		"js": [ "js/libs/jquery.js", "js/libs/runtime.js", "js/libs/general.js" ],
+		"all_frames": true
+	} ],
+	"options_page": "options.html",	
+	"permissions": [
+		"bookmarks",
+		"contextMenus",
+		"http://*/*",
+		"https://*/*",
+		"notifications",
+		"tabs"
+	]
+}

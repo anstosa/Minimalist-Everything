@@ -1,0 +1,113 @@
+<html>
+<head>
+	<title>Minimalist Options</title>
+	<link type="text/css" rel="stylesheet" href="css/options.css" />
+</head>
+<body>
+	<div id="container">
+		<nav>
+			<h1>Minimalist</h1>
+			<!-- SYSTEM MESSAGES -->
+			<div id="m_welcome" class="current">
+				<strong>Subtract until it breaks</strong><br />The way of the minimalist
+			</div>
+			<div id="m_saved">
+				<strong>Settings saved!</strong><br /><a href="#" onclick="javascript:chrome.extension.sendRequest({action: 'reload'},function(){});">Refresh Gmail to apply changes</a>
+			</div>
+			<div id="m_import">
+				<strong>Import successful!</strong><br /><a href="#" onclick="javascript:chrome.extension.sendRequest({action: 'reload'},function(){});">Refresh Gmail to apply changes</a>
+			</div>
+			<!-- END SYSTEM MESSAGES -->
+			<!-- NAVIGATION -->
+			<ul>
+				<li><a href="#das" id="n_das">Dashboard</a></li>
+				<li><a href="#wik" id="n_wik">Wiki</a></li>
+				<li><a href="#syn" id="n_syn">Sync</a></li>
+				<li><a href="#sup" id="n_sup">Support</a></li>
+				<li><a href="#abo" id="n_abo">About</a></li>				
+				<li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=C5GNE665F894E" id="n_don" target="_blank">Donate</a></li>
+			</ul>
+			<!-- END NAVIGATION -->
+		</nav>
+		<div class="page" id="p_das">
+			<h1>Dashboard</span></h1>
+			<div class="table">
+				<section>
+					<h3>Installed Modules</h3>
+					<div>
+						<ul>
+							<li></li>
+						</ul>
+					</div>
+				</section>
+				<section>
+					<h3>&nbsp;</h3>
+					<div>
+						<a href="#" class="button blue">New Module</a> <a href="#" class="button">Find Modules</a>
+					</div>
+				</section>
+			</div>
+		</div>
+		<div class="page" id="p_wik">
+			<h1>Wiki</span></h1>
+			<section>
+				<h3>Installed Modules</h3>
+				<div>
+					<input type="checkbox" id="mgicon" />
+						<label for="mgicon" title=""><div class="input"></div>This is a checkbox</label><br />
+					<input type="radio" name="test" id="mgicons" />	
+						<label for="mgicons" title=""><div class="input"></div>This is a radio button</label><br />
+					<input type="radio" name="test" id="mgicont" />
+						<label for="mgicont" title=""><div class="input"></div>This is a radio button</label><br />
+						
+				</div>
+			</section>
+		</div>
+		<div class="page" id="p_syn">
+			<h1>Sync</span></h1>
+			
+		</div>
+		<div class="page" id="p_sup">
+			<h1>Support</span></h1>
+			
+		</div>
+		<div class="page" id="p_abo">
+			<h1>About</span></h1>
+			
+		</div>
+
+	</div>
+	<!-- JAVASCRIPT -->
+	<script type="text/javascript" src="js/libs/jquery.js"></script>
+	<script type="text/javascript" src="js/options.js"></script>
+	<script type="text/javascript">		
+		// === GOOGLE FONT LOADER === //
+		WebFontConfig = {
+			google: { families: [ 'Raleway:100' ] }
+		};
+		(function() {
+			var wf = document.createElement('script');
+				wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+					'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+				wf.type = 'text/javascript';
+				wf.async = 'true';
+			var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(wf, s);
+		})();
+		// === END GOOGLE FONT LOADER === //
+		// === GOOGLE ANALYTICS === //
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA']);
+		_gaq.push(['_trackPageview']);
+		(function() {
+			var ga = document.createElement('script');
+				ga.type = 'text/javascript';
+				ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(ga, s);
+		})();
+		// === END GOOGLE ANALYTICS === //
+	</script>
+</body>
+</html>
