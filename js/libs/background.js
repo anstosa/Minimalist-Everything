@@ -39,27 +39,39 @@ function loadOptions() {
 
 function loadModules() {
 	debug("loading modules...");
-	if ((modules = localStorage["modules"]) != null) {
+	if ((modules = localStorage["modules"].split("|||")) != null) {
 		try {
 			for (var i = 0, l = modules.length; i < l; i++) {
-				modules[i] = JSON.parse(localStorage["modules"][i]);
+				modules[i] = JSON.parse(modules[i]);
 			}
 		} catch (e) {
-			console.log("Minimalist: " + e);
-			modules = new Array();
+			console.error("Minimalist: " + e);
 		}
 	} else {
 		modules = new Array();
+		modules[0] = new Module({
+			name: "Starter Module",
+			author: "Ansel Santosa",
+			includes: "http://minimalistsuite.com/*",
+			isEnabled: true,
+			css: [
+				"h1 {",
+				"	color: #09f;",
+				"}"
+			],
+			js: [
+				"console.log(\"Subtract until it breaks\")",
+				"console.log(\"The way of the Minimalist\")"
+			],
+		});
 		save();
 	}
 }
 /* === END INIT HELPERS === */
 
 /* === LISTENERS === */
-
 function getModules(target){
-	var modules = localStorage[modules],
-		matchedModules = new Array();
+	var matchedModules = new Array();
 	for (var i = 0, l = modules.length; i < l; i++) {
 		if (isMatch(target, modules[i].includes)) {
 			matchedModules.push(modules[i]);
@@ -95,7 +107,7 @@ function save() {
 	for (var i = 0, l = modules.length; i < l; i++) {
 		modulesString[i] = JSON.stringify(modules[i]);
 	}
-	localStorage["modules"] = modulesString;
+	localStorage["modules"] = modulesString.join("|||");
 }
 /* === END LISTENERS === */
 

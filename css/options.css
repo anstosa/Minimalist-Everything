@@ -140,6 +140,9 @@ textarea:focus {
 textarea {
 	margin-left: 2px;
 }
+.page li {
+	list-style-type: none;
+}
 /* === END GENERAL STYLES === */
 
 /* === STRUCTURE === */

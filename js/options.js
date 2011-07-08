@@ -30,6 +30,13 @@ if (hash == "update") {
 }
 /* === END NAVIGATION HANDLER === */
 
+/* === LOAD MODULES === */
+chrome.extension.sendRequest({name: "getOptions"}, function(response) {
+	options = response.options;
+});
+
+/* === END LOAD MODULES === */
+
 	
 	//---- SYNC ----//
 	/*$("#sncDirDlg").dialog({ 
@@ -88,42 +95,3 @@ if (hash == "update") {
 		}
 	}*/
 	//---- END SYNC ----//
-
-/*function export(EIid) {
-	var prefOut = new Array();
-		prefOut[0] = localStorage["options"];
-		prefOut[1] = localStorage["BTNcolor"];
-		prefOut[2] = localStorage["BTNborder"];
-		prefOut[3] = localStorage["BTNbottom"];
-		prefOut[4] = localStorage["BTNtop"];
-		prefOut[5] = localStorage["customCSSval"];
-		prefOut[6] = localStorage["appsURL"];
-		prefOut[7] = localStorage["starCLR"];
-		prefOut[8] = localStorage["uCLR"];
-		prefOut[9] = localStorage["highCLR"];
-		prefOut[10] = ""//localStorage["highCLRu"];
-	var prefsOut = prefOut[0];	// fencepost
-	for (var i = 1; i <= 10; i++) {
-		prefsOut += '\n' + prefOut[i];
-	}
-	document.getElementById(EIid).innerHTML = prefsOut;
-	if (EIid == "EIC_3") localStorage["EIC_3"] = prefsOut;	// backup existing to Custom 3
-}
-
-function import(EIid) {
-	var prefsIn = document.getElementById(EIid).value;
-	var prefIn = prefsIn.split("\n");
-		localStorage["options"] = prefIn[0];
-		localStorage["BTNcolor"] = prefIn[1];
-		localStorage["BTNborder"] = prefIn[2];
-		localStorage["BTNbottom"] = prefIn[3];
-		localStorage["BTNtop"] = prefIn[4];
-		localStorage["customCSSval"] = prefIn[5];
-		localStorage["appsURL"] = prefIn[6];
-		localStorage["starCLR"] = prefIn[7];
-		localStorage["uCLR"] = prefIn[8];
-		localStorage["highCLR"] = prefIn[9];
-		//localStorage["highCLRu"] = prefIn[10];
-	window.location.hash = "imps";
-	window.location.reload();
-}*/
