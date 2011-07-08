@@ -6,6 +6,7 @@
  **/
 
  function injectJS(scripts) {
+ 	debug("injecting JavaScript...");
 	var m_bodies = document.getElementsByTagName("body");
 	if (m_bodies.length > 0) {
 		var m_scriptBlock = document.createElement("script");
@@ -16,6 +17,7 @@
 }
 
 function injectCSS(styles) {
+	debug("injecting CSS...");
 	var m_heads = document.getElementsByTagName("head");
 	if (m_heads.length > 0) {
 		var m_styleBlock = document.createElement("style");
@@ -25,6 +27,7 @@ function injectCSS(styles) {
 	}
 }
 function injectAll() {
+	debug("startimg injection...");
 	if (m_scripts != null) {
 		injectJS(m_scripts);
 	}

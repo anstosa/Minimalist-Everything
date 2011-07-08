@@ -39,7 +39,8 @@ function loadOptions() {
 
 function loadModules() {
 	debug("loading modules...");
-	if ((modules = localStorage["modules"].split("|||")) != null) {
+	if ((modules = localStorage["modules"]) != null) {
+		modules = modules.split("|||");
 		try {
 			for (var i = 0, l = modules.length; i < l; i++) {
 				modules[i] = JSON.parse(modules[i]);
@@ -48,6 +49,7 @@ function loadModules() {
 			console.error("Minimalist: " + e);
 		}
 	} else {
+		debug("no modules, reseting to starter...");
 		modules = new Array();
 		modules[0] = new Module({
 			name: "Starter Module",
@@ -71,6 +73,7 @@ function loadModules() {
 
 /* === LISTENERS === */
 function getModules(target){
+	debug("getting modules that target " + target);
 	var matchedModules = new Array();
 	for (var i = 0, l = modules.length; i < l; i++) {
 		if (isMatch(target, modules[i].includes)) {
@@ -81,10 +84,12 @@ function getModules(target){
 }
 
 function activateBrowserAction(tab) {
+	debug("activating browser action for " + tab.url);
 	chrome.browserAction.setIcon({path: "img/icons/icon19_active.png", tabId: tab.id})
 }
 
 function deactivateBrowserAction(tab) {
+	debug("deactivating browser action for " + tab.url);
 	chrome.browserAction.setIcon({path: "img/icons/icon19.png", tabId: tab.id})
 }
 
@@ -110,6 +115,19 @@ function save() {
 	localStorage["modules"] = modulesString.join("|||");
 }
 /* === END LISTENERS === */
+
+function isMatch(target, includeString) {
+	debug("checking regex match...");
+	includeString.replace("*", ".*");
+	var includes = includeString.split(",");
+	for (var i = 0, l = includes.length; i < l; i++) {
+		if (target.match(includes[i]) != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
 
 function debug(message) {
 	if (options.isDebugging) {

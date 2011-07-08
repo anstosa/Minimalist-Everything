@@ -12,7 +12,12 @@ var name = "",
 	js = new Array();
 
 function Module(params) {
+	debug("creating module: " + params.name);
     for (param in params) {
     	eval("this." + param + " = params[param]");	// TODO: find better way to do this
     }
+}
+
+function set(key, value) {
+	eval("this." + key + " = value");				// TODO: find better way to do this
 }
