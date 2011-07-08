@@ -24,15 +24,15 @@ function checkUpdate() {
 	}
 }
 
-function loadOptions() {
-	debug("loading options...");
+function loadPrefs() {
+	debug("loading preferences...");
 	var value;
-	for (var option in options) {
-		value = localStorage[option];
+	for (var key in prefs) {
+		value = localStorage[key];
 		if (value != null) {
-			options[option] = value;
+			prefs[key] = value;
 		} else {
-			localStorage[option] = options[option];
+			localStorage[key] = prefs[key];
 		}
 	}
 }
@@ -40,7 +40,7 @@ function loadOptions() {
 function loadModules() {
 	debug("loading modules...");
 	if ((modules = localStorage["modules"]) != null) {
-		modules = modules.split("|||");
+		 modules = modules.split("|||");
 		try {
 			for (var i = 0, l = modules.length; i < l; i++) {
 				modules[i] = JSON.parse(modules[i]);
@@ -56,15 +56,29 @@ function loadModules() {
 			author: "Ansel Santosa",
 			includes: "http://minimalistsuite.com/*",
 			isEnabled: true,
-			css: [
-				"h1 {",
-				"	color: #09f;",
-				"}"
-			],
-			js: [
-				"console.log(\"Subtract until it breaks\")",
-				"console.log(\"The way of the Minimalist\")"
-			],
+			options: [
+				{
+					description: "theme",
+					isEnabled: true,
+					head: {
+						css: [
+							"h1 {",
+							"	color: #09f;",
+							"}"
+						],
+						js: [
+							"var line1 = \"Subtract until it breaks\",",
+							"\tline2 = \"The way of the Minimalist\";"
+						]	
+					},
+					load: {
+						js: [
+							"console.log(line1);",
+							"console.log(line2);"
+						]
+					}
+				}
+			]		
 		});
 		save();
 	}
@@ -87,11 +101,12 @@ function activateBrowserAction(tab) {
 	debug("activating browser action for " + tab.url);
 	chrome.browserAction.setIcon({path: "img/icons/icon19_active.png", tabId: tab.id})
 }
-
+/*
 function deactivateBrowserAction(tab) {
 	debug("deactivating browser action for " + tab.url);
 	chrome.browserAction.setIcon({path: "img/icons/icon19.png", tabId: tab.id})
 }
+*/
 
 String.prototype.copy = function() {
 	var copyTextarea = document.createElement('textarea');
@@ -103,9 +118,9 @@ String.prototype.copy = function() {
 };
 
 function save() {
-	debug("saving options...");
-	for (var option in options) {
-		localStorage[option] = options[option];
+	debug("saving preferences...");
+	for (var pref in prefs) {
+		localStorage[pref] = prefs[pref];
 	}
 	debug("saving modules...");
 	var modulesString = new Array();	
@@ -129,8 +144,19 @@ function isMatch(target, includeString) {
 	}
 }
 
+function arrayReplacer(key, value) {
+	if (Array.isArray(value)) {
+		for (var i = 0, l = value.length; i < l; i++) {
+			value[i] = JSON.stringify(value[i], arrayReplacer);
+		}
+		return value.join("|||");
+	} else {
+		return value;
+	}
+}
+
 function debug(message) {
-	if (options.isDebugging) {
+	if (prefs.isDebugging) {
 		console.log("Minimalist: " + message);
 	}
 }

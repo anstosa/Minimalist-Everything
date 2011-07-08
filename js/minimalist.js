@@ -8,18 +8,22 @@
 // var modules [init.js]
 
 /* === SETUP === */
-var m_scripts,
-	m_staticStyles,
-	m_dynamicStyles,
-	options;
+var bodyScripts = "",
+	headScripts = "",
+	prefs,
+	styles = "";
 
-chrome.extension.sendRequest({name: "getOptions"}, function(response) {
-	options = response.options;
+chrome.extension.sendRequest({name: "getPrefs"}, function(response) {
+	prefs = response.prefs;
 });
 /* === END SETUP === */
 
 /* === CONSTRUCTION === */
-function runModules() {
-	injectAll();
+function buildModules() {
+	for (var i = 0, l = modules.length; i < l; i++) {
+		var moduleOptions = modules[i].options;
+		buildStyles(moduleOptions);
+		buildScripts(moduleOptions);
+	}
 }
 /* === END CONSTURCTION === */

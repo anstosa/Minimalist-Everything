@@ -7,9 +7,7 @@
 
 var name = "",
 	includes = "",
-	isEnabled = true,
-	css = new Array(),
-	js = new Array();
+	isEnabled = true;
 
 function Module(params) {
 	debug("creating module: " + params.name);

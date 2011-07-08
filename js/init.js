@@ -19,12 +19,12 @@ function init() {
 		return;
 	}
 	if (lastCheck != null) {
-		lastCheck.removeEventListener("DOMSubtreeModified", runModules, false);
+		lastCheck.removeEventListener("DOMSubtreeModified", injectBody, false);
 	}
 	lastCheck = getTarget()
 	if (lastCheck != null) {
-		lastCheck.addEventListener("DOMSubtreeModified", runModules, false);
-		runModules();	// fencepost
+		lastCheck.addEventListener("DOMSubtreeModified", injectBody, false);
+		//runModules();	// fencepost
 	}
 }
 
@@ -35,10 +35,11 @@ chrome.extension.sendRequest({name: "getModules", target: window.location.toStri
 		if (bootstrapTarget != null) {
 			window.addEventListener("DOMSubtreeModified", init, false);
 		} else {
-			debug("no bootstrap target. Skipping load...")
-			runModules();
+			debug("no bootstrap target. Skipping load...");
+			injectBody();
 		}
-		injectCSS(staticStyles);	// static styles don't need page load
-		chrome.extension.sendRequest({name: "activateBrowserAction"}, false);
+		buildModules();
+		injectHead();
+		chrome.extension.sendRequest({name: "activateBrowserAction"}, function(response){});
 	}
 });

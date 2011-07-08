@@ -14,7 +14,7 @@
 	"background_page": "background.html",
 	"content_scripts": [ {
 		"matches": [ "http://*/*", "https://*/*" ],
-		"js": [ "js/minimalist.js", "js/inject.js", "js/init.js" ],
+		"js": [ "js/libs/jquery.js", "js/libs/runtime.js" ],
 		"run_at": "document_start",
 		"all_frames": true
 //	}, {
@@ -27,7 +27,8 @@
 //		"run_at": "document_start"
 	}, {
 		"matches": [ "http://*/*", "https://*/*" ],
-		"js": [ "js/libs/jquery.js", "js/libs/runtime.js", "js/libs/general.js" ],
+		"js": [ "js/minimalist.js", "js/inject.js", "js/init.js" ],
+		"run_at": "document_start",
 		"all_frames": true
 	} ],
 	"options_page": "options.html",	
