@@ -6,7 +6,7 @@
  **/
 
 function debug(message) {
-	if (prefs.isDebugging) {
+	if (prefs.isDebugging == "true") {
 		console.log("Minimalist: " + message);
 	}
 }
@@ -16,24 +16,33 @@ function buildStyles(options) {
 	for (var i = 0, l = options.length; i < l; i++) {
 		if ((styleData = options[i].head.css) != null && options[i].isEnabled) {
 			for (var j = 0, e = styleData.length; j < e; j++) {				
-				styles += "\n" + styleData[j];
+				styles += "\n    " + styleData[j];
 			}
+			styles += "\n";
 		}
 	}
 }
 
-function buildScripts(options) {
+function buildHeadScripts(options) {
 	var scriptData;
 	for (var i = 0, l = options.length; i < l; i++) {
 		if (scriptData = options[i].head.js) {
 			for (var j = 0, e = scriptData.length; j < e; j++) {
-				headScripts += "\n" + scriptData[j];
+				headScripts += "\n    " + scriptData[j];
 			}
+			headScripts += "\n";
 		}
+	}
+}
+
+function buildBodyScripts(options) {
+	var scriptData;
+	for (var i = 0, l = options.length; i < l; i++) {
 		if (scriptData = options[i].load.js) {
 			for (var j = 0, e = scriptData.length; j < e; j++) {
-				headScripts += "\n" + scriptData[j];
+				bodyScripts += "\n    " + scriptData[j];
 			}
+			bodyScripts += "\n";
 		}
 	}
 }

@@ -6,16 +6,12 @@
  **/
 
 // var modules [init.js]
+// var prefs [init.js]
 
 /* === SETUP === */
 var bodyScripts = "",
 	headScripts = "",
-	prefs,
 	styles = "";
-
-chrome.extension.sendRequest({name: "getPrefs"}, function(response) {
-	prefs = response.prefs;
-});
 /* === END SETUP === */
 
 /* === CONSTRUCTION === */
@@ -23,7 +19,8 @@ function buildModules() {
 	for (var i = 0, l = modules.length; i < l; i++) {
 		var moduleOptions = modules[i].options;
 		buildStyles(moduleOptions);
-		buildScripts(moduleOptions);
+		buildHeadScripts(moduleOptions);
+		buildBodyScripts(moduleOptions);
 	}
 }
 /* === END CONSTURCTION === */

@@ -7,7 +7,9 @@
 
 var lastCheck = null,
 	bootstrapTarget,
-	modules;
+	modules,
+	prefs;
+
 
 function getTarget() {
 	return document.getElementById(bootstrapTarget);
@@ -24,22 +26,25 @@ function init() {
 	lastCheck = getTarget()
 	if (lastCheck != null) {
 		lastCheck.addEventListener("DOMSubtreeModified", injectBody, false);
-		//runModules();	// fencepost
 	}
 }
-
-chrome.extension.sendRequest({name: "getModules", target: window.location.toString()}, function(response) {
-	modules = response.modules;
-	if (modules.length > 0) {
-		bootstrapTarget = modules[0].bootstrapTarget;	// TODO: find way of prioritizing bootstrap targets
-		if (bootstrapTarget != null) {
-			window.addEventListener("DOMSubtreeModified", init, false);
-		} else {
-			debug("no bootstrap target. Skipping load...");
-			injectBody();
-		}
-		buildModules();
-		injectHead();
-		chrome.extension.sendRequest({name: "activateBrowserAction"}, function(response){});
+chrome.extension.sendRequest({name: "getPrefs"}, function(response) {
+	prefs = response.prefs;
+	if (prefs.isEnabled == true) {
+		chrome.extension.sendRequest({name: "getActiveModules"}, function(response) {
+			modules = response.modules;
+			if (modules.length > 0) {
+				buildModules();
+				injectHead();
+				chrome.extension.sendRequest({name: "activateBrowserAction"}, function(response){});
+				bootstrapTarget = modules[0].bootstrapTarget;	// TODO: find way of prioritizing bootstrap targets
+				if (bootstrapTarget != null) {
+					window.addEventListener("DOMSubtreeModified", init, false);
+				} else {
+					debug("no bootstrap target. Skipping load...");
+					injectBody();
+				}
+			}
+		});
 	}
 });

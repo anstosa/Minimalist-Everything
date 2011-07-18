@@ -5,6 +5,9 @@
  * Licensed under GNU GPL v3
  **/
 
+var modules,
+	prefs;
+
 /* === NAVIGATION HANDLER === */
 var last = "das";
 $("nav li a:not(#n_don)").click(function(){
@@ -14,15 +17,15 @@ $("nav li a:not(#n_don)").click(function(){
 	last = next;
 });
 var hash = window.location.hash.substr(1);
-if (hash == "update") {
+if (hash === "update") {
 	$("#n_abo, #p_abo").addClass("current");
 	last = "abo";
-} else if (hash == "s_syn") {
+} else if (hash === "s_syn") {
 	$("#n_syn, #p_syn").addClass("current");
 	$("#m_welcome").removeClass("current");
 	$("#m_import").removeClass("current");
 	last = "syn";
-} else if (hash == null || hash === "") {
+} else if (hash == null || hash === "" || hash === "opt") {
 	$("#n_das, #p_das").addClass("current");
 } else {
 	$("#n_" + hash + ", #p_" + hash).addClass("current");			
@@ -31,12 +34,115 @@ if (hash == "update") {
 /* === END NAVIGATION HANDLER === */
 
 /* === LOAD MODULES === */
-chrome.extension.sendRequest({name: "getOptions"}, function(response) {
-	options = response.options;
+chrome.extension.sendRequest({name: "getPrefs"}, function(response) {
+	prefs = response.prefs;
 });
 
+chrome.extension.sendRequest({name: "getAllModules"}, function(response) {
+	
+	modules = response.modules;
+
+	/**
+	 * CONTROL PANEL
+	 *
+	 * <div>
+	 *   <a href="javascript:void(0)" class="moduleOptions button blue">Options</a>
+	 *   <a href="javascript:void(0)" class="moduleEdit button green">Edit</a>
+	 *   <a href="javascript:void(0)" class="moduleToggle button gray">Disable</a>
+	 *   <a href="javascript:void(0)" class="moduleDelete button red">Delete</a>
+	 * </div>
+	 **/
+	var $moduleControls = $("<div></div>");
+	$("<a></a>", {
+		href: "javascript:void(0)",
+		class: "moduleOptions button subtle blue"
+	}).text("Options").appendTo($moduleControls);
+	$("<a></a>", {
+		href: "javascript:void(0)",
+		class: "moduleEdit button subtle green"
+	}).text("Edit").appendTo($moduleControls);
+	$("<a></a>", {		
+		href: "javascript:void(0)",
+		class: "moduleToggle button subtle"
+	}).text("Disable").appendTo($moduleControls);
+	$("<a></a>", {
+		href: "javascript:void(0)",
+		class: "moduleDelete button subtle red"
+	}).text("Delete").appendTo($moduleControls);
+
+	var $moduleList = $("#moduleList").empty();
+
+	for (var i = 0, l = modules.length; i < l; i++) {
+		var current = modules[i];
+
+		/**
+		 * SINGLE MODULE
+		 *
+		 * <li id="module_X", >
+		 *   <h2>Module Name</h2>
+		 *   <h4>Module targets</h4>
+		 *   <!-- Control Panel -->
+		 * </li>
+		 **/
+		var $module = $("<li></li>",{
+			id: "module_" + i,
+			class: current.isEnabled
+		});
+		$("<h2></h2>").text(current.name).appendTo($module);
+		$("<h4></h4>").text(current.includes).appendTo($module);
+		$module.append($moduleControls);
+		$moduleList.append($module);
+	}
+	addModuleListeners();
+});
 /* === END LOAD MODULES === */
 
+/* === MODULE OPTIONS === */
+function addModuleListeners() {
+	$(".moduleOptions").click(function() {
+		buildOptions($(this).parent().parent().attr("id").substr(7));
+	});
+}
+
+function buildOptions(i) {
+	var options = modules[i].options,
+		sections = {};
+	$("#p_opt h1").text(modules[i].name);
+	for (var j = 0, l = options.length; j < l; j++) {
+		var option = options[j];
+		
+		var $input = $("<input />", {
+			type: option.type,
+			id: "option_" + j
+		});
+		if (option.type === "radio") {
+			$input.attr(name) = option.radio;
+		}
+		
+		var $label = $("<label></label>", {
+			for: "option_" + j
+		}).append($("<div></div>", {
+				class: "input"
+			}))
+		.end().text(option.decription);
+		if (option.hasOwnProperty("screen")) {
+			$label.attr("screen") = option.screen;
+		}
+
+		var section = options[j].section;
+		if (!sections.hasOwnProperty(section)) {
+			sections[section] = new Array();
+		}
+		sections[section].push($input, $label);
+	}
+	console.log(sections);
+
+	// switch to page
+	$("#p_" + last + ", #n_" + last).removeClass("current");
+	$("#p_opt").addClass("current");
+	last = "opt";
+}
+/* === END MODULE OPTIONS === */
 	
 	//---- SYNC ----//
 	/*$("#sncDirDlg").dialog({ 

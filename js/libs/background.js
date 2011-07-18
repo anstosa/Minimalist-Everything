@@ -6,10 +6,18 @@
  **/
 
 /* === INIT HELPERS === */
+function setDebugging() {
+	if (localStorage["isDebugging"] != null) {
+		return localStorage["isDebugging"];
+	} else {
+		return false;
+	}
+}
+
 function checkUpdate() {
 	debug("checking for updates...");
 	if (!localStorage["version"]) {
-		localStorage["version"] = VERSION
+		localStorage["version"] = VERSION;
 		return true;
 	}
 	if (localStorage["version"] != VERSION) {
@@ -37,6 +45,26 @@ function loadPrefs() {
 	}
 }
 
+function disable(target) {
+	if (target < 0) {
+		debug("Minimalist disabled");
+		prefs.isEnabled = false;
+	} else {
+		
+	}
+	save();
+}
+
+function enable(target) {
+	if (target < 0) {
+		debug("Minimalist enabled");
+		prefs.isEnabled = true;
+	} else {
+		
+	}
+	save();
+}
+
 function loadModules() {
 	debug("loading modules...");
 	if ((modules = localStorage["modules"]) != null) {
@@ -60,6 +88,8 @@ function loadModules() {
 				{
 					description: "theme",
 					isEnabled: true,
+					section: "Debug test",
+					type: "checkbox",
 					head: {
 						css: [
 							"h1 {",
@@ -69,7 +99,7 @@ function loadModules() {
 						js: [
 							"var line1 = \"Subtract until it breaks\",",
 							"\tline2 = \"The way of the Minimalist\";"
-						]	
+						]
 					},
 					load: {
 						js: [
@@ -78,7 +108,7 @@ function loadModules() {
 						]
 					}
 				}
-			]		
+			]
 		});
 		save();
 	}
@@ -86,8 +116,8 @@ function loadModules() {
 /* === END INIT HELPERS === */
 
 /* === LISTENERS === */
-function getModules(target){
-	debug("getting modules that target " + target);
+function getActiveModules(target){
+	debug("getting modules that target " + target + "...");
 	var matchedModules = new Array();
 	for (var i = 0, l = modules.length; i < l; i++) {
 		if (isMatch(target, modules[i].includes)) {
@@ -98,22 +128,37 @@ function getModules(target){
 }
 
 function activateBrowserAction(tab) {
-	debug("activating browser action for " + tab.url);
+	debug("activating browser action for " + tab.url + "...");
 	chrome.browserAction.setIcon({path: "img/icons/icon19_active.png", tabId: tab.id})
 }
-/*
-function deactivateBrowserAction(tab) {
-	debug("deactivating browser action for " + tab.url);
-	chrome.browserAction.setIcon({path: "img/icons/icon19.png", tabId: tab.id})
+
+function reloadAll() {
+	debug("reloading all targetted tabs...");
+	chrome.windows.getAll({populate: true},function(windows) {
+		for (var i = 0, l = windows.length; i < l; i++) {
+			//chrome.tabs.getAllInWindow(windows[i], function(tabs) {
+				var tabs = windows[i].tabs;
+				for (var j = 0, m = tabs.length; j < m; j++) {
+					if (getActiveModules(tabs[j].url).length > 0) {
+						reloadTab(tabs[j]);	
+					}				
+				}
+			//});	
+		}
+	});
 }
-*/
+
+function reloadTab(tab) {
+	debug("reloading " + tab.url);
+	chrome.tabs.update(tab.id, {url: tab.url, selected: tab.selected}, null);
+}
 
 String.prototype.copy = function() {
-	var copyTextarea = document.createElement('textarea');
+	var copyTextarea = document.createElement("textarea");
 	document.body.appendChild(copyTextarea);
 	copyTextarea.value = this;
 	copyTextarea.select();
-	document.execCommand('copy');
+	document.execCommand("copy");
 	document.body.removeChild(copyTextarea);
 };
 
@@ -121,6 +166,7 @@ function save() {
 	debug("saving preferences...");
 	for (var pref in prefs) {
 		localStorage[pref] = prefs[pref];
+		console.log(pref + ": " + prefs[pref]);
 	}
 	debug("saving modules...");
 	var modulesString = new Array();	
@@ -144,7 +190,7 @@ function isMatch(target, includeString) {
 	}
 }
 
-function arrayReplacer(key, value) {
+/*function arrayReplacer(key, value) {
 	if (Array.isArray(value)) {
 		for (var i = 0, l = value.length; i < l; i++) {
 			value[i] = JSON.stringify(value[i], arrayReplacer);
@@ -153,10 +199,10 @@ function arrayReplacer(key, value) {
 	} else {
 		return value;
 	}
-}
+}*/
 
 function debug(message) {
-	if (prefs.isDebugging) {
+	if (prefs.isDebugging == "true") {
 		console.log("Minimalist: " + message);
 	}
 }

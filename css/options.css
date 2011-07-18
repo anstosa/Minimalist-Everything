@@ -78,13 +78,16 @@ label:hover {
 }
 /* BUTTONS */
 a.button {
-	-webkit-transition: background, border, box-shadow .15s ease-out;
+	-webkit-transition-property: background, border, box-shadow;
+	-webkit-transition-duration: .15s;
 	background-color: #999 !important;
 	border: 1px solid #666;
 	border-radius: 2px;
 	color: #fff;
+	font-size: 12px;
 	font-weight: bold;
-	padding: 10px 20px;
+	margin: 0 3px;
+	padding: 5px 15px;
 	text-decoration: none;
 	text-shadow: 0 0 1px rgba(0,0,0,.05);
 }
@@ -99,6 +102,14 @@ a.button {
 	a.green {
 		background-color: #3d9400 !important;
 		border-color: #29691d;
+	}
+	a.button.subtle:not(:hover) {
+		background-color: #999 !important;
+		border-color: #666;
+	}
+	a.big {
+		font-size: 14px;
+		padding: 10px 20px;
 	}
 a.button:hover {
 	background: -webkit-gradient(linear, left bottom, left top, from(rgba(0,0,0,.25)), to(rgba(0,0,0,0)));
@@ -178,7 +189,7 @@ body {
 				text-shadow: 0 0 1px rgba(255,255,255,.25);
 			}
 			nav > div {
-				-webkit-transition: opacity .15s ease-out;
+				-webkit-transition: opacity .15s linear;
 				background: rgba(255,255,255,.25);
 				border-bottom: 1px solid rgba(255,255,255,.5);
 				border-top: 1px solid rgba(255,255,255,.5);
@@ -208,7 +219,7 @@ body {
 					nav li a,
 					nav li a:link,
 					nav li a:visited {
-						-webkit-transition: background .15s ease-out;
+						-webkit-transition: background .15s linear;
 						color: #fff;
 						display: block;
 						padding: 8px 20px 8px 0;
@@ -236,7 +247,7 @@ body {
 						text-shadow: 1px 1px 1px rgba(0,0,0,.65);
 					}
 		.page {
-			-webkit-transition: opacity .15s ease-out;
+			-webkit-transition: opacity .15s linear;
 			-webkit-transition-delay: .5s;
 			background: #f1f1f1;
 			box-shadow: -11px -30px 11px -11px rgba(0,0,0,.5),
@@ -275,6 +286,7 @@ body {
 					h3 {
 						color: #000;
 						display: table-cell;
+						font-size: 14px;
 						margin: 0;
 						padding-right: 20px;
 						width: 130px;
@@ -282,5 +294,30 @@ body {
 					section > div {
 						min-width: 380px;
 						display: table-cell;
+					}
+					ul {
+						-webkit-padding-start: 0;	
+					}
+					#moduleList li {
+						border-left: 1px solid #ccc;
+						padding-left: 10px;
+					}
+					h2 {
+						-webkit-margin-before: 0;
+						-webkit-margin-after: 0;
+						color: #444;
+						margin-bottom: 5px;
+						font-size: 18px;
+						font-weight: normal;
+					}
+					h4 {
+						-webkit-margin-before: 0;
+						-webkit-margina-after: 0;
+						color: #999;
+						font-weight: normal;
+						font-style: italic;
+						margin-bottom: 20px;
+						
+
 					}
 /* === END STRUCTURE === */
