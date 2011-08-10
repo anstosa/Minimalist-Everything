@@ -50,7 +50,8 @@ function disable(target) {
 		debug("Minimalist disabled");
 		prefs.isEnabled = false;
 	} else {
-		
+		debug(modules[target].name + " disabled");
+		modules[target].isEnabled = false;
 	}
 	save();
 }
@@ -60,8 +61,15 @@ function enable(target) {
 		debug("Minimalist enabled");
 		prefs.isEnabled = true;
 	} else {
-		
+		debug(modules[target].name + " enabled");
+		modules[target].isEnabled = true;
 	}
+	save();
+}
+
+function deleteModule(target) {
+	debug(modules[target].name + " deleted");
+	modules.splice(target, 1);
 	save();
 }
 
@@ -77,39 +85,8 @@ function loadModules() {
 			console.error("Minimalist: " + e);
 		}
 	} else {
-		debug("no modules, reseting to starter...");
+		debug("no modules, creating repo...");
 		modules = new Array();
-		modules[0] = new Module({
-			name: "Starter Module",
-			author: "Ansel Santosa",
-			includes: "http://minimalistsuite.com/*",
-			isEnabled: true,
-			options: [
-				{
-					description: "theme",
-					isEnabled: true,
-					section: "Debug test",
-					type: "checkbox",
-					head: {
-						css: [
-							"h1 {",
-							"	color: #09f;",
-							"}"
-						],
-						js: [
-							"var line1 = \"Subtract until it breaks\",",
-							"\tline2 = \"The way of the Minimalist\";"
-						]
-					},
-					load: {
-						js: [
-							"console.log(line1);",
-							"console.log(line2);"
-						]
-					}
-				}
-			]
-		});
 		save();
 	}
 }
@@ -120,7 +97,7 @@ function getActiveModules(target){
 	debug("getting modules that target " + target + "...");
 	var matchedModules = new Array();
 	for (var i = 0, l = modules.length; i < l; i++) {
-		if (isMatch(target, modules[i].includes)) {
+		if (isMatch(target, modules[i].includes) && modules[i].isEnabled) {
 			matchedModules.push(modules[i]);
 		}
 	}
@@ -132,18 +109,78 @@ function activateBrowserAction(tab) {
 	chrome.browserAction.setIcon({path: "img/icons/icon19_active.png", tabId: tab.id})
 }
 
+function installStarter() {
+	modules.push(new Module({
+		name: "Starter Module",
+		author: "Ansel Santosa",
+		includes: "http://minimalistsuite.com/*",
+		isEnabled: true,
+		options: [
+			{
+				description: "Enable CSS & Full JS test",
+				isEnabled: true,
+				tab: "General",
+				section: "Full feature",
+				type: "checkbox",
+				head: {
+					js: [
+						"var line1 = \"Subtract until it breaks\",",
+						"\tline2 = \"The way of the Minimalist\";"
+					],
+					css: [
+						"h1 {",
+						"	color: #09f;",
+						"}"
+					]
+				},
+				load: {
+					js: [
+						"console.log(line1);",
+						"console.log(line2);"
+					]
+				}
+			},
+			{
+				description: "Enable alert demo",
+				isEnabled: true,
+				tab: "General",
+				section: "JS Demo",
+				type: "checkbox",
+				load: {
+					js: [
+						"alert(\"JavaScript Enabled\");"
+					]
+				}
+			}
+		]
+	}));
+	save();
+}
+
 function reloadAll() {
-	debug("reloading all targetted tabs...");
+	debug("reloading tabs targetted by all active modules...");
 	chrome.windows.getAll({populate: true},function(windows) {
 		for (var i = 0, l = windows.length; i < l; i++) {
-			//chrome.tabs.getAllInWindow(windows[i], function(tabs) {
-				var tabs = windows[i].tabs;
-				for (var j = 0, m = tabs.length; j < m; j++) {
-					if (getActiveModules(tabs[j].url).length > 0) {
-						reloadTab(tabs[j]);	
-					}				
+			var tabs = windows[i].tabs;
+			for (var j = 0, m = tabs.length; j < m; j++) {
+				if (getActiveModules(tabs[j].url).length > 0) {
+					reloadTab(tabs[j]);	
 				}
-			//});	
+			}
+		}
+	});
+}
+
+function reload(target) {
+	debug("reloading tabs targetted by " + modules[target].name + "...");
+	chrome.windows.getAll({populate: true},function(windows) {
+		for (var i = 0, l = windows.length; i < l; i++) {
+			var tabs = windows[i].tabs;
+			for (var j = 0, m = tabs.length; j < m; j++) {
+				if (isMatch(tabs[j].url, modules[target].includes) && modules[target].isEnabled) {
+					reloadTab(tabs[j]);	
+				}
+			}
 		}
 	});
 }
@@ -166,7 +203,6 @@ function save() {
 	debug("saving preferences...");
 	for (var pref in prefs) {
 		localStorage[pref] = prefs[pref];
-		console.log(pref + ": " + prefs[pref]);
 	}
 	debug("saving modules...");
 	var modulesString = new Array();	
@@ -189,17 +225,6 @@ function isMatch(target, includeString) {
 		}
 	}
 }
-
-/*function arrayReplacer(key, value) {
-	if (Array.isArray(value)) {
-		for (var i = 0, l = value.length; i < l; i++) {
-			value[i] = JSON.stringify(value[i], arrayReplacer);
-		}
-		return value.join("|||");
-	} else {
-		return value;
-	}
-}*/
 
 function debug(message) {
 	if (prefs.isDebugging == "true") {

@@ -28,9 +28,9 @@ function init() {
 		lastCheck.addEventListener("DOMSubtreeModified", injectBody, false);
 	}
 }
-chrome.extension.sendRequest({name: "getPrefs"}, function(response) {
+chrome.extension.sendRequest({name: "getPrefs"}, function(response) {	
 	prefs = response.prefs;
-	if (prefs.isEnabled == true) {
+	if (prefs.isEnabled) {
 		chrome.extension.sendRequest({name: "getActiveModules"}, function(response) {
 			modules = response.modules;
 			if (modules.length > 0) {

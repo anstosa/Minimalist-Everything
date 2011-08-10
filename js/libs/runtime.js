@@ -14,7 +14,7 @@ function debug(message) {
 function buildStyles(options) {
 	var styleData;
 	for (var i = 0, l = options.length; i < l; i++) {
-		if ((styleData = options[i].head.css) != null && options[i].isEnabled) {
+		if (options[i].hasOwnProperty("head") && options[i].head.hasOwnProperty("css") && (styleData = options[i].head.css) != null && options[i].isEnabled) {
 			for (var j = 0, e = styleData.length; j < e; j++) {				
 				styles += "\n    " + styleData[j];
 			}
@@ -26,7 +26,7 @@ function buildStyles(options) {
 function buildHeadScripts(options) {
 	var scriptData;
 	for (var i = 0, l = options.length; i < l; i++) {
-		if (scriptData = options[i].head.js) {
+		if (options[i].hasOwnProperty("head") && options[i].head.hasOwnProperty("js") && (scriptData = options[i].head.js) && options[i].isEnabled) {
 			for (var j = 0, e = scriptData.length; j < e; j++) {
 				headScripts += "\n    " + scriptData[j];
 			}
@@ -38,7 +38,7 @@ function buildHeadScripts(options) {
 function buildBodyScripts(options) {
 	var scriptData;
 	for (var i = 0, l = options.length; i < l; i++) {
-		if (scriptData = options[i].load.js) {
+		if (options[i].hasOwnProperty("load") && (scriptData = options[i].load.js) && options[i].isEnabled) {
 			for (var j = 0, e = scriptData.length; j < e; j++) {
 				bodyScripts += "\n    " + scriptData[j];
 			}

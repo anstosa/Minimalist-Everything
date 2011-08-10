@@ -80,6 +80,7 @@ label:hover {
 a.button {
 	-webkit-transition-property: background, border, box-shadow;
 	-webkit-transition-duration: .15s;
+	background: -webkit-gradient(linear, left bottom, left top, from(rgba(0,0,0,.20)), to(rgba(0,0,0,0)));
 	background-color: #999 !important;
 	border: 1px solid #666;
 	border-radius: 2px;
@@ -104,15 +105,22 @@ a.button {
 		border-color: #29691d;
 	}
 	a.button.subtle:not(:hover) {
-		background-color: #999 !important;
+		background-color: #bbb !important;
 		border-color: #666;
 	}
 	a.big {
 		font-size: 14px;
 		padding: 10px 20px;
 	}
+	a.button span {
+		font-size: 30px;
+		font-weight: normal;
+		left: 35px;
+		position: absolute;
+		top: 12px;
+	}
 a.button:hover {
-	background: -webkit-gradient(linear, left bottom, left top, from(rgba(0,0,0,.25)), to(rgba(0,0,0,0)));
+	background: -webkit-gradient(linear, left bottom, left top, from(rgba(0,0,0,.35)), to(rgba(0,0,0,0)));
 	box-shadow: 0 1px 3px rgba(0,0,0,.35);
 	text-shadow: -1px -1px 1px rgba(0,0,0,.25);
 }
@@ -124,6 +132,18 @@ a.button:active {
 	background: -webkit-gradient(linear, left bottom, left top, from(rgba(0,0,0,.30)), to(rgba(0,0,0,0)));
 	box-shadow: 0 1px 5px rgba(0,0,0,.45) inset;
 	text-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+a.button.disabled,
+a.button.disabled:hover,
+a.button.disabled:active {
+	background: #ccc !important;
+	border-color: #999;
+	cursor: default;
+	box-shadow: none;
+	text-shadow: none;
+}
+a.button.hidden {
+	display: none;
 }
 /* FIELDS */
 input[type = "field"],
@@ -171,11 +191,12 @@ body {
 	}
 		nav {
 			background: url("../img/bg.png") repeat-x #222;
-			height: 100%;
+			left: 0;
+			min-height: 100%;
 			overflow: scroll;
-			float: left;
+			position: fixed;
 			text-align: right;
-			position: relative;
+			top: 0;
 			width: 225px;
 			z-index: 0;
 		}
@@ -183,11 +204,27 @@ body {
 			width: 0;
 		}
 			h1 {
+				-webkit-transition: text-shadow .05s linear;
 				color: #fff;
 				font: 38px normal 'Raleway', Arial, sans-serif;
 				margin: 10px 20px 10px 0;
 				text-shadow: 0 0 1px rgba(255,255,255,.25);
 			}
+				#logo {
+					text-decoration: none;
+				}
+				#logo:hover h1 {
+					text-shadow: 0 0 1px rgba(255,255,255,.25),
+						1px 1px 1px rgba(0,0,0,.65),
+						0 0 5px rgba(71,135,237,1),
+						0 0 10px rgba(71,135,237,1);
+				}
+				#logo:active h1 {
+					text-shadow: 0 0 1px rgba(255,255,255,.25),
+						1px 1px 1px rgba(0,0,0,.65),
+						0 0 5px rgba(255,255,255,1),
+						0 0 10px rgba(255,255,255,1);
+				}
 			nav > div {
 				-webkit-transition: opacity .15s linear;
 				background: rgba(255,255,255,.25);
@@ -237,10 +274,6 @@ body {
 						background: -webkit-linear-gradient(left,
 									rgba(71,135,237,.75) 0%,
 									rgba(71,135,237,.75) 100%);
-						/*background: -webkit-linear-gradient(left,
-									rgba(71,135,237,0) 0%,
-									rgba(71,135,237,.15) 10%,
-									rgba(71,135,237,.75) 100%);*/
 						color: #fff;
 						font-weight: bold;
 						padding: 7px 20px 7px 0;
@@ -255,6 +288,7 @@ body {
 						-23px -30px 23px -23px rgba(0,0,0,.5),
 						-32px -30px 32px -32px rgba(0,0,0,.5);
 			display: none;
+			margin-left: 225px;
 			min-height: 100%;
 			opacity: 0;
 			overflow: hidden;
@@ -279,7 +313,6 @@ body {
 			}
 				section {
 					border-top: 1px solid #ccc;
-					display: table-row;
 					display: -webkit-box;
 					padding: 20px 0;
 				}
@@ -298,26 +331,110 @@ body {
 					ul {
 						-webkit-padding-start: 0;	
 					}
-					#moduleList li {
-						border-left: 1px solid #ccc;
-						padding-left: 10px;
-					}
-					h2 {
-						-webkit-margin-before: 0;
-						-webkit-margin-after: 0;
-						color: #444;
-						margin-bottom: 5px;
-						font-size: 18px;
-						font-weight: normal;
-					}
-					h4 {
-						-webkit-margin-before: 0;
-						-webkit-margina-after: 0;
-						color: #999;
-						font-weight: normal;
-						font-style: italic;
-						margin-bottom: 20px;
-						
-
-					}
 /* === END STRUCTURE === */
+
+/* === DASHBOARD === */
+#moduleList li {
+	border-left: 1px solid #ccc;
+	padding-left: 10px;
+}
+#moduleList li.disabled h2,
+#moduleList li.disabled h4,
+#moduleList li.disabled a.button:not(.moduleToggle):not(:hover) {
+	opacity: .5;
+}
+h2 {
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
+	color: #444;
+	margin-bottom: 5px;
+	font-size: 18px;
+	font-weight: normal;
+}
+h4 {
+	-webkit-margin-before: 0;
+	-webkit-margina-after: 0;
+	color: #999;
+	font-weight: normal;
+	font-style: italic;
+	margin-bottom: 20px;
+}
+/* === END DASHBOARD === */
+
+/* === OPTIONS === */
+header {
+	overflow: hidden;
+}
+#p_opt h1,
+#p_edi h1 {
+	display: inline-block;
+	float: left;
+}
+#p_opt a.nav,
+#p_edi a.nav {
+	float: left;
+	margin: 13px 20px 0 0;
+}
+#p_opt h1 ~ a,
+#p_edi h1 ~ a {
+	float: left;
+	clear: right;
+	margin: 13px 0 0 20px;					
+}
+/* === END OPTIONS === */
+
+/* === EDIT === */
+#ediWrapper {
+	max-height: 100%;
+}
+#editorCSS,
+#editorHeadJS,
+#editorBodyJS {
+	margin-left: 200px;
+	position: relative;
+	display: -webkit-box;
+	min-height: 25%;
+}
+#optionTree {
+	float: left;
+	min-height: 100%;
+	width: 150px;
+}
+#optionTree ul {
+	-webkit-transition-property: all;
+	-webkit-transition-duration: .15s;
+	margin-left: 15px;
+}
+#optionTree .collapsed ul {
+	opacity: 0;
+	overflow: hidden;
+}
+#optionTree span {
+	cursor: pointer;
+	display: inline-block;
+}
+#optionTree span:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+#optionTree {
+	font-weight: bold;
+}
+#optionTree ul ul {
+	font-weight: normal;
+}
+#optionTree li {
+	margin: 2px 0;
+}
+#optionTree > li > span:before,
+#optionTree > li > ul > li > span:before {
+	content: "- ";
+}
+#optionTree > li.collapsed > span:before,
+#optionTree > li > ul > li.collapsed > span:before {
+	content: "+ ";
+}
+#optionTree .current {
+	font-style: italic;
+}
+/* === END EDIT === */
