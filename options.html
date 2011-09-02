@@ -56,7 +56,7 @@
 		<div class="page" id="p_edi">
 			<header>
 				<a href="#das" class="nav button blue big subtle"><span>&#171;</span>&nbsp;&nbsp;</a>
-				<h1></h1>
+				<input type="field" class="h1" size="16" />
 				<a href="javascript:void(0);" id="saveEdits" class="button green big disabled">Save Changes</a>
 				<a href="javascript:void(0);" id="cancelNav" class="button green big hidden">Cancel Exit</a>
 				<a href="javascript:void(0);" id="abandonEdits" class="button red big hidden">Abandon Changes</a>
@@ -64,6 +64,9 @@
 			<div id="ediWrapper">
 				<ul id="optionTree">
 				</ul>
+				<div id="optionMeta">
+					<input id="optionDescription" type="field" size="50" />
+				</div>
 				<pre id="editorCSS"></pre>
 				<pre id="editorHeadJS"></pre>
 				<pre id="editorBodyJS"></pre>

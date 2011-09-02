@@ -119,6 +119,9 @@ a.button {
 		position: absolute;
 		top: 12px;
 	}
+	a.button.square {
+		padding: 5px 9px;
+	}
 a.button:hover {
 	background: -webkit-gradient(linear, left bottom, left top, from(rgba(0,0,0,.35)), to(rgba(0,0,0,0)));
 	box-shadow: 0 1px 3px rgba(0,0,0,.35);
@@ -148,6 +151,8 @@ a.button.hidden {
 /* FIELDS */
 input[type = "field"],
 textarea {
+	-webkit-transition-property: background, border, box-shadow, color;
+	-webkit-transition-duration: .25s;
 	padding: 0 2px 2px 2px;
 	margin: 2px 0 2px 25px;
 	outline: none;
@@ -203,7 +208,7 @@ body {
 		nav::-webkit-scrollbar {
 			width: 0;
 		}
-			h1 {
+			h1, .h1 {
 				-webkit-transition: text-shadow .05s linear;
 				color: #fff;
 				font: 38px normal 'Raleway', Arial, sans-serif;
@@ -302,7 +307,7 @@ body {
 			opacity: 1;
 			z-index: 2;
 		}
-			.page h1 {
+			.page h1, .h1 {
 				color: #000;
 				margin: 10px 0;
 				text-shadow: 0 0 1px rgba(255,255,255,.25);
@@ -366,7 +371,7 @@ header {
 	overflow: hidden;
 }
 #p_opt h1,
-#p_edi h1 {
+#p_edi .h1 {
 	display: inline-block;
 	float: left;
 }
@@ -376,7 +381,7 @@ header {
 	margin: 13px 20px 0 0;
 }
 #p_opt h1 ~ a,
-#p_edi h1 ~ a {
+#p_edi .h1 ~ a {
 	float: left;
 	clear: right;
 	margin: 13px 0 0 20px;					
@@ -384,16 +389,24 @@ header {
 /* === END OPTIONS === */
 
 /* === EDIT === */
+#p_edi.loading {
+	display: block;
+	visibility: hidden;
+}
 #ediWrapper {
 	max-height: 100%;
 }
-#editorCSS,
-#editorHeadJS,
-#editorBodyJS {
-	margin-left: 200px;
-	position: relative;
-	display: -webkit-box;
-	min-height: 25%;
+input.h1[type = "field"] {
+	background: transparent;
+	border-color: transparent;
+	color: #000;
+	margin: 5px 0 0 0;
+}
+.h1:hover {
+	border-color: #333;
+}
+.h1:focus {
+	border-color: #0099ff;
 }
 #optionTree {
 	float: left;
@@ -436,5 +449,37 @@ header {
 }
 #optionTree .current {
 	font-style: italic;
+}
+#editorCSS,
+#editorHeadJS,
+#editorBodyJS {
+	display: -webkit-box;
+	margin-left: 170px;
+	min-height: 25%;
+	position: relative;
+}
+#optionMeta {
+	display: -webkit-box;
+	margin-left: 170px;
+}
+#optionDescription {
+	background: transparent;
+	border: 1px solid transparent;
+	font-size: 18px;
+	margin-left: 0;
+	width: 100%;
+}
+#p_edi input[type = "field"] {
+	padding: 4px 5px 3px 5px;
+}
+#p_edi input[type = "field"]:hover {
+	background: #fff;
+	border-color: #333;
+	color: #000;
+}
+
+#p_edi input[type = "field"]:focus {
+	background: #fff;
+	border: 1px solid #0099ff;
 }
 /* === END EDIT === */

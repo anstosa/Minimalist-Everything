@@ -93,15 +93,29 @@ function loadModules() {
 /* === END INIT HELPERS === */
 
 /* === LISTENERS === */
-function getActiveModules(target){
+function getTargetModules(target, activeOnly) {
 	debug("getting modules that target " + target + "...");
 	var matchedModules = new Array();
 	for (var i = 0, l = modules.length; i < l; i++) {
-		if (isMatch(target, modules[i].includes) && modules[i].isEnabled) {
-			matchedModules.push(modules[i]);
+		if (isMatch(target, modules[i].includes)) {
+			if (activeOnly) {
+				if (modules[i].isEnabled) {
+					matchedModules.push(modules[i]);
+				}	
+			} else {
+				matchedModules.push(modules[i]);
+			}
 		}
 	}
+	debug("matched modules: " + matchedModules.length);
 	return matchedModules;
+}
+
+function getTargetModulesOfSelected() {
+	debug("getting current tab...");
+	chrome.tabs.getSelected(null, function(t) {
+		return getTargetModules(t.url, false);
+	});
 }
 
 function activateBrowserAction(tab) {
@@ -163,7 +177,7 @@ function reloadAll() {
 		for (var i = 0, l = windows.length; i < l; i++) {
 			var tabs = windows[i].tabs;
 			for (var j = 0, m = tabs.length; j < m; j++) {
-				if (getActiveModules(tabs[j].url).length > 0) {
+				if (getTargetModules(tabs[j].url, true).length > 0) {
 					reloadTab(tabs[j]);	
 				}
 			}
@@ -177,7 +191,7 @@ function reload(target) {
 		for (var i = 0, l = windows.length; i < l; i++) {
 			var tabs = windows[i].tabs;
 			for (var j = 0, m = tabs.length; j < m; j++) {
-				if (isMatch(tabs[j].url, modules[target].includes) && modules[target].isEnabled) {
+				if (isMatch(tabs[j].url, modules[target].includes)) {
 					reloadTab(tabs[j]);	
 				}
 			}

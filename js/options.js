@@ -36,83 +36,85 @@ if (hash === "update") {
 /* === END NAVIGATION HANDLER === */
 
 /* === LOAD MODULES === */
-chrome.extension.sendRequest({name: "getPrefs"}, function(response) {
-	prefs = response.prefs;
-});
+function buildDashboard() {
+	chrome.extension.sendRequest({name: "getPrefs"}, function(response) {
+		prefs = response.prefs;
+	});
 
-chrome.extension.sendRequest({name: "getAllModules"}, function(response) {
-	
-	modules = response.modules;
-
-	/**
-	 * CONTROL PANEL
-	 *
-	 * <div>
-	 *   <a href="javascript:void(0)" class="moduleOptions button blue">Options</a>
-	 *   <a href="javascript:void(0)" class="moduleEdit button green">Edit</a>
-	 *   <a href="javascript:void(0)" class="moduleToggle button gray">Disable</a>
-	 *   <a href="javascript:void(0)" class="moduleDelete button red">Delete</a>
-	 * </div>
-	 **/
-	var $moduleControls = $("<div></div>");
-	$("<a></a>", {
-		href: "#opt",
-		class: "moduleOptions nav button subtle blue"
-	}).text("Options").appendTo($moduleControls);
-	$("<a></a>", {
-		href: "#edi",
-		class: "moduleEdit nav button subtle green"
-	}).text("Edit").appendTo($moduleControls);
-	$("<a></a>", {		
-		href: "javascript:void(0);",
-		class: "moduleToggle button subtle red"
-	}).text("Disable").appendTo($moduleControls);
-	$("<a></a>", {
-		href: "javascript:void(0);",
-		class: "moduleDelete button subtle red"
-	}).text("Delete").appendTo($moduleControls);
-	$("<a></a>", {
-		href: "javascript:void(0);",
-		class: "moduleDeleteCancel button green hidden"
-	}).text("Cancel Delete").appendTo($moduleControls);
-	$("<a></a>", {
-		href: "javascript:void(0);",
-		class: "moduleDeleteConfirm button red hidden"
-	}).text("Confirm Delete").appendTo($moduleControls);
-
-	var $moduleList;
-	
-	if (modules.length > 0) {
-		$moduleList = $("#moduleList").empty()
-	}
-	for (var i = 0, l = modules.length; i < l; i++) {
-		var current = modules[i];
+	chrome.extension.sendRequest({name: "getAllModules"}, function(response) {
+		
+		modules = response.modules;
 
 		/**
-		 * SINGLE MODULE
+		 * CONTROL PANEL
 		 *
-		 * <li id="module_X", >
-		 *   <h2>Module Name</h2>
-		 *   <h4>Module targets</h4>
-		 *   <!-- Control Panel -->
-		 * </li>
+		 * <div>
+		 *   <a href="javascript:void(0)" class="moduleOptions button blue">Options</a>
+		 *   <a href="javascript:void(0)" class="moduleEdit button green">Edit</a>
+		 *   <a href="javascript:void(0)" class="moduleToggle button gray">Disable</a>
+		 *   <a href="javascript:void(0)" class="moduleDelete button red">Delete</a>
+		 * </div>
 		 **/
-		var $module = $("<li></li>",{
-			id: "module_" + i,
-			class: current.isEnabled
-		});
-		$("<h2></h2>").text(current.name).appendTo($module);
-		$("<h4></h4>").text(current.includes).appendTo($module);
-		$module.append($moduleControls);
-		$moduleList.append($module);
-		if (!modules[i].isEnabled) {
-			$("#module_" + i).addClass("disabled");
-			$("#module_" + i + " .moduleToggle").removeClass("red").addClass("green").text("Enable");
+		var $moduleControls = $("<div></div>");
+		$("<a></a>", {
+			href: "#opt",
+			class: "moduleOptions nav button subtle blue"
+		}).text("Options").appendTo($moduleControls);
+		$("<a></a>", {
+			href: "#edi",
+			class: "moduleEdit nav button subtle green"
+		}).text("Edit").appendTo($moduleControls);
+		$("<a></a>", {		
+			href: "javascript:void(0);",
+			class: "moduleToggle button subtle red"
+		}).text("Disable").appendTo($moduleControls);
+		$("<a></a>", {
+			href: "javascript:void(0);",
+			class: "moduleDelete button subtle red"
+		}).text("Delete").appendTo($moduleControls);
+		$("<a></a>", {
+			href: "javascript:void(0);",
+			class: "moduleDeleteCancel button green hidden"
+		}).text("Cancel Delete").appendTo($moduleControls);
+		$("<a></a>", {
+			href: "javascript:void(0);",
+			class: "moduleDeleteConfirm button red hidden"
+		}).text("Confirm Delete").appendTo($moduleControls);
+
+		var $moduleList;
+		
+		if (modules.length > 0) {
+			$moduleList = $("#moduleList").empty()
 		}
-	}
-	addModuleListeners();
-	addNavHandler();
-});
+		for (var i = 0, l = modules.length; i < l; i++) {
+			var current = modules[i];
+
+			/**
+			 * SINGLE MODULE
+			 *
+			 * <li id="module_X", >
+			 *   <h2>Module Name</h2>
+			 *   <h4>Module targets</h4>
+			 *   <!-- Control Panel -->
+			 * </li>
+			 **/
+			var $module = $("<li></li>",{
+				id: "module_" + i,
+				class: current.isEnabled
+			});
+			$("<h2></h2>").text(current.name).appendTo($module);
+			$("<h4></h4>").text(current.includes).appendTo($module);
+			$module.append($moduleControls);
+			$moduleList.append($module);
+			if (!modules[i].isEnabled) {
+				$("#module_" + i).addClass("disabled");
+				$("#module_" + i + " .moduleToggle").removeClass("red").addClass("green").text("Enable");
+			}
+		}
+		addModuleListeners();
+		addNavHandler();
+	});
+}
 /* === END LOAD MODULES === */
 
 /* === MODULE OPTIONS === */
@@ -216,6 +218,7 @@ function buildOptions(i) {
 		$("#optWrapper").append($tab);
 	}
 
+
 	addOptionsListeners();
 }
 /* === END MODULE OPTIONS === */
@@ -229,7 +232,7 @@ function buildEditor(i) {
 	var options = modules[i].options;
 	var tree = {};
 
-	$("#p_edi h1").text(modules[i].name).attr("id", "module_" + i);
+	$("#p_edi .h1").val(modules[i].name).attr("id", "module_" + i);
 	$("#optionTree").empty();
 
 	for (var j = 0, l = options.length; j < l; j++) {
@@ -274,10 +277,42 @@ function buildEditor(i) {
 		$("#optionTree").append($root);
 	}
 
+	var option = modules[i].options[0];
+	$("#optionTree #treeOption_0 span").addClass("current");
+	$("#optionDescription").val(option.description);
+	
+	editorCSS.getSession().setValue("");
+	editorHeadJS.getSession().setValue("");
+	editorBodyJS.getSession().setValue("");
+
+	if (option.hasOwnProperty("head") && option.head.hasOwnProperty("css")) {
+		var content = option.head.css[0];
+		for (var i = 1, l = option.head.css.length; i < l; i++) {
+			content += "\n" + option.head.css[i];
+		}
+		editorCSS.getSession().setValue(content);
+	}
+	if (option.hasOwnProperty("head") && option.head.hasOwnProperty("js")) {
+		var content = option.head.js[0];
+		for (var i = 1, l = option.head.js.length; i < l; i++) {
+			content += "\n" + option.head.js[i];
+		}
+		editorHeadJS.getSession().setValue(content);
+	}
+	if (option.hasOwnProperty("load") && option.load.hasOwnProperty("js")) {
+		var content = option.load.js[0];
+		for (var i = 1, l = option.load.js.length; i < l; i++) {
+			content += "\n" + option.load.js[i];
+		}
+		editorBodyJS.getSession().setValue(content);
+	}
+
 	addEditorListeners();
 }
 
 window.onload = function() {
+	$("#p_edi").addClass("loading");
+
 	var editorModeCSS = require("ace/mode/css").Mode;
 	var editorModeJS = require("ace/mode/javascript").Mode;
 
@@ -292,6 +327,8 @@ window.onload = function() {
 	editorBodyJS = ace.edit("editorBodyJS");
 	editorBodyJS.setTheme("ace/theme/twilight");
 	editorBodyJS.getSession().setMode(new editorModeJS());
+
+	$("#p_edi").removeClass("loading");
 };
 /* === END MODULE EDITOR === */
 
@@ -336,12 +373,14 @@ function addEditorListeners() {
 
 	$("#optionTree ul ul span").click(function() {
 //		if (editNavConfirmed()) {
-			var module = modules[$("#p_edi h1").attr("id").substr(7)],
+			var module = modules[$("#p_edi .h1").attr("id").substr(7)],
 				option = module.options[$(this).parent().attr("id").substr(11)];
 
 			$("#optionTree .current").removeClass("current");
 			$(this).addClass("current");
 
+			$("#optionDescription").val(option.description);
+			
 			editorCSS.getSession().setValue("");
 			editorHeadJS.getSession().setValue("");
 			editorBodyJS.getSession().setValue("");
@@ -371,9 +410,10 @@ function addEditorListeners() {
 //		}
 	});
 
-	editorCSS.getSession().on('change', activateEditSaveButton);
-	editorHeadJS.getSession().on('change', activateEditSaveButton);
-	editorBodyJS.getSession().on('change', activateEditSaveButton);
+	$("#optionMeta input, .h1").bind("keypress", activateEditSaveButton);
+	editorCSS.getSession().on("change", activateEditSaveButton);
+	editorHeadJS.getSession().on("change", activateEditSaveButton);
+	editorBodyJS.getSession().on("change", activateEditSaveButton);
 }
 
 function activateEditSaveButton() {
@@ -392,7 +432,7 @@ function disableEditSaveButton() {
 	$("#saveEdits").addClass("hidden")
 		.next().removeClass("hidden")
 		.next().removeClass("hidden");
-	$("#cancelNav").click(function() {
+		$("#cancelNav").click(function() {
 		$("#saveEdits").removeClass("hidden")
 			.next().addClass("hidden")
 			.next().addClass("hidden");
@@ -421,7 +461,7 @@ function saveOptions() {
 
 function saveEdits() {
 	if (!$(this).hasClass("disabled")) {
-		var i = $("#p_edi h1").attr("id").substr(7),
+		var i = $("#p_edi .h1").attr("id").substr(7),
 			j = $("#optionTree .current").parent().attr("id").substr(11),
 			editsCSS = editorCSS.getSession().getValue(),
 			editsHJS = editorHeadJS.getSession().getValue(),
@@ -437,10 +477,15 @@ function saveEdits() {
 			modules[i].options[j].load.js = editsBJS.split("\n");
 		}
 
+		modules[i].name = $(".h1").val();
+		modules[i].options[j].description = $("#optionDescription").val();
+
 		chrome.extension.sendRequest({name: "save", modules: modules}, function(response) {});
 		hasEditorChanged = false;
 		$("#saveEdits").addClass("disabled").text("Changes Saved!");
 		chrome.extension.sendRequest({name: "reload", module: i}, function(response) {});
+		buildEditor($(this).prev().attr("id").substr(7));
+		buildDashboard();
 	}
 }
 
@@ -503,3 +548,5 @@ function saveEdits() {
 		}
 	}*/
 	//---- END SYNC ----//
+
+buildDashboard();
