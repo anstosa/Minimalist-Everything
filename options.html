@@ -2,6 +2,7 @@
 <head>
 	<title>Minimalist Options</title>
 	<link type="text/css" rel="stylesheet" href="css/options.css" />
+	<link type="text/css" rel="stylesheet" href="css/tooltips.css" />
 </head>
 <body>
 	<div id="container">
@@ -15,14 +16,15 @@
 			<!-- NAVIGATION -->
 			<ul>
 				<li><a href="#das" id="n_das">Dashboard</a></li>
-				<li><a href="#wik" id="n_wik">Wiki</a></li>
+				<li><a href="http://code.google.com/p/minimalist/wiki" id="n_wik" class="noNav" target="_blank">Wiki</a></li>
 				<li><a href="#syn" id="n_syn">Sync</a></li>
 				<li><a href="#sup" id="n_sup">Support</a></li>
 				<li><a href="#abo" id="n_abo">About</a></li>				
-				<li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=C5GNE665F894E" id="n_don" target="_blank">Donate</a></li>
+				<li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=C5GNE665F894E" id="n_don" class="noNav" target="_blank">Donate</a></li>
 			</ul>
 			<!-- END NAVIGATION -->
 		</nav>
+		<!-- <a href="javascript:void(0);" id="masterReset" class="button big red">Data has been corrupted. Reset?</a> -->
 		<div class="page" id="p_das">
 			<h1>Dashboard</h1>
 			<div class="table">
@@ -32,15 +34,15 @@
 						<ul id="moduleList">
 							<h2>You have no modules installed...</h2>
 							<br />
-							<a href="javascript:void(0);" id="installStarter" class="button big blue">Install Starter Module</a>
-							<a href="javascript:void(0);" class="button big red">What is a Module?</a>
+							<a href="javascript:void(0);" id="installStarter" class="button first group big blue">Install Starter Module</a>
+							<a href="http://code.google.com/p/minimalist/wiki/Modules" class="button big last group red" target="_blank">What is a Module?</a>
 						</ul>
 					</div>
 				</section>
 				<section>
 					<h3>&nbsp;</h3>
 					<div>
-						<a href="#" class="button big subtle green">New Module</a><a href="#" class="button big subtle blue">Find Modules</a>
+						<a href="#edi" class="button nav big group first subtle green" onclick="makeNewModule(null, null)">New Module</a><a href="javascript:void(0);" class="button big group last disabled blue" tip="Coming in the stable release!">Find Modules</a>
 					</div>
 				</section>
 			</div>
@@ -51,61 +53,238 @@
 				<h1></h1>
 				<a href="javascript:void(0);" id="saveOptions" class="button green big disabled">Save Changes</a>
 			</header>
-			<div id="optWrapper"></div>
+			<div id="optWrapper">
+				<ul id="optionNav">
+				</ul>
+			</div>
 		</div>
 		<div class="page" id="p_edi">
 			<header>
 				<a href="#das" class="nav button blue big subtle"><span>&#171;</span>&nbsp;&nbsp;</a>
-				<input type="field" class="h1" size="16" />
+				<h1></h1>
 				<a href="javascript:void(0);" id="saveEdits" class="button green big disabled">Save Changes</a>
 				<a href="javascript:void(0);" id="cancelNav" class="button green big hidden">Cancel Exit</a>
 				<a href="javascript:void(0);" id="abandonEdits" class="button red big hidden">Abandon Changes</a>
 			</header>
 			<div id="ediWrapper">
 				<ul id="optionTree">
+					<li>Loading...</li>
 				</ul>
-				<div id="optionMeta">
-					<input id="optionDescription" type="field" size="50" />
+				<div id="ediWrapperSub">
+					<div id="moduleMeta">
+						<div class="table">
+							<div class="row">
+								<div class="cell head">Name</div>
+								<div class="cell"><input id="moduleName" type="field" class="subtle" size="50" /></div>
+							</div>
+							<div class="row">
+								<div class="cell head">By</div>
+								<div class="cell"><input id="moduleAuthor" type="field" class="subtle normal" size="50" /></div>
+							</div>
+							<div class="row">
+								<div class="cell head">@includes</div>
+								<div class="cell"><input id="moduleIncludes" type="field" class="subtle normal" size="50" tip="Wildcard notation, seperate URLs with commas" /></div>
+							</div>
+							<div class="row">
+								<div class="cell head">version</div>
+								<div class="cell"><input id="moduleVersion" type="field" class="subtle normal" size="50" /></div>
+							</div>
+							<div class="row">
+								<div class="cell head top s" tip="HTML for the about tab in the Options Page">About</div>
+								<div class="cell">
+									<pre id="moduleAbout"></pre>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="optionMeta" class="table hidden">
+						<div class="row">
+							<div class="cell head">Name</div>
+							<div class="cell"><input id="optionDescription" type="field" class="subtle" size="80" /></div>
+						</div>
+						<div class="row hidden">
+							<div class="cell head">Tab</div>
+							<div class="cell"><input id="optionTab" type="field" class="subtle normal" size="80" tip="Parent tab in the Options Page" /></div>
+						</div>
+						<div class="row hidden">
+							<div class="cell head">Section</div>
+							<div class="cell"><input id="optionSection" type="field" class="subtle normal" size="80" tip="Parent sub-section in the Options Page" /></div>
+						</div>
+						<div class="row">
+							<div class="cell head top">Meta</div>
+							<div class="cell"><a href="javascript:void(0);" class="button small green subtle" id="optionAdvanced" />Advanced</a></div>
+						</div>
+						<div class="row hidden indev w" tip="Coming in the Beta...">
+							<div class="cell head top">Type</div>
+							<div class="cell">
+								<input id="optionCheck" type="radio" name="optionType" /><label for="optionCheck"><div class="input"></div>Checkbox</label>
+								<input id="optionRadio" type="radio" name="optionType" /><label for="optionRadio"><div class="input"></div>Radio buttons</label>
+							</div>
+						</div>
+						<div class="row hidden indev w" tip="(Add fields, color pickers, etc) Coming in the Beta...">
+							<div class="cell head top">Input</div>
+							<div class="cell">
+								<br /><br />
+							</div>
+						</div>
+						<div class="row hidden w" tip="Hover preview image for option in Options Page">
+							<div class="cell head top" >Image</div>
+							<div class="cell">
+								<div id="optionPreview"></div>
+								<input type="file" onchange="updateScreenshot(this.files)" />
+							</div>
+						</div>
+					</div>
+					<div id="editors" class="table hidden">
+						<div class="row">
+							<div class="cell head top">CSS</div>
+							<div class="cell">
+								<pre id="editorCSS"></pre>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell head top">Head JS</div>
+							<div class="cell">
+								<pre id="editorHeadJS"></pre>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell head top">Body JS</div>
+							<div class="cell">
+								<pre id="editorBodyJS"></pre>
+							</div>
+						</div>
+					</div>
 				</div>
-				<pre id="editorCSS"></pre>
-				<pre id="editorHeadJS"></pre>
-				<pre id="editorBodyJS"></pre>
 			</div>
 		</div>
 		<div class="page" id="p_wik">
 			<h1>Wiki</h1>
-			
+			<section class="indev">
+				<h3>Coming soon</h3>
+				<div>
+					Documentation, examples, module index and other resources
+				</div>
+			</section>
 		</div>
 		<div class="page" id="p_syn">
 			<h1>Sync</h1>
-			
+			<section class="indev">
+				<h3>Sync</h3>
+				<div>
+					<p>Coming in the beta...</p>
+				</div>
+			</section>
+			<section>
+				<h3>Import/Export</h3>
+				<div>
+					<br />
+					<form name="io">
+						<textarea id="dataField" cols="80" rows="5"></textarea>
+						<div class="floatRight">
+							<a href="javascript:void(0);" id="exportUserScript" tip="Coming in Beta!" class="button group big hidden subtle disabled first red">UserScript</a>
+							<a href="javascript:void(0);" id="exportSome" class="button group big hidden blue">Specific Modules</a>
+							<a href="javascript:void(0);" id="exportAll" class="button group big hidden green">Everything</a>
+							<a href="javascript:void(0);" id="export" class="button group big first blue">Export</a>
+							<a href="javascript:void(0);" id="exportSelected" class="button group big hidden first green">Export Selected</a>
+							<a href="javascript:void(0);" id="exportCopy" class="button group big hidden green">Copy Code</a>
+							<a href="javascript:void(0);" id="import" class="button group big subtle last green" tip="THIS WILL OVERWRITE EVERYTHING!">Import</a>
+						</div>
+					</form>
+					<ul id="exportList" class="hidden">
+						<li id="checkAllWrap"><input type="checkbox" id="checkAll" /><label for="checkAll"><div class="input"></div>Check All</label><li>
+					<ul>
+				</div>
+			</section>
 		</div>
 		<div class="page" id="p_sup">
 			<h1>Support</h1>
-			
+			<section>
+				<h3>Support Page</h3>
+				<div>
+					<p>Try the <a href="http://minimalistsuite.com/wiki/support" target="_blank">official support page</a> first. Otherwise, see below:</p>
+				</div>
+			</section>
+			<section>
+				<h3>Community</h3>
+				<div>
+					<p>I'm not always available to answer questions personally. Post questions on the <a href="https://groups.google.com/forum/?hl=en&pli=1#!forum/minimalist-everything" target="_blank">Google Group</a> to get help and tips from other Minimalist users</p>
+				</div>
+			</section>
+			<section>
+				<h3>Bugs &amp; Ideas</h3>
+				<div>
+					<p>I'm always looking to patch bugs and improve Minimalist. I respond in the Issue Tracker, email, and Twitter within the day.</p>
+					<ul class="bullets">
+						<li>Submit a bug or feature request: <a href="http://code.google.com/p/minimalist/issues" target="_blank">Official Issues Tracker</a></li>
+						<li>Just have a question?
+							<ul class="bullets">
+								<li>Ping me on Twitter: <a href="http://twitter.com/anstosa" target="_blank">@anstosa</a></li>
+								<li>Shoot me an email: <a href="https://mail.google.com/mail/?view=cm&tf=0&to=ansel@anselsantosa.com&fs=1" target="_blank">ansel@anselsantosa.com</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
 		</div>
 		<div class="page" id="p_abo">
 			<h1>About</h1>
-			
+			<section>
+				<h3>Version</h3>
+				<div>
+					0.1.4 (alpha)
+				</div>
+			</section>
+			<section>
+				<h3>Credits</h3>
+				<div>
+					<p>My name is <a href="http://anselsantosa.com" target="_blank">Ansel Santosa</a> [<a href="http://twitter.com/anstosa" target="_blank">@anstosa</a>].</p>
+					<p>I'm an Informatics student at the University of Washington in Seattle studying UX and UIE</p>
+					<p>I created Minimalist to enable people to take control of the way they experience their favorite websites. Inspired by the success of my four other Minimalist extensions, I wanted users to be able to customize <em>any</em> website, not just my personal favorites.</p>
+				</div>
+			</section>
+			<section>
+				<h3>Rate &amp; Review</h3>
+				<div>
+					<p>Do you like Minimalist? Please <a href="https://chrome.google.com/webstore/detail/bmihblnpomgpjkfddepdpdafhhepdbek" target="_blank">rate and review it in the Web Store!</a>
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Donate</h3>
+				<div>
+					<p>This is a personal project and I am a full-time student, please <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4RVCM5TZRYBK8">support me by donating</a> so I can keep keep Minimalist up-to-date and competitive.</p>
+					<br />
+					<a class="button big green" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C5GNE665F894E" target="_blank">Donate</a>
+				</div>
+			</section>
 		</div>
-
 	</div>
 	<!-- JAVASCRIPT -->
 
 	<!-- ACE EDITOR -->
 	<script type="text/javascript" src="js/ace/ace.js"></script>
 	<script type="text/javascript" src="js/ace/theme-twilight.js"></script>
+	<script type="text/javascript" src="js/ace/mode-html.js"></script>
 	<script type="text/javascript" src="js/ace/mode-css.js"></script>
 	<script type="text/javascript" src="js/ace/mode-javascript.js"></script>
 	<!-- END ACE EDITOR -->
 
 	<script type="text/javascript" src="js/libs/jquery.js"></script>
-	<script type="text/javascript" src="js/libs/jquery-ui.js"></script>
+	<!--<script type="text/javascript" src="js/libs/jquery-ui.js"></script>-->
+	<script type="text/javascript" src="js/libs/tooltips.js"></script>
+	<script type="text/javascript" src="js/libs/Module.js"></script>
+	<script type="text/javascript" src="js/libs/dashboard.js"></script>
+	<script type="text/javascript" src="js/libs/options.js"></script>
+	<script type="text/javascript" src="js/libs/preview.js"></script>
+	<script type="text/javascript" src="js/libs/editor.js"></script>
+	<script type="text/javascript" src="js/io/exportImport.js"></script>
+	<!--<script type="text/javascript" src="js/io/sync.js"></script>-->
 	<script type="text/javascript" src="js/options.js"></script>	
 	<script type="text/javascript">
 		// === GOOGLE FONT LOADER === //
 		WebFontConfig = {
-			google: { families: [ 'Raleway:100' ] }
+			google: { families: [ 'Raleway:100:latin' ] }
 		};
 		(function() {
 			var wf = document.createElement('script');
@@ -117,19 +296,6 @@
 				s.parentNode.insertBefore(wf, s);
 		})();
 		// === END GOOGLE FONT LOADER === //
-		// === GOOGLE ANALYTICS === //
-		var _gaq = _gaq || [];
-		_gaq.push(['_setAccount', 'UA']);
-		_gaq.push(['_trackPageview']);
-		(function() {
-			var ga = document.createElement('script');
-				ga.type = 'text/javascript';
-				ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(ga, s);
-		})();
-		// === END GOOGLE ANALYTICS === //
 	</script>
 </body>
 </html>

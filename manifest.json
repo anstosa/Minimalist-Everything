@@ -1,6 +1,6 @@
 {
-	"name": "Minimalist for Everything",
-	"version": "0.1.0",
+	"name": "Minimalist for Everything [Alpha]",
+	"version": "0.1.4",
 	"description": "You live in webapps. Make them yours",
 	"icons": {
 		 "16": "img/icons/icon16.png",
@@ -8,36 +8,37 @@
 		"128": "img/icons/icon128.png" },
 	"browser_action": {
 		"default_icon": "img/icons/icon19.png",
-		"default_title": "Minimalist for Everything",
+		"default_title": "minimalist",
 		"default_popup": "modal/browserAction.html"
 	},
 	"background_page": "background.html",
 	"content_scripts": [ {
-		"matches": [ "http://*/*", "https://*/*" ],
+		"matches": [ "<all_urls>" ],
 		"js": [ "js/libs/jquery.js", "js/libs/runtime.js" ],
 		"run_at": "document_start",
 		"all_frames": true
-//	}, {
-//		"matches": [ "http://userstyles.org/styles/*" ],
-//		"js": [ "js/io/userstyles.js" ],
-//		"run_at": "document_start"
-//	}, {
-//		"matches": [ "http://userscripts.org/scripts/*" ],
-//		"js": [ "js/io/userscripts.js" ],
-//		"run_at": "document_start"
 	}, {
-		"matches": [ "http://*/*", "https://*/*" ],
+		"matches": [ "http://userstyles.org/styles/*" ],
+		"js": [ "js/io/userstyles.js" ],
+		"run_at": "document_start"
+	}, {
+		"matches": [ "http://userscripts.org/scripts/*" ],
+		"js": [ "js/io/userscripts.js" ],
+		"run_at": "document_start"
+	}, {
+		"matches": [ "<all_urls>" ],
 		"js": [ "js/minimalist.js", "js/inject.js", "js/init.js" ],
 		"run_at": "document_start",
 		"all_frames": true
 	} ],
 	"options_page": "options.html",	
 	"permissions": [
+		"<all_urls>",
 		"bookmarks",
+		"clipboardWrite",
 		"contextMenus",
-		"http://*/*",
-		"https://*/*",
 		"notifications",
-		"tabs"
+		"tabs",
+		"unlimitedStorage"
 	]
 }
