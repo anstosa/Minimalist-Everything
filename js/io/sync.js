@@ -1,130 +1,110 @@
 /**
  * Sync for Minimalist
  * 
- * Based on Sync for Minimalist for Gmail
- * contributed by Ludovic Chabant
- * https://github.com/ludovicchabant/Minimalist-Gmail
+ * dependencies: bookmark.js
  *
- * © 2011 Ansel Santosa
- * Licensed under GNU GPL v3
+ * Based on Sync for chrome extensions
+ * Copyright (c) 2010 Ankit Ahuja
+ * Dual licensed under GPL and MIT licenses.
  **/
 
-var FOLDER_NAME = "Minimalist Sync",
-	BOOKMARK_NAME = "Minimalist for Everything",
-	URL_PREFIX = "http://minimalist?data=",
-	bookmarkId = false,
-	folderId = false,
-	isSyncing = false,
-	listenersAttached = false,
-	notify = options.notifySync;
+var FOLDER = "Minimalist Sync",
+	BOOKMARK = "Minimalist_for_Everything",
+	URL_PREFIX = "http://minimalistsuite.com?data=",
+	bookmarkId = null,
+	folderId = null;
 
-function hasSyncData(callback) {
-	if (bookmarkId != false) {
-		callback(true);
-	}
-	chrome.bookmarks.search(BOOKMARK_NAME, function(bookmarks) {
-		callback(bookmarks.length > 0);
-	});
-}
-
-function syncLoad(saveIfNotFound, showNotification) {
-	chrome.bookmarks.search(BOOKMARK_NAME, function(bookmarks) {
-		if (bookmarks.length != 0) {
+function syncLoad() {
+	lastSync = localStorage["lastSync"];
+	chrome.bookmarks.search(BOOKMARK, function(results) {
+		if (results.length > 0) {
 			// TODO: handle duplicates
-			var boomark = bookmarks[0];
+			var bookmark = results[0];
 			bookmarkId = bookmark.id;
 			folderId = bookmark.parentId;
 			var data = getSyncDataFromUrl(bookmark.url);
-			localStorage["options"] = data;
-			console.log("Minimalist: Loaded settings from bookmark.");
-			
-			if (showNotification) {
-				var notification = webkitNotifications.createNotification(
-					'modal/notifySynced.html'
-				);
-				notification.show();
-				setTimeout(function() {
-					notification.cancel();
-				}, 5000);
+			if (lastSync == null || data.split("%%%")[0] > lastSync) {
+				data = data.split("%%%")[1];
+				setRawData({isSyncing: data.split("###")[1].split("|||")[0], isEnabled: data.split("###")[1].split("|||")[1]}, data.split("###")[1].split("|||").slice(2));
+				lastSync = (new Date()).getTime();
+				save();
+				debug("loaded settings from bookmark");
+			} else {
+				syncSave();
 			}
-		} else if (saveIfNotFound) {
-			console.log("Minimalist: No synced settings found. Syncing local settings");
-			syncSave();
+		} else {
+			if (modules.length > 0) {
+				debug("no synced settings found. Syncing local settings");
+				syncSave();
+			}
 		}
 	});
 }
 
-var url = getUrlFromData(data);
 function syncSave() {
-	var data = localStorage["options"];
+	var url = getUrlFromData(getRawData());
 	
-	if (!bookmarkId) {
-		isSyncing = true;
-		createBookmark(FOLDER_NAME, null, null, function(folder) {
-			createBookmark(BOOKMARK_NAME, url, folder.id, function(bookmark) {
-				bookmarkId = bookmark.id;
-				folderId = bookmark.parentId;
-				console.log("Minimalist: Created sync entry.");
-			});
+	if (bookmarkId == null) {
+		chrome.bookmarks.search(FOLDER, function(results) {
+			if (results.length > 0) {
+				createBookmark(BOOKMARK, url, results[0].id, function(bookmark) {
+					bookmarkId = bookmark.id;
+					folderId = bookmark.parentId;
+					debug("created sync entry");
+				});
+			} else {
+				createBookmark(FOLDER, null, null, function(folder) {
+					createBookmark(BOOKMARK, url, folder.id, function(bookmark) {
+						bookmarkId = bookmark.id;
+						folderId = bookmark.parentId;
+						debug("created sync entry");
+					});
+				});
+			}
 		});
-	}
-	else {
-		isSyncing = true;
+	} else {
 		chrome.bookmarks.update(bookmarkId, {url: url}, function(bookmark) {
-			console.log("Minimalist: Synced settings updated.");
+			debug("synced settings updated.");
 		});
 	}
 }
 
 function getSyncDataFromUrl(url) {
-	if (!url || url === "") {
-	return unescape(url.replace(URL_PREFIX, ""));
-		return null;
+	if (url != "" && url != URL_PREFIX) {
+		return unescape(url.substr(URL_PREFIX.length + 1))
 	}
-	
-function getURLFromData(data) {
-	return URL_PREFIX + escape(data);
+	return null
 }
-
 	
+function getUrlFromData(data) {
+	return URL_PREFIX + (new Date()).getTime() + "%%%" + escape(data);
 }
 
 function attachSyncListeners() {
-	if (!listenersAttached) {
-		chrome.bookmarks.onChanged.addListener(onBookmarkUpdate);
-		listenersAttached = true;
-	}
-}
-
-function detachSyncListeners() {
-	if (listenersAttached) {
-		chrome.bookmarks.onChanged.removeListener(onBookmarkUpdate);
-		listenersAttached = false;
-	}
+	chrome.bookmarks.onChanged.addListener(onBookmarkUpdate);
 }
 
 function onBookmarkUpdate(id, properties) {
-	if (localStorage["syncEnabled"] && !isSyncing && id === bookmarkId) {
-		syncLoad(false, notify);
+	if (id === bookmarkId) {
+		syncLoad();
 	}
-	isSyncing = false;
 }
 
 function createBookmark(title, url, parentId, callback) {
-	if (!parentId)
-	{
+	if (parentId == null) {
 		// Create the bookmark in the "Other bookmarks" folder, which should always be the root folder's second child.
-		chrome.bookmarks.getTree(function(bookmarks) {
-			var folder = bookmarks[0].children[1];
-			var bookmark = {
-				parentId: folder.id,
-				title: title
-			};
-			if (url) bookmark.url = url;
+		chrome.bookmarks.getTree(function(results) {
+			var folder = results[0].children[1],
+				bookmark = {
+					parentId: folder.id,
+					title: title
+				};
+			if (url != null) {
+				bookmark.url = url;
+			}
 			chrome.bookmarks.create(bookmark, callback);
 		});
-	}
-	else {
+	} else {
 		var bookmark = {
 			parentId: parentId,
 			title: title,
@@ -132,9 +112,4 @@ function createBookmark(title, url, parentId, callback) {
 		};
 		chrome.bookmarks.create(bookmark, callback);
 	}
-}
-
-if (localStorage["syncEnabled"]) {
-	attachSyncListeners();
-	syncLoad(true, false);
 }

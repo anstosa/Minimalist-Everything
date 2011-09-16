@@ -198,7 +198,6 @@ textarea {
 }
 input[type = "field"]:hover,
 input[type = "field"]:focus,
-textarea:hover,
 textarea:focus {
 	background: #eee;
 	color: #222;
