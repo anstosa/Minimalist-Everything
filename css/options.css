@@ -224,10 +224,11 @@ textarea {
 body {
 	background: #f1f1f1;
 	color: #000;
-	font: 13px Arial, sans-serif;
+	font: 13px sans-serif;
 	margin: 0 !important;
 }
 	#container {
+		background: url(../img/loadingLarge.gif) no-repeat 500px center;
 		max-width: 1025px;
 		min-width: 845px;
 		min-height: 100%;
@@ -250,7 +251,7 @@ body {
 			h1 {
 				-webkit-transition: text-shadow .05s linear;
 				color: #fff;
-				font: 38px normal 'Raleway', Arial, sans-serif;
+				font: 38px normal 'Raleway', sans-serif;
 				margin: 10px 20px 10px 0;
 				text-shadow: 0 0 1px rgba(255,255,255,.25);
 			}

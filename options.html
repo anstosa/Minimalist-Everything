@@ -42,7 +42,7 @@
 				<section>
 					<h3>&nbsp;</h3>
 					<div>
-						<a href="#edi" class="button nav big group first subtle green" onclick="makeNewModule(null, null)">New Module</a><a href="javascript:void(0);" class="button big group last disabled blue" tip="Coming in the stable release!">Find Modules</a>
+						<a href="#edi" class="button nav big group first subtle green" onclick="makeNewModule(null,null)">New Module</a><a href="javascript:void(0);" class="button big group last disabled blue" tip="Coming in the stable release!">Find Modules</a>
 					</div>
 				</section>
 			</div>
@@ -173,7 +173,7 @@
 				<h3>Sync</h3>
 				<div>
 					<p>Note: You must have Chrome Sync enabled (at least bookmarks)<p>
-					<a href="javascript:void(0);" id="sync" class="button group first red">Disable Sync</a>
+					<a href="javascript:void(0);" id="sync" class="button red">Disable Sync</a>
 					<!-- <a href="javascript:void(0);" id="reinit" class="button group last">Refresh</a> -->
 				</div>
 			</section>
@@ -189,6 +189,7 @@
 							<a href="javascript:void(0);" id="exportAll" class="button group big hidden green">Everything</a>
 							<a href="javascript:void(0);" id="export" class="button group big first blue">Export</a>
 							<a href="javascript:void(0);" id="exportSelected" class="button group big hidden first green">Export Selected</a>
+							<a href="javascript:void(0);" id="exportShare" class="button group big hidden green" tip="This will always fail because of the 2038 char limit on shortened URLs. Working on another solution">Share via URL</a>
 							<a href="javascript:void(0);" id="exportCopy" class="button group big hidden green">Copy Code</a>
 							<a href="javascript:void(0);" id="import" class="button group big subtle last green" tip="THIS WILL OVERWRITE EVERYTHING!">Import</a>
 						</div>
@@ -234,7 +235,7 @@
 			<section>
 				<h3>Version</h3>
 				<div>
-					0.1.4 (alpha)
+					0.3.0 (alpha)
 				</div>
 			</section>
 			<section>

@@ -8,41 +8,54 @@
  * Dual licensed under GPL and MIT licenses.
  **/
 
-var FOLDER = "Minimalist Sync",
+var FOLDER = "Minimalist_Sync",
 	BOOKMARK = "Minimalist_for_Everything",
 	URL_PREFIX = "http://minimalistsuite.com?data=",
 	bookmarkId = null,
-	folderId = null;
+	folderId = null,
+	wasJustUpdated = false;
 
 function syncLoad() {
 	lastSync = localStorage["lastSync"];
 	chrome.bookmarks.search(BOOKMARK, function(results) {
-		if (results.length > 0) {
-			// TODO: handle duplicates
-			var bookmark = results[0];
+		if (results.length != 0) {
+			var bookmark = results[0],
+				data = getSyncDataFromUrl(bookmark.url),
+				syncTime = parseInt(data.split("%%%")[0], 10);
 			bookmarkId = bookmark.id;
 			folderId = bookmark.parentId;
-			var data = getSyncDataFromUrl(bookmark.url);
-			if (lastSync == null || data.split("%%%")[0] > lastSync) {
+			
+			if (results.length > 1) {
+				for (var i = 1, l = results.length; i < l; i++) {
+					if (results[i].parentId != bookmark.parentId) {
+						chrome.bookmarks.removeTree(results[i].parentId);
+					} else {
+						chrome.bookmarks.remove(results[i].id);
+				   	}
+				}
+			}
+			if (lastSync == null || parseInt(data.split("%%%")[0], 10) > lastSync) {
+				debug("loading settings from bookmark");
 				data = data.split("%%%")[1];
+				lastSync = syncTime;
 				setRawData({isSyncing: data.split("###")[1].split("|||")[0], isEnabled: data.split("###")[1].split("|||")[1]}, data.split("###")[1].split("|||").slice(2));
-				lastSync = (new Date()).getTime();
-				save();
-				debug("loaded settings from bookmark");
+			} else if (parseInt(data.split("%%%")[0], 10) == lastSync) {
+				debug("sync up to date");
 			} else {
-				syncSave();
+				syncSave(false);
 			}
 		} else {
 			if (modules.length > 0) {
 				debug("no synced settings found. Syncing local settings");
-				syncSave();
+				syncSave(false);
 			}
 		}
 	});
 }
 
-function syncSave() {
+function syncSave(isSaved) {
 	var url = getUrlFromData(getRawData());
+	wasJustUpdated = true;
 	
 	if (bookmarkId == null) {
 		chrome.bookmarks.search(FOLDER, function(results) {
@@ -50,6 +63,7 @@ function syncSave() {
 				createBookmark(BOOKMARK, url, results[0].id, function(bookmark) {
 					bookmarkId = bookmark.id;
 					folderId = bookmark.parentId;
+					wasJustUpdated = false;
 					debug("created sync entry");
 				});
 			} else {
@@ -57,6 +71,7 @@ function syncSave() {
 					createBookmark(BOOKMARK, url, folder.id, function(bookmark) {
 						bookmarkId = bookmark.id;
 						folderId = bookmark.parentId;
+						wasJustUpdated = false;
 						debug("created sync entry");
 					});
 				});
@@ -64,8 +79,13 @@ function syncSave() {
 		});
 	} else {
 		chrome.bookmarks.update(bookmarkId, {url: url}, function(bookmark) {
+			wasJustUpdated = false;
 			debug("synced settings updated.");
 		});
+	}
+
+	if (!isSaved) {
+		save();
 	}
 }
 
@@ -77,15 +97,20 @@ function getSyncDataFromUrl(url) {
 }
 	
 function getUrlFromData(data) {
-	return URL_PREFIX + (new Date()).getTime() + "%%%" + escape(data);
+	lastSync = (new Date()).getTime();
+	return URL_PREFIX + lastSync + "%%%" + escape(data);
 }
 
 function attachSyncListeners() {
 	chrome.bookmarks.onChanged.addListener(onBookmarkUpdate);
 }
 
+function detachSyncListeners() {
+	chrome.bookmarks.onChanged.removeListener(onBookmarkUpdate);
+}
+
 function onBookmarkUpdate(id, properties) {
-	if (id === bookmarkId) {
+	if (id === bookmarkId && !wasJustUpdated) {
 		syncLoad();
 	}
 }

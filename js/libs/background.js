@@ -87,6 +87,15 @@ function enable(target) {
 	save();
 }
 
+function checkForInstall(name, author) {
+	for (var i = 0, l = modules.length; i < l; i++) {
+		if (modules[i].name == name && modules[i].author == author) {
+			return true;
+		}
+	}
+	return false;
+}
+
 function deleteModule(target) {
 	debug(modules[target].name + " deleted");
 	modules.splice(target, 1);
@@ -106,6 +115,18 @@ function getRawData() {
 	return VERSION + "###" + prefs.isSyncing + "|||" + prefs.isEnabled + "|||" + localStorage["modules"];
 }
 
+function disableSync() {
+	prefs.isSyncing = false;
+	detachSyncListeners();
+	save();
+}
+
+function enableSync() {
+	prefs.isSyncing = true;
+	attachSyncListeners();
+	save();
+}
+
 function getTargetModules(target, activeOnly) {
 	debug("getting modules that target " + target + "...");
 	var matchedModules = new Array();
@@ -120,7 +141,6 @@ function getTargetModules(target, activeOnly) {
 			}
 		}
 	}
-	//debug("matched modules: " + matchedModules.length);
 	return matchedModules;
 }
 
@@ -174,15 +194,6 @@ function reloadTab(tab) {
 	chrome.tabs.update(tab.id, {url: tab.url, selected: tab.selected}, null);
 }
 
-/*String.prototype.copy = function() {
-	var copyTextarea = document.createElement("textarea");
-	document.body.appendChild(copyTextarea);
-	copyTextarea.value = this;
-	copyTextarea.select();
-	document.execCommand("copy");
-	document.body.removeChild(copyTextarea);
-};*/
-
 function save() {
 	debug("saving preferences...");
 	for (var pref in prefs) {
@@ -195,6 +206,7 @@ function save() {
 	}
 	localStorage["modules"] = modulesString.join("|||");
 	localStorage["lastSync"] = lastSync;
+	syncSave(true);
 }
 /* === END LISTENERS === */
 
@@ -213,11 +225,7 @@ function isMatch(target, includeString) {
 function isUpdate(current, query) {
 	current = current.split(".");
 	query = query.split(".");
-	if (
-		query[0] > current[0] ||
-		query[0] == current[0] && query[1] > current[1] ||
-		query[0] == current[0] && query[1] == current[1] && query[2] > current[2]
-	) {
+	if (query[0] > current[0] || query[0] == current[0] && query[1] > current[1]) {
 		return true;
 	}
 	return false;		

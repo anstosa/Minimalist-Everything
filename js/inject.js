@@ -5,9 +5,9 @@
  * Licensed under GNU GPL v3
  **/
 
- function injectBody() {
- 	if (bodyScripts.length > 0) {
-	 	debug("injecting body JavaScript...");
+function injectBody() {
+	if (bodyScripts.length > 0) {
+		debug("injecting body JavaScript...");
 		var bodies = document.getElementsByTagName("body");
 		if (bodies.length > 0) {
 			var scriptBlock = document.createElement("script");
