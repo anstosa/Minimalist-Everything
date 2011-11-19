@@ -100,6 +100,17 @@
 
   NOTE: versions ending in 't' are test versions only published to trusted testers.
 
+ === 0.5.4 (19 NOV) ===
+  * Changed: (Gmail) Alerts appear even when header is hidden
+  * Changed: (Gmail) [ / ] can no longer close the Google Bar (See next change)
+  * Fixed: (Gmail) [ / ] while header is already open just focuses the search field instead of hidding the header
+  * Fixed: (Gmail) Footer options not working in split pane mode
+  * Fixed: (Gmail) Hide statuses not working
+  * Fixed: (Gmail) Hide offline not working. Selector too specific.
+  * Fixed: (Gmail) Hide away not working. Selector too specific.
+  * Fixed: (Gmail) Hide more tip not working
+  * Fixed: (Gmail) Highlight starred items not working consistently
+  * Fixed: (Reader) Force comopact layout density not working consistently
  === 0.5.3 (18 NOV) ===
   * Added: Sync is back and hopefully more stable (it still doesn't work all the time but it won't slow down Chrome anymore.)
   * Added: (Reader) Force compact layout density
