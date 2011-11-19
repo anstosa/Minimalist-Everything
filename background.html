@@ -1,0 +1,179 @@
+<html>
+<head>
+	<title>Minimalist for Everything Background</title>
+	<script type="text/javascript" src="js/libs/background.js"></script>
+	<script type="text/javascript" src="js/libs/data.js"></script>
+	<script type="text/javascript" src="js/libs/Module.js"></script>
+	<script type="text/javascript" src="js/io/sync.js"></script>
+	<script type="text/javascript">
+
+		var VERSION = '0.5.3',
+			KILLSYNC = false,
+			prefs = {
+				isEnabled: true,
+				isSyncing: true,
+				isDebugging: setDebugging() // must pre-load for init debugging
+			},
+			modules = new Array(),
+			lastSync = null;
+
+		function attachListeners() {
+			debug('loading back-end...');
+			attachSyncListeners();
+			chrome.extension.onRequest.addListener(
+				function(request, sender, sendResponse) {
+					switch (request.name) {
+
+						case 'activateBrowserAction' :
+							activateBrowserAction(sender.tab);
+							sendResponse({});
+							break;
+
+						case 'addModule' :
+							addModule(request.module);
+							sendResponse({});
+							break;
+
+						case 'deleteModule' :
+							deleteModule(request.module);
+							sendResponse({});
+							break;
+
+						case 'checkForInstall' :
+							sendResponse({isInstalled: checkForInstall(request.meta.name, request.meta.author) > -1});
+							break;
+
+						case 'disable' :
+							disable(request.module);
+							sendResponse({});
+							break;
+
+						case 'disableSync' :
+							disableSync();
+							sendResponse({});
+							break;
+
+						case 'enable' :
+							enable(request.module);
+							sendResponse({});
+							break;
+
+						case 'enableSync' :
+							enableSync();
+							sendResponse({});
+							break;
+
+						case 'getActiveModules' :
+							sendResponse({modules: getTargetModules(sender.tab.url, true)});
+							break;
+						
+						case 'getAllModules' :
+							if (localStorage.modules.length > 0) {
+								sendResponse({modules: this.modules});
+							} else {
+								sendResponse({modules: []});
+							}
+							break;
+						
+						case 'getGranularRawData' :
+							sendResponse({
+								modules: localStorage.modules,
+								isSyncing: prefs.isSyncing,
+								isEnabled: prefs.isEnabled,
+								version: VERSION
+							});
+							break;
+
+						case 'getPrefs' :
+							sendResponse({prefs: prefs});
+							break;
+
+						case 'getRawData' :
+							sendResponse({data: getRawData()});
+							break;
+
+						case 'getTargetModulesOfURL' :
+							sendResponse({modules: getTargetModules(request.url, false)});
+							break;
+
+						case 'installStarterModule' :
+							installStarter();
+							sendResponse({});
+							break;
+
+						case 'openTab' :
+							console.warn(request);
+							chrome.tabs.create({'url': request.url, 'selected': request.isSelected});
+							sendResponse({});
+							break;
+
+						case 'reinit' :
+							init();
+							sendResponse({});
+							break;
+
+						case 'reload' :
+							if (request.module < 0) {
+								reloadAll();
+							} else {
+								reload(request.module);
+							}
+							sendResponse({});
+							break;
+
+						case 'isEnabled' :
+							sendResponse({isEnabled: prefs.isEnabled});
+							break;
+
+						case 'save' :
+							if (request.hasOwnProperty('modules')) {
+								modules = request.modules;
+							}
+							if (request.hasOwnProperty('prefs')) {
+								prefs = request.prefs;
+							}
+							save();
+							sendResponse({});
+							break;
+
+						case 'setRawData' :
+							sendResponse({wasSuccessful: setRawData(request.prefs, request.moduleData)});
+							break;
+
+						default :
+							debug('Switch confused');
+							break;
+					}
+			});
+		}
+
+		function init() {
+			debug('initializing...');
+			loadPrefs();
+			loadModules();
+			checkUpdate();
+			attachListeners();
+			syncLoad();
+		}
+
+		window.addEventListener('load', function() {
+			init();
+		});
+
+	/* === GOOGLE ANALYTICS === */
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-25500884-1']);
+		_gaq.push(['_trackPageview']);
+		(function() {
+			var ga = document.createElement('script');
+				ga.type = "text/javascript";
+				ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(ga, s);
+		})();
+	/* === END GOOGLE ANALYTICS === */
+	</script>
+</head>
+<body></body>
+</html>

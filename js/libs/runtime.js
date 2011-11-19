@@ -6,7 +6,15 @@
  **/
 
 function debug(message) {
-	if (prefs.isDebugging == "true") {
-		console.log("Minimalist: " + message);
+	if (prefs.isDebugging == 'true') {
+		console.log('Minimalist: ' + message);
 	}
 }
+
+$(document).bind('openTab', function(event) {
+	chrome.extension.sendRequest({
+		name: 'openTab',
+		url: $('#openTab').text(),
+		isSelected: (document.getElementById('openTab').getAttribute('selected') == 'true')
+	});
+});

@@ -1,0 +1,194 @@
+<html>
+<head>
+	<title>Minimalist for Everything</title>
+	<link type="text/css" rel="stylesheet" href="../css/options.css" />
+	<style type="text/css">
+		body {
+			background: url("../img/bg.png") repeat-x #222;
+			padding: 20px;
+			text-align: center;
+			width: 175px;
+		}
+		h1 {
+			font-size: 38px;
+			margin: 0;		
+		}
+		ul {
+			border-bottom: 1px solid #ccc;
+			border-top: 1px solid #ccc;
+			margin: 10px 0;
+			padding: 10px 0;
+			text-align: left;
+		}
+		li {
+			list-style-type: none;
+			color: #fff;
+		}
+		a.button {
+			float: none;
+			line-height: 3;
+		}
+		a.button + a.button {
+			margin-left: -4px;
+		}
+		a.group:not(.subtle) + a.subtle:hover {
+			margin-left: -5px;
+		}
+		a.anchor,
+		a.anchor:link,
+		a.anchor:visited {
+			color: #fff;
+		}
+		li span {
+			margin-left: 5px;
+		}
+		.green + span {
+			opacity: .5;
+		}
+	</style>
+	<script type="text/javascript" src="../js/libs/jquery.js"></script>
+	<script type="text/javascript">
+		var isEnabled = false,
+			modules,
+			allModules,
+			url,
+			title;
+
+		chrome.extension.sendRequest({name: 'isEnabled'}, function(response) {
+			isEnabled = response.isEnabled;
+			toggleButton(-1);
+		});
+
+		function toggleButton(target) {
+			if ((target == -1 && isEnabled) || (target != -1 && modules[target].isEnabled)) {
+				$('#toggle_' + target)
+					.removeClass('green')
+					.addClass('red')
+					.html('&#10008;')
+				;
+				if (target == -1) {
+					$('#toggle_-1').text('Disable');
+				}
+			} else {
+				$('#toggle_' + target)
+					.removeClass('red')
+					.addClass('green')
+					.html('&#10004;')
+				;
+				if (target == -1) {
+					$('#toggle_-1').text('Enable');
+				}
+			}
+		}
+
+		function toggle(target) {
+			if ($('#toggle_' + target).hasClass('red')) {
+				chrome.extension.sendRequest({name: 'disable', module: getTrueIndex(target)}, function(response) {});
+			} else {
+				chrome.extension.sendRequest({name: 'enable', module: getTrueIndex(target)}, function(response) {});
+			}
+			chrome.extension.sendRequest({name: 'getTargetModulesOfURL', url: url}, function(response) {
+				modules = response.modules;
+				toggleButton(target);
+				if (isEnabled || target == -1) {
+					chrome.extension.sendRequest({name: 'reload', module: getTrueIndex(target)}, function(response) {});
+				}
+			});
+			//window.close();
+		}
+
+		function getTrueIndex(target) {
+			if (target != -1) {
+				for (var i = 0, l = allModules.length; i < l; i++) {
+					if (allModules[i].name == modules[target].name && allModules[i].author == modules[target].author) {
+						return i;
+					}
+				}
+			}
+		}
+
+		function options(target) {
+			if (target === 'new') {
+				chrome.tabs.create({url:chrome.extension.getURL('options.html#new=' + stripHost(url) + '&title=' + title)});
+			} else if (target === 'find') {
+				chrome.tabs.create({url:'http://wiki.minimalistsuite.com/modules'});
+			} else {
+				chrome.tabs.create({url:chrome.extension.getURL('options.html')});
+			}
+		}
+
+		function stripHost(url) {
+			return url.match(/:\/\/(www\.)?(.[^/:]+)/)[2];
+		}
+
+		function anchor(target) {
+			chrome.tabs.create({url:target});
+		}
+
+		function init() {
+			chrome.tabs.getSelected(null, function(tab) {
+				url = tab.url;
+				title = tab.title;
+				chrome.extension.sendRequest({name: 'getTargetModulesOfURL', url: tab.url}, function(response) {
+					modules = response.modules;
+					chrome.extension.sendRequest({name: 'getAllModules'}, function(responseAll) {
+						allModules = responseAll.modules;
+						if (modules.length > 0) {
+							$('#activeModules li').remove();
+						} else if (url.indexOf('chrome://') != -1) {
+							$('#activeModules li')
+								.html('<a href="javascript:;" class="anchor" onclick="anchor("http://code.google.com/chrome/extensions/faq.html#faq-dev-15")">Can\'t modify "chrome://" pages</a>')
+								.parent().attr({
+									style: 'border-bottom-color: transparent;'
+								})
+							;
+							$('#activeModules ~ a').remove();						
+						} else {
+							$('#activeModules li').text('No modules for this page...');
+						}
+						for (var i = 0, l = modules.length; i < l; i++) {
+							var $module = $('<li><span>' + modules[i].name + '</span></li>'),
+								$toggle = $('<a></a>', {
+									href: 'javascript:;',
+									id: 'toggle_' + i,
+									class: 'button subtle square',
+									onclick: 'toggle(' + i + ')',
+									text: '?'
+								}).prependTo($module);
+								$module.appendTo($('#activeModules'))
+							toggleButton(i);	
+						}
+					});
+				});
+			});
+		}
+		window.onload = init;
+	</script>
+</head>
+<body id="minBrowserAction">
+	<h1>Minimalist</h1>
+	<a href="javascript:;" class="button group first blue" onclick="options('das')" >Dashboard</a>
+	<a href="javascript:;" id="toggle_-1" class="button group last subtle" onclick="toggle(-1)" >Loading</a><br />
+	<ul id="activeModules">
+		<li style="text-align:center;width:100%;"><img src="../img/loadingSmall.gif" /></li>
+	</ul>
+	<a href="javascript:;" class="button group first subtle green" onclick="options('new')" >New Mod</a>
+	<a href="javascript:;" id="toggle_-1" class="button group last disabled blue" onclick="options('find')" >Find Mods</a><br />
+	<script type="text/javascript">
+		// === GOOGLE FONT LOADER === //
+		WebFontConfig = {
+			google: { families: [ 'Raleway:100' ] }
+		};
+		(function() {
+			var wf = document.createElement('script');
+				wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+					'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+				wf.type = 'text/javascript';
+				wf.async = 'true';
+			var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(wf, s);
+		})();
+		// === END GOOGLE FONT LOADER === //
+	</script>
+</body>
+</html>

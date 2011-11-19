@@ -5,18 +5,18 @@
  * Licensed under GNU GPL v3
  **/
 
-var name = "",
-	includes = "",
+var name = '',
+	includes = '',
 	isEnabled = true,
 	options = new Array();
 
 function Module(params) {
-	debug("creating module: " + params.name);
+	debug('creating module: ' + params.name);
     for (param in params) {
-    	eval("this." + param + " = params[param]");	// TODO: find better way to do this
+    	eval('this.' + param + ' = params[param]');	// TODO: find better way to do this
     }
 }
 
 function set(key, value) {
-	eval("this." + key + " = value");				// TODO: find better way to do this
+	eval('this.' + key + ' = value');				// TODO: find better way to do this
 }

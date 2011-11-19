@@ -256,6 +256,7 @@ body {
 				text-shadow: 0 0 1px rgba(255,255,255,.25);
 			}
 				#logo {
+					color: #fff;
 					text-decoration: none;
 				}
 				#logo:hover h1 {
@@ -515,6 +516,22 @@ header {
 #hoverPreview img {
 	border: 1px solid #000;
 }
+span.field {
+	margin-left: 27px;
+}
+
+.varField input {
+	margin-left: 5px;
+}
+
+.color {
+	width: 75px;
+}
+
+#jQWheelColorPickerDlg {
+	border-radius: 2px;
+	box-shadow: 1px 1px 10px rgba(0,0,0,.5);
+}
 /* === END OPTIONS === */
 
 /* === EDIT === */
@@ -668,6 +685,28 @@ input[type = "field"].subtle:hover {
 input[type = "field"].subtle:focus {
 	background: #fff;
 	border: 1px solid #09f;
+}
+.fieldRow input[type = "field"] {
+	height: 20px;
+	margin-left: 1px;
+}
+.desc {
+	width: 150px;
+}
+input[type="field"].var {
+	margin-left: 6px;
+	width: 75px;
+}
+.fieldRow label {
+	display: inline-block;
+	margin-left: 10px;
+}
+.removeField {
+	margin-left: 5px;
+	text-decoration: none;
+}
+.removeField:hover {
+	color: #dd4b39;
 }
 /* === END EDIT === */
 

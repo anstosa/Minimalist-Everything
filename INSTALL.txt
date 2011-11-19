@@ -1,0 +1,7 @@
+TO INSTALL IN CHROME:
+
+1. Extract
+2. Chrome Menu > Tools > Extensions
+3. Developer Mode
+4. Load unpacked extension
+5. Select Extracted root directory
