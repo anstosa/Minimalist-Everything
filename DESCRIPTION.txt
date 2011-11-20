@@ -100,6 +100,14 @@
 
   NOTE: versions ending in 't' are test versions only published to trusted testers.
 
+ === 0.5.5 (20 NOV) ===
+  * Added: Tooltip in popup to make enable/disable action clearer
+  * Added: (Gmail) Hide consider including
+  * Added: "(disabled)" after the names of disabled modules in dashboard and popup
+  * Changed: Enabling or disabling a module from the dashboard now refreshes the page. This should solve conflicts.
+  * Fixed: (Gmail) Google Bar background covering up elements when Google Links were hidden
+  * Fixed: (Gmail) Show checkbox tools list not working
+  * Removed: Sync (again). It won't work because of limitations in Chrome. See: http://goo.gl/53Fg4
  === 0.5.4 (19 NOV) ===
   * Changed: (Gmail) Alerts appear even when header is hidden
   * Changed: (Gmail) [ / ] can no longer close the Google Bar (See next change)

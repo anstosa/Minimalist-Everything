@@ -7,8 +7,8 @@
 	<script type="text/javascript" src="js/io/sync.js"></script>
 	<script type="text/javascript">
 
-		var VERSION = '0.5.4',
-			KILLSYNC = false,
+		var VERSION = '0.5.5',
+			KILLSYNC = true,
 			prefs = {
 				isEnabled: true,
 				isSyncing: true,
@@ -132,7 +132,7 @@
 							if (request.hasOwnProperty('prefs')) {
 								prefs = request.prefs;
 							}
-							save();
+							save(false);
 							sendResponse({});
 							break;
 

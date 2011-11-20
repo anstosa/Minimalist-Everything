@@ -35,8 +35,8 @@ function buildDashboard(andSwitch) {
 			var current = modules[i];
 			var $module = $(
 				'<li id="module_' + i + '" class="' + current.isEnabled + '">'
-					+ '<h2>' + current.name + '<h2>'
-					+ '<h4>' + current.includes + '<h4>'
+					+ '<h2>' + current.name + '</h2>'
+					+ '<h4>' + current.includes + '</h4>'
 				+ '</li>'
 			);
 			$module.append($moduleControls.clone());
@@ -78,6 +78,7 @@ function addDashboardListeners() {
 			$('#module_' + module).removeClass('disabled');
 			$('#module_' + module + ' .moduleToggle').removeClass('green').addClass('red').text('Disable');
 		}
+		window.location.reload();
 	});
 	$('.moduleDelete').click(function() {
 		$(this).addClass('hidden').next().removeClass('hidden').next().removeClass('hidden');

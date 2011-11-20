@@ -81,6 +81,7 @@ window.onload = function() {
 	buildDashboard(true);
 	initSyntax();
 };
+
 $(function() {
 	$('[tip]:not(input)').tipsy({live: true, fade: true, gravity: 'n'});
 	$('.w[tip]:not(input)').tipsy({live: true, fade: true, gravity: 'w'});

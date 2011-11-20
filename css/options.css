@@ -439,6 +439,13 @@ h2 {
 	font-size: 18px;
 	font-weight: normal;
 }
+#moduleList .disabled h2:after {
+	color: #444;
+	content: " (disabled)";
+	margin-bottom: 5px;
+	font-size: 18px;
+	font-weight: normal;
+}
 h4 {
 	-webkit-margin-before: 0;
 	-webkit-margina-after: 0;

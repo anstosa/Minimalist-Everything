@@ -13,12 +13,19 @@ var FOLDER = 'Minimalist_Sync',
 	URL_PREFIX = 'http://minimalistsuite.com?data=',
 	bookmarkId = null,
 	folderId = null,
-	wasJustUpdated = false;
+	isUpdating = false;
 
 function syncLoad() {
 	if (KILLSYNC) {
 		return;
 	}
+	chrome.bookmarks.onChanged.removeListener(onBookmarkUpdate);
+	isUpdating = true;
+	setTimeout(function() {
+		isUpdating = false;
+		chrome.bookmarks.onChanged.addListener(onBookmarkUpdate);
+	}, 10000);
+
 	lastSync = localStorage['lastSync'];
 	chrome.bookmarks.search(BOOKMARK, function(results) {
 		if (results.length != 0) {
@@ -41,7 +48,12 @@ function syncLoad() {
 				debug('loading settings from bookmark');
 				data = data.split('%%%')[1];
 				lastSync = syncTime;
-				setRawData({isSyncing: data.split('###')[1].split('|||')[0], isEnabled: data.split('###')[1].split('|||')[1]}, data.split('###')[1].split('|||').slice(2));
+				setRawData({
+					isSyncing: data.split('###')[1].split('|||')[0],
+					isEnabled: data.split('###')[1].split('|||')[1]
+				},
+					data.split('###')[1].split('|||').slice(2)
+				);
 			} else if (parseInt(data.split('%%%')[0], 10) == lastSync) {
 				debug('sync up to date');
 			} else {
@@ -61,7 +73,12 @@ function syncSave(isSaved) {
 		return;
 	}
 	var url = getUrlFromData(getRawData());
-	wasJustUpdated = true;
+	isUpdating = true;
+	chrome.bookmarks.onChanged.removeListener(onBookmarkUpdate);
+	setTimeout(function() {
+		isUpdating = false;
+		chrome.bookmarks.onChanged.addListener(onBookmarkUpdate);
+	}, 10000);
 	
 	if (bookmarkId == null) {
 		chrome.bookmarks.search(FOLDER, function(results) {
@@ -69,7 +86,6 @@ function syncSave(isSaved) {
 				createBookmark(BOOKMARK, url, results[0].id, function(bookmark) {
 					bookmarkId = bookmark.id;
 					folderId = bookmark.parentId;
-					wasJustUpdated = false;
 					debug('created sync entry');
 				});
 			} else {
@@ -77,21 +93,20 @@ function syncSave(isSaved) {
 					createBookmark(BOOKMARK, url, folder.id, function(bookmark) {
 						bookmarkId = bookmark.id;
 						folderId = bookmark.parentId;
-						wasJustUpdated = false;
 						debug('created sync entry');
 					});
 				});
 			}
 		});
 	} else {
+		console.log(url);
 		chrome.bookmarks.update(bookmarkId, {url: url}, function(bookmark) {
-			wasJustUpdated = false;
 			debug('synced settings updated.');
 		});
 	}
 
 	if (!isSaved) {
-		save();
+		save(true);
 	}
 }
 
@@ -119,7 +134,8 @@ function detachSyncListeners() {
 }
 
 function onBookmarkUpdate(id, properties) {
-	if (id === bookmarkId && !wasJustUpdated) {
+	console.log(id);
+	if (id === bookmarkId && !isUpdating) {
 		syncLoad();
 	}
 }

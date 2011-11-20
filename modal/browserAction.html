@@ -2,6 +2,7 @@
 <head>
 	<title>Minimalist for Everything</title>
 	<link type="text/css" rel="stylesheet" href="../css/options.css" />
+	<link type="text/css" rel="stylesheet" href="../css/tooltips.css" />
 	<style type="text/css">
 		body {
 			background: url("../img/bg.png") repeat-x #222;
@@ -39,11 +40,20 @@
 		a.anchor:visited {
 			color: #fff;
 		}
+		li a {
+			float: left;
+		}
 		li span {
+			float: left;
+			display: inline-block;
 			margin-left: 5px;
+			width: 130px;
 		}
 		.green + span {
 			opacity: .5;
+		}
+		.green + span:after {
+			content: " (disabled) ";
 		}
 	</style>
 	<script type="text/javascript" src="../js/libs/jquery.js"></script>
@@ -64,6 +74,7 @@
 				$('#toggle_' + target)
 					.removeClass('green')
 					.addClass('red')
+					.attr('tip', 'Disable module')
 					.html('&#10008;')
 				;
 				if (target == -1) {
@@ -73,6 +84,7 @@
 				$('#toggle_' + target)
 					.removeClass('red')
 					.addClass('green')
+					.attr('tip', 'Enable module')
 					.html('&#10004;')
 				;
 				if (target == -1) {
@@ -138,26 +150,22 @@
 						} else if (url.indexOf('chrome://') != -1) {
 							$('#activeModules li')
 								.html('<a href="javascript:;" class="anchor" onclick="anchor("http://code.google.com/chrome/extensions/faq.html#faq-dev-15")">Can\'t modify "chrome://" pages</a>')
-								.parent().attr({
-									style: 'border-bottom-color: transparent;'
-								})
+								.parent()
+									.css('border-bottom-color', 'transparent;')
+								.end().siblings('a')
+									.remove()
 							;
-							$('#activeModules ~ a').remove();						
 						} else {
 							$('#activeModules li').text('No modules for this page...');
 						}
-						for (var i = 0, l = modules.length; i < l; i++) {
-							var $module = $('<li><span>' + modules[i].name + '</span></li>'),
-								$toggle = $('<a></a>', {
-									href: 'javascript:;',
-									id: 'toggle_' + i,
-									class: 'button subtle square',
-									onclick: 'toggle(' + i + ')',
-									text: '?'
-								}).prependTo($module);
-								$module.appendTo($('#activeModules'))
-							toggleButton(i);	
+						for (var i = 0; i < modules.length; i++) {
+							$('<li>'
+								+ '<a href="javascript:;" id="toggle_' + i + '" class="button subtle square" onclick="toggle(' + i + ')" tip="Error: Could not get module state">?</a>'
+								+ '<span>' + modules[i].name + '</span>'
+							+ '</li>').appendTo($('#activeModules'))
+							toggleButton(i);
 						}
+						$('li a').tipsy({live: true, fade: true, gravity: 'e'});
 					});
 				});
 			});
@@ -174,6 +182,7 @@
 	</ul>
 	<a href="javascript:;" class="button group first subtle green" onclick="options('new')" >New Mod</a>
 	<a href="javascript:;" id="toggle_-1" class="button group last disabled blue" onclick="options('find')" >Find Mods</a><br />
+	<script type="text/javascript" src="../js/libs/tooltips.js"></script>
 	<script type="text/javascript">
 		// === GOOGLE FONT LOADER === //
 		WebFontConfig = {

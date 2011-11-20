@@ -63,7 +63,7 @@ function updateCoreModules() {
 			}
 		}
 	}
-	save();
+	save(false);
 }
 
 function loadPrefs() {
@@ -93,7 +93,7 @@ function loadModules() {
 	} else {
 		debug('no modules, creating repo...');
 		modules = new Array();
-		save();
+		save(false);
 	}
 }
 /* === END INIT HELPERS === */
@@ -107,7 +107,7 @@ function disable(target) {
 		debug(modules[target].name + ' disabled');
 		modules[target].isEnabled = false;
 	}
-	save();
+	save(false);
 }
 
 function enable(target) {
@@ -118,7 +118,7 @@ function enable(target) {
 		debug(modules[target].name + ' enabled');
 		modules[target].isEnabled = true;
 	}
-	save();
+	save(false);
 }
 
 function checkForInstall(name, author) {
@@ -137,13 +137,13 @@ function addModule(module) {
 	} else {
 		modules[i] = new Module(module);
 	}
-	save();
+	save(false);
 }
 
 function deleteModule(target) {
 	debug(modules[target].name + ' deleted');
 	modules.splice(target, 1);
-	save();
+	save(false);
 }
 
 function setRawData(newPrefs, moduleData) {
@@ -158,7 +158,7 @@ function setRawData(newPrefs, moduleData) {
 	if (moduleData == '') {
 		modules = moduleData;
 	}
-	save();
+	save(false);
 }
 
 function getRawData() {
@@ -168,13 +168,13 @@ function getRawData() {
 function disableSync() {
 	prefs.isSyncing = false;
 	detachSyncListeners();
-	save();
+	save(false);
 }
 
 function enableSync() {
 	prefs.isSyncing = true;
 	attachSyncListeners();
-	save();
+	save(false);
 }
 
 function getTargetModules(target, activeOnly) {
@@ -209,7 +209,7 @@ function activateBrowserAction(tab) {
 function installStarter() {
 	//modules.push(new Module(STARTER));
 	updateCoreModules();
-	save();
+	save(false);
 }
 
 function reloadAll() {
@@ -245,7 +245,7 @@ function reloadTab(tab) {
 	chrome.tabs.update(tab.id, {url: tab.url, selected: tab.selected}, null);
 }
 
-function save() {
+function save(isSynced) {
 	debug('saving preferences...');
 	for (var pref in prefs) {
 		localStorage[pref] = prefs[pref];
@@ -257,7 +257,9 @@ function save() {
 	}
 	localStorage.modules = modulesString.join('|||');
 	localStorage.lastSync = lastSync;
-	syncSave(true);
+	if (!isSynced) {
+		syncSave(true);
+	}
 }
 /* === END LISTENERS === */
 
