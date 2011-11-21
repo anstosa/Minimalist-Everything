@@ -1,13 +1,15 @@
 == ANNOUNCEMENTS ==
 
-  This is an Beta build! If you want to keep your data make sure to backup frequently from the Sync tab.
+  Thanks for bearing with me during the big transition everyone.
+
+  I'm going to be working on merging MinGcal in as well as a G+ module next weekend.
 
   Please post bugs and feature requests in the issue tracker: [http://code.google.com/p/minimalist/issues]
 
   Please ask questions or give feedback to me at my email: [ansel@anselsantosa.com]
 
   Right now the UI is not where I want it. Especially the Edit page, it's busy and cumbersome.
-  This will be improving a lot, I promise. It's also a bit glitchy sometimes. Just refresh and it'll work itself out.
+  This will be improving a lot, I promise.
   
   Questions about permissions? See PERMISSIONS section below.
 
@@ -100,6 +102,19 @@
 
   NOTE: versions ending in 't' are test versions only published to trusted testers.
 
+ === 0.5.7 (21 NOV) ===
+  * Added: (Gmail) Hide Labels
+  * Added: (Gmail) Hide Move To
+  * Added: (Gmail) Hide Back
+  * Added: (Gmail) Hide Spam count
+  * Added: (Gmail) Better attachment icon support: js, db, py, java, class, apk, jar
+  * Changed: (Gmail) v9 better attachment icons
+  * Fixed: (Reader) Items opening in background when typing [ v ] into field or textarea
+  * Fixed: (Reader) Hide footer not working in list view
+  * Fixed: (Gmail) Inconsistent or not functional options under Main > Toolbars
+  * Fixed: (Gmail) Hide Google logo not working
+ === 0.5.6 (20 NOV) ===
+  * Fixed: Display bug in popup
  === 0.5.5 (20 NOV) ===
   * Added: Tooltip in popup to make enable/disable action clearer
   * Added: (Gmail) Hide consider including

@@ -22,8 +22,10 @@
 			text-align: left;
 		}
 		li {
-			list-style-type: none;
 			color: #fff;
+			list-style-type: none;
+			margin-bottom: 5px;
+			overflow: hidden;
 		}
 		a.button {
 			float: none;
@@ -40,13 +42,15 @@
 		a.anchor:visited {
 			color: #fff;
 		}
-		li a {
+		li a.button {
 			float: left;
+			height: 14px;
+			line-height: 1;
 		}
 		li span {
 			float: left;
 			display: inline-block;
-			margin-left: 5px;
+			margin: 6px 0 0 5px;
 			width: 130px;
 		}
 		.green + span {
@@ -165,7 +169,7 @@
 							+ '</li>').appendTo($('#activeModules'))
 							toggleButton(i);
 						}
-						$('li a').tipsy({live: true, fade: true, gravity: 'e'});
+						$('li a').tipsy({live: true, fade: true, gravity: 'w'});
 					});
 				});
 			});
