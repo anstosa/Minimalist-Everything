@@ -171,7 +171,9 @@ function deleteOption(j) {
 
 function addEditorListeners() {	
 	$('#saveEdits').addClass('disabled').text('Save Changes');
-	$('#saveEdits').click(saveEdits);
+	$('#saveEdits').click(function(event) {
+		saveEdits(event.shiftKey);
+	});	
 
 	$('#moduleMetaLi').click(function(){
 		$('#optionTree .current').removeClass('current');
@@ -192,13 +194,29 @@ function addEditorListeners() {
 			'<div class="fieldRow" count="' + count + '">'
 				+ '<input type="field" class="s desc normal" size="20" tip="field description">'
 	 			+ '<input type="field" class="s var normal" size="10" tip="var name">'
+	 			+ '<input type="field" class="s def normal" size="10" tip="default value">'
 				+ '<input class="isColor" id="isColor_' + count + '" type="checkbox">'
 				+ '<label for="isColor_' + count + '" tip="whether this field should have a color picker attached to it."><div class="input"></div>Color Picker</label>'
 				+ '<a href="javascript:;" class="removeField">&#10008;</a>'
 			+ '</div>'
 		));
+		$('#p_edi input[tip]').tipsy({trigger: 'focus', gravity: 's'});
 	});
 
+	$(".isColor").live('click', function() {
+		if ($(this).is(':checked')) {
+			$(this).prev().wheelColorPicker({
+				dir: '../../img/colorpicker/',
+				format: 'hex',
+				preview: true,
+				userinput: true,
+				validate: true,
+				color: null
+			});
+		} else {
+			$(this).prev().wheelColorPicker('destroy');
+		}
+	});
 	$('#optionNew').click(makeNewOption);
 
 	$('#optionTree > li > span, #optionTree > li > ul > li > span').click(function() {
@@ -278,11 +296,11 @@ function navigateToOption(j) {
 		$('#optionTree .current').removeClass('current');
 		$('#treeOption_' + j).addClass('current');
 
-		$('#optionMeta .row:not(:first-child)')
+		$('#optionMeta .row:not(:first-child):not(:nth-child(2))')
 			.addClass('hidden')
 		;
-		$('#optionMeta .row:nth-child(4)').removeClass('hidden');
-		$('#optionMeta .row:nth-child(5) .cell:last-child').html('<a id="newField" href="javascript:;">Add new Field</a>');
+		$('#optionMeta .row:nth-child(5)').removeClass('hidden');
+		$('#optionMeta .row:nth-child(6) .cell:last-child').html('<a id="newField" href="javascript:;">Add new Field</a>');
 
 		if (option.fields != null && option.fields.length > 0) {
 			for (var i = 0, l = option.fields.length; i < l; i++) {
@@ -291,6 +309,7 @@ function navigateToOption(j) {
 					'<div class="fieldRow" count="' + i + '">'
 						+ '<input type="field" class="s desc ormal" size="20" value="' + option.fields[i].description + '" tip="field description">'
 			 			+ '<input type="field" class="s var normal" size="10" value="' + option.fields[i].name + '" tip="var name">'
+			 			+ '<input type="field" class="s def normal" size="10" value="' + option.fields[i].val + '" tip="default value">'
 						+ '<input class="isColor" id="isColor_' + i + '" ' + isColor + 'type="checkbox">'
 						+ '<label for="isColor_' + i + '" tip="whether this field should have a color picker attached to it."><div class="input"></div>Color Picker</label>'
 						+ '<a href="javascript:;" class="removeField">&#10008;</a>'
@@ -300,12 +319,13 @@ function navigateToOption(j) {
 		}
 
 		if (option.tab.length < 1 || option.tab == 'New Tab') {
-			$('#optionMeta .row:nth-child(2)').removeClass('hidden');				
-		}
-		if (option.section.length < 1 || option.section == 'New Section') {
 			$('#optionMeta .row:nth-child(3)').removeClass('hidden');				
 		}
+		if (option.section.length < 1 || option.section == 'New Section') {
+			$('#optionMeta .row:nth-child(4)').removeClass('hidden');				
+		}
 
+		$('#optionState').prop('checked', option.isEnabled);
 		$('#optionDescription').val(option.description);
 		$('#optionTab').val(option.tab);
 		$('#optionSection').val(option.section);
@@ -344,6 +364,16 @@ function navigateToOption(j) {
 			editorBodyJS.getSession().setValue(content);
 		}
 		disableEditSaveButton();
+
+		$('#p_edi input[tip]').tipsy({trigger: 'focus', gravity: 's'});
+		$('.isColor:checked').prev().wheelColorPicker({
+			dir: '../../img/colorpicker/',
+			format: 'hex',
+			preview: true,
+			userinput: true,
+			validate: true,
+			color: null
+		});
 	//}
 }
 
@@ -351,7 +381,7 @@ function addSaveHotkey() {
 	$(window).keydown(function(event) {
 		if ((event.which == 83 && event.ctrlKey) || (event.which == 19)) {
 			if ($('#p_edi').hasClass('current') && !$('#saveEdits').hasClass('disabled')) {
-				saveEdits();
+					saveEdits(event.shiftKey);
 			} else if ($('#p_opt').hasClass('current') && !$('#saveOptions').hasClass('disabled')) {
 				saveOptions();
 			}
@@ -391,7 +421,7 @@ function disableEditSaveButton() {
 	});
 }*/
 
-function saveEdits() {
+function saveEdits(noReload) {
 	if (!$(this).hasClass('disabled')) {
 		var i = $('#p_edi h1').attr('id').substr(7),
 			j = null;
@@ -431,6 +461,14 @@ function saveEdits() {
 				delete option.load.js;
 			}
 
+			$('.isColor:checked').each(function() {
+				$self = $(this).prev();
+				if ($self.val().indexOf('#') < 0) {
+					$self.val('#' + $self.val());	
+				}
+			});
+
+			option.isEnabled = $('#optionState').is(':checked');
 			option.description = $('#optionDescription').val();
 			option.tab = $('#optionTab').val();
 			option.section = $('#optionSection').val();
@@ -439,14 +477,14 @@ function saveEdits() {
 				var oldVal = null;
 				console.log(modules[i].options[j].fields);
 				console.log(k);
-				if (modules[i].options[j].fields != null && modules[i].options[j].fields[k] != null) {
+				/*if (modules[i].options[j].fields != null && modules[i].options[j].fields[k] != null) {
 					oldVal = modules[i].options[j].fields[k].val;
-				}
+				}*/
 				option.fields[k] = {
 					description: $('.fieldRow:nth-child(' + (k + 1) + ') .desc').val(),
 					name: $('.fieldRow:nth-child(' + (k + 1) + ') .var').val(),
-					isColor: $('.fieldRow:nth-child(' + (k + 1) + ') .isColor').is(':checked'),
-					val: oldVal
+					val: $('.fieldRow:nth-child(' + (k + 1) + ') .def').val(),
+					isColor: $('.fieldRow:nth-child(' + (k + 1) + ') .isColor').is(':checked')					
 				};
 			}
 
@@ -458,7 +496,9 @@ function saveEdits() {
 
 		chrome.extension.sendRequest({name: 'save', modules: modules}, function(response) {});
 		hasEditorChanged = false;
-		chrome.extension.sendRequest({name: 'reload', module: i}, function(response) {});
+		if (!noReload) {
+			chrome.extension.sendRequest({name: 'reload', module: i}, function(response) {});
+		}
 		buildEditor($('#p_edi h1').attr('id').substr(7));
 		buildDashboard(false);
 		if (j != null) {

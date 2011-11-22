@@ -229,7 +229,7 @@ body {
 }
 	#container {
 		background: url(../img/loadingLarge.gif) no-repeat 500px center;
-		max-width: 1025px;
+		max-width: 2000px;
 		min-width: 845px;
 		min-height: 100%;
 		padding-right: 20px;
@@ -625,7 +625,7 @@ span.field {
 #editorBodyJS,
 #moduleAbout {
 	display: -webkit-box;
-	min-height: 200px;
+	min-height: 300px;
 	position: relative;
 }
 #ediWrapper .hidden:not(.loading) {
@@ -700,7 +700,8 @@ input[type = "field"].subtle:focus {
 .desc {
 	width: 150px;
 }
-input[type="field"].var {
+input[type="field"].var,
+input[type="field"].def {
 	margin-left: 6px;
 	width: 75px;
 }

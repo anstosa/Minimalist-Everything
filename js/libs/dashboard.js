@@ -50,6 +50,31 @@ function buildDashboard(andSwitch) {
 		if (andSwitch) {
 			addNavHandler();
 		}
+
+		var getOptions = function (cmd) {
+			var option = {};
+			cmd.replace(/^.*\?/, "").replace(/([^=&]*)=([^=&]*)&?/g, function (str, p1, p2) {
+				if (option[p1]) {
+					typeof option[p1] == "string"? option[p1] = [option[p1], p2] : option[p1].push(p2);
+				} else {
+					option[p1] = p2;
+				}
+			});
+
+			return option;
+		};
+		
+		var option = getOptions(location.href); // ?cmd=[option, edit]&index=[0, 1, ...]
+		if (option["cmd"] && option["index"] >= 0) {
+			switch (option["cmd"]) {
+				case "option":
+					$("#module_" + option["index"] + " .moduleOptions").click();
+					break;
+				case "edit":
+					$("#module_" + option["index"] + " .moduleEdit").click();
+					break;
+			}
+		}
 	});
 }
 /* === END LOAD MODULES === */

@@ -169,6 +169,14 @@
 							+ '</li>').appendTo($('#activeModules'))
 							toggleButton(i);
 						}
+						$('li span').click(function(event) {
+							var i = $(this).prev().attr('id').substr(7);
+							if (event.ctrlKey) {
+								chrome.tabs.create({url: chrome.extension.getURL('options.html?cmd=option&index=' + getTrueIndex(i))});
+							} else if (event.shiftKey) {
+								chrome.tabs.create({url: chrome.extension.getURL('options.html?cmd=edit&index=' + getTrueIndex(i))});
+							}
+						});
 						$('li a').tipsy({live: true, fade: true, gravity: 'w'});
 					});
 				});

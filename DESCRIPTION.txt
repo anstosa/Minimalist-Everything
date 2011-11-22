@@ -102,6 +102,18 @@
 
   NOTE: versions ending in 't' are test versions only published to trusted testers.
 
+ === 0.5.8 (21 NOV) ===
+  * Added: Toggle options on and off from edit page
+  * Added: Change field values from options page
+  * Added: (Gmail) Highlight checked items
+  * Added: Hidden shortcuts to Options and Edit pages (Thanks jiefoxi). [ Ctrl ] + click module name for options page, [ Shift ] + Click for edit page
+  * Added: Option to save changes without reloaded targetted pages. [ Shift ] + click Save or [ Ctrl ] + [ Shift ] + [ S ]
+  * Changed: (Gmail) default highlight colors (#f3f3f3, #75b44b, #fff8b0, #ed6254, & #5eabff respectively)
+  * Changed: Edit page can now extend to full width of browser window
+  * Changed: Code editors to height of 300px (can't make them resizable because of limitation in ACE)
+  * Fixed: (Gmail) Highlight unread items not working consistently
+  * Fixed: (Gmail) Hide Google Bar fatally polluting global namespace on accounts without G+ profiles
+  * Fixed: (Gmail) Hide Move To and Hide Labels hidding Settings on some accounts (Thanks jiefoxi)
  === 0.5.7 (21 NOV) ===
   * Added: (Gmail) Hide Labels
   * Added: (Gmail) Hide Move To
@@ -113,6 +125,7 @@
   * Fixed: (Reader) Hide footer not working in list view
   * Fixed: (Gmail) Inconsistent or not functional options under Main > Toolbars
   * Fixed: (Gmail) Hide Google logo not working
+  * Fixed: (Gmail) Hide Move To and Hide Labels causing Labels dropdown to loose anchor point
  === 0.5.6 (20 NOV) ===
   * Fixed: Display bug in popup
  === 0.5.5 (20 NOV) ===
