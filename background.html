@@ -7,15 +7,17 @@
 	<script type="text/javascript" src="js/io/sync.js"></script>
 	<script type="text/javascript">
 
-		var VERSION = '0.5.8',
+		var VERSION = '0.5.17',
 			KILLSYNC = true,
 			prefs = {
 				isEnabled: true,
 				isSyncing: true,
 				isDebugging: setDebugging() // must pre-load for init debugging
-			},
+			}
 			modules = new Array(),
-			lastSync = null;
+			lastSync = null,
+			upgrade = false;
+			// minDB = {db: null, mods: 0};
 
 		function attachListeners() {
 			debug('loading back-end...');
@@ -68,8 +70,8 @@
 							break;
 						
 						case 'getAllModules' :
-							if (localStorage.modules.length > 0) {
-								sendResponse({modules: this.modules});
+							if (modules.length > 0) {
+								sendResponse({modules: modules});
 							} else {
 								sendResponse({modules: []});
 							}
@@ -77,7 +79,7 @@
 						
 						case 'getGranularRawData' :
 							sendResponse({
-								modules: localStorage.modules,
+								modules: modules,
 								isSyncing: prefs.isSyncing,
 								isEnabled: prefs.isEnabled,
 								version: VERSION
@@ -150,10 +152,34 @@
 		function init() {
 			debug('initializing...');
 			loadPrefs();
-			loadModules();
-			checkUpdate();
-			attachListeners();
-			syncLoad();
+			var request = webkitIndexedDB.open('Minimalist'); 
+				request.onsuccess = function(e) {
+					var v = '1.0',
+						initData = false;
+					minDB.db = request.result;
+					if (v != minDB.db.version && v.split('.')[0] > minDB.db.version.split('.')) {
+						var setVrequest = minDB.db.setVersion(v);
+							setVrequest.onsuccess = function(e) {
+								var store = minDB.db.createObjectStore('Modules', {keyPath: 'index'});
+								minDB.onSave = function() {
+									window.location.reload();
+								};
+								initCont(true);
+							};
+							setVrequest.onerror = function(e) { console.error(e.value); };
+					} else {
+						initCont(false);
+					}
+				};
+				request.onerror = function(e) { console.error(e.value); };	
+		}
+
+		function initCont(isUpgrade) {
+			loadModules(isUpgrade, function() {
+				checkUpdate();
+				attachListeners();
+				syncLoad();
+			});
 		}
 
 		window.addEventListener('load', function() {

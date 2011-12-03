@@ -532,7 +532,7 @@ span.field {
 }
 
 .color {
-	width: 75px;
+	width: 150px;
 }
 
 #jQWheelColorPickerDlg {
@@ -670,6 +670,13 @@ li#moduleMetaLi {
 #optionPreview img {
 	max-height: 500px;
 	max-width: 100%;
+}
+#deleteScreen {
+	display: block;
+	margin: 5px 0;
+}
+#deleteScreen:hover {
+	color: #b0281a;
 }
 input[type = "field"].subtle {
 	background: transparent;

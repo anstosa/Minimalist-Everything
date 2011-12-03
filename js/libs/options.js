@@ -5,7 +5,8 @@
  * Licensed under GNU GPL v3
  **/
 
-var hasOptionsChanged = false;
+var hasOptionsChanged = false,
+	hasOptionsLoaded = false;
 
 function buildOptions(i) {
 	var options = modules[i].options;
@@ -90,7 +91,7 @@ function buildOptions(i) {
 	$('#optionNav li:first-child, #optionNav + .tab').addClass('current');
 	$('.color').wheelColorPicker({
 		dir: '../../img/colorpicker/',
-		format: 'hex',
+		format: 'rgba',
 		preview: true,
 		userinput: true,
 		validate: true,
@@ -98,11 +99,14 @@ function buildOptions(i) {
 	});
 
 	addOptionsListeners();
+	if (!hasOptionsLoaded) {
+		addOptionsOneTimeListeners();
+		hasOptionsLoaded = true;
+	}
 }
 
 function addOptionsListeners() {	
 	$('#saveOptions').addClass('disabled').text('Save Changes');
-	$('#saveOptions').click(saveOptions);
 
 	$('#optionNav li').click(function() {
 		$('#optionNav .current').removeClass('current');
@@ -121,7 +125,10 @@ function addOptionsListeners() {
 
 	$('.color').focusout(activateSaveOptionsButton);
 	$('.varfield').keypress(activateSaveOptionsButton);
+}
 
+function addOptionsOneTimeListeners() {
+	$('#saveOptions').click(saveOptions);
 	addSaveHotkey();
 }
 

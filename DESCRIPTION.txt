@@ -1,8 +1,6 @@
 == ANNOUNCEMENTS ==
 
-  Thanks for bearing with me during the big transition everyone.
-
-  I'm going to be working on merging MinGcal in as well as a G+ module next weekend.
+  Now compatible with the new Google Bar!
 
   Please post bugs and feature requests in the issue tracker: [http://code.google.com/p/minimalist/issues]
 
@@ -102,6 +100,44 @@
 
   NOTE: versions ending in 't' are test versions only published to trusted testers.
 
+ === 0.6.17 (3 DEC) ===
+  * Changed: Color pickers now use rgba instead of hex to allow transparency
+ === 0.5.17 (3 DEC) ===
+  * Added: (Gmail) Force Refresh to show in split-pane view
+  * Added: (Gmail) Collapse Gadget Pane
+  * Added: (Reader) Hide Send to
+  * Added: (Reader) Better item style (some styles by david.rixon)
+  * Added: Ability to delete screenshots from features
+  * Fixed: (Gmail) Highlight starred not working in non-english Gmail
+  * Fixed: Import from userscripts.org not compatible with Black Canvas Script Handler (thanks jiefoxi)
+  * MORE!: See 0.5.11 for more updates this version
+ === 0.5.16t (3 DEC) ===
+  * Fixed: Options page not accepting database data until extension reload
+ === 0.5.15t (3 DEC) ===
+  * Fixed: Storing legacy data exceeding localStorage data limit
+ === 0.5.14t (3 DEC) ===
+  * Changed: LocalStorage to WebkitIndexDB for module storage
+ === 0.5.13t (30 NOV) ===
+  * Changed: Testing for cause of "QUOTA_EXCEEDED_ERR: DOM Exception 22"
+ === 0.5.12t (30 NOV) ===
+  * Changed: Testing for cause of "QUOTA_EXCEEDED_ERR: DOM Exception 22"
+ === 0.5.11t (30 NOV) ===
+  * Added: (Gmail, Reader) Support for new Google Bar
+  * Added: (Reader) Hide No Entries message
+  * Added: (Reader) Hide Home sidebar
+  * Added: (Reader) Custom sidebar width
+  * Changed: (Gmail, Reader) Hide user photo no longer hides user name
+  * Changed: (Gmail, Reader) Responsive layout changed from JS listeners to CSS media queries
+  * Changed: (Gmail) Tweaked hide offline and hide away to be faster
+  * Changed: Editor page scrolls to top when a new option is selected
+  * Fixed: Re-initialization of Editor listeners causing each save to be progressively slower
+  * Removed: (Reader) Force compact layout density (Google finally pushed the new settings menu and built-in responsive layout for Reader)
+ === 0.5.10 (25 NOV) ===
+  * Fixed: Typo on options page
+  * Fixed: Export selected not exporting the correct module consistently
+ === 0.5.9 (22 NOV) ===
+  * Added: Import from [stylebot.me] (thanks jiefoxi)
+  * Fixed: (Gmail) Hide Header breaking all following options that involve CSS
  === 0.5.8 (21 NOV) ===
   * Added: Toggle options on and off from edit page
   * Added: Change field values from options page

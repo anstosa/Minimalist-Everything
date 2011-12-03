@@ -128,3 +128,12 @@ a.button.hidden {
 	position: absolute;
 	top: 20px;
 }
+
+.post_links .minimalistInstall {
+	border-color: #2F5BB7;
+	border-radius: 2px;
+	color: #fff;
+	display: block;
+	padding: 3px 10px;
+	
+}

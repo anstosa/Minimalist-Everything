@@ -57,11 +57,14 @@ $('#exportAll').click(function() {
 });
 $('#exportSelected').click(function() {
 	chrome.extension.sendRequest({name: 'getGranularRawData'}, function(response) {
-		var modulesData = response.modules.split('|||');
+		var modulesData = response.modules;
 			exportData = response.version + '$$$';
-		for (var i = 0, l = modulesData.length; i < l; i++) {
+			
+		for (var i = modulesData.length - 1; i >= 0; i--) {
 			if (!$('#export_' + i).is(':checked')) {
 				modulesData.splice(i,1);
+			} else {
+				modulesData[i] = JSON.stringify(modulesData[i]);
 			}
 		}
 		exportData += modulesData.join('|||');

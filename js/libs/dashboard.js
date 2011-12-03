@@ -9,11 +9,12 @@
 function buildDashboard(andSwitch) {
 	chrome.extension.sendRequest({name: 'getPrefs'}, function(response) {
 		prefs = response.prefs;
+		debug("Loading Dashboard");
 		initSync();
 	});
 
 	chrome.extension.sendRequest({name: 'getAllModules'}, function(response) {
-		
+
 		modules = response.modules;
 
 		var $moduleControls = $(

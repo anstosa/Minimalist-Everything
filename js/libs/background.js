@@ -5,6 +5,12 @@
  * Licensed under GNU GPL v3
  **/
 
+var minDB = {
+	db: null,
+	mods: 0,
+	onSave: null
+};
+
 /* === INIT HELPERS === */
 function setDebugging() {
 	if (localStorage.isDebugging != null) {
@@ -33,6 +39,36 @@ function checkUpdate() {
 		localStorage.version = VERSION;
 	}
 }
+
+minDB.add = function(module, i, callback) {
+	var db = minDB.db,
+		trans = db.transaction(["Modules"], webkitIDBTransaction.READ_WRITE),
+		store = trans.objectStore("Modules"),
+		request = store.put({
+			"data": module,
+			"index": i
+		})
+	;
+	request.onsuccess = function(e) { callback(); };
+	request.onerror = function(e) { console.error(e.value); };
+};
+
+minDB.delete = function(i, callback) {
+	var db = html5rocks.indexedDB.db,
+		trans = db.transaction(["Modules"], webkitIDBTransaction.READ_WRITE),
+		store = trans.objectStore("Modules"),
+		request = store.delete(i);
+
+	request.onsuccess = function(e) { callback(); };
+	request.onerror = function(e) { console.error(e.value); };
+};
+
+minDB.reset = function() {
+	var resetRequest = minDB.db.setVersion("");
+		resetRequest.onsuccess = function(e) {
+			minDB.db.deleteObjectStore('Modules');
+		};	
+};
 
 function updateCoreModules() {
 	debug('Updating code modules...');
@@ -79,22 +115,42 @@ function loadPrefs() {
 	}
 }
 
-function loadModules() {
+function loadModules(isUpgrade, callback) {
 	debug('loading modules...');
-	if ((modules = localStorage.modules) != null && modules.length > 0) {
-		modules = modules.split('|||');
-		try {
-			for (var i = 0, l = modules.length; i < l; i++) {
-				modules[i] = JSON.parse(modules[i]);
+	if (isUpgrade) {
+		debug('upgrading legacy data...');
+		modules = localStorage.modules;
+		if (modules != null && modules.length > 0) {
+			modules = modules.split('|||');
+			try {
+				for (var i = 0, l = modules.length; i < l; i++) {
+					modules[i] = JSON.parse(modules[i]);
+				}
+			} catch (e) {
+				console.error('Minimalist: ' + e);
 			}
-		} catch (e) {
-			console.error('Minimalist: ' + e);
-		}
-	} else {
-		debug('no modules, creating repo...');
-		modules = new Array();
+		} else {
+			debug('no modules, creating repo...');
+			modules = new Array();
+		}	
+		var temp = localStorage.modules;
+		localStorage.removeItem('modules');
+		localStorage.legacy = temp;
 		save(false);
-	}
+	} else {
+		var loadRequest = minDB.db.transaction("Modules").objectStore("Modules").openCursor();
+
+		loadRequest.onsuccess = function(e) {
+			var cursor = loadRequest.result;
+			if (!cursor) {
+				minDB.mods = modules.length;
+				callback();
+			} else {
+				modules.push(cursor.value.data);
+				cursor.continue();
+			}
+		}
+		};
 }
 /* === END INIT HELPERS === */
 
@@ -162,7 +218,7 @@ function setRawData(newPrefs, moduleData) {
 }
 
 function getRawData() {
-	return VERSION + '###' + prefs.isSyncing + '|||' + prefs.isEnabled + '|||' + localStorage.modules;
+	return VERSION + '###' + prefs.isSyncing + '|||' + prefs.isEnabled + '|||' + allModuleString();
 }
 
 function disableSync() {
@@ -251,17 +307,61 @@ function save(isSynced) {
 		localStorage[pref] = prefs[pref];
 	}
 	debug('saving modules...');
-	var modulesString = new Array();	
-	for (var i = 0, l = modules.length; i < l; i++) {
-		modulesString[i] = JSON.stringify(modules[i]);
+	var i;
+	writeToDB(0, modules.length);
+}
+
+
+function writeToDB(i, l) {
+	if (i < l) {
+		modules[i].index = i;
+		debug("saving " + modules[i].name);
+		minDB.add(modules[i], i, function() {
+			writeToDB((i + 1), l);
+		});
+	} else {
+		cleanDB(i);
 	}
-	localStorage.modules = modulesString.join('|||');
-	localStorage.lastSync = lastSync;
-	if (!isSynced) {
-		syncSave(true);
+}
+
+function cleanDB(i) {
+	if (i < minDB.mods) {
+		minDB.delete(i, function() {
+			cleanDB((i + 1));
+		});
+	} else {
+		localStorage.lastSync = lastSync;
+		if (typeof minDB.onSave == 'function') {
+			minDB.onSave();
+		}
+		/*if (!isSynced) {
+			syncSave(true);
+		}*/
 	}
 }
 /* === END LISTENERS === */
+
+function allModuleString() {
+	moduleString = JSON.stringify(modules[0]);
+	for (var i = 1; i < modules.length; i++) {
+		moduleString += '|||' + JSON.stringify(modules[i]);
+	}
+	return moduleString;
+	/*var i = 1,
+		moduleString = localStorage['modules_0'];
+	if ((localStorage.modules != null && localStorage.modules != '') &&
+		(localStorage.version.split('.')[1] < 5 ||
+			(localStorage.version.split('.')[1] < 5 &&
+			 localStorage.version.split('.')[2] < 11))) {
+		moduleString = localStorage.modules;
+		localStorage.removeItem('modules');
+	}
+	while (localStorage['modules_' + i] != null) {
+		moduleString += '|||' + localStorage['modules_' + i];
+		i++;
+	}
+	return moduleString;*/
+}
 
 function isMatch(target, includeString) {
 	//debug('checking regex matches for ' + target + ' against ' + includeString);

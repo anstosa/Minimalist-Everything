@@ -1,6 +1,6 @@
 {
 	"name": "Minimalist for Everything [Beta]",
-	"version": "0.5.8",
+	"version": "0.5.17",
 	"description": "You live in webapps. Make them yours",
 	"icons": {
 		 "16": "img/icons/icon16.png",
@@ -26,6 +26,11 @@
 		"matches": [ "http://userscripts.org/scripts/*" ],
 		"css": [ "css/import.css" ],
 		"js": [ "js/io/userscripts.js" ],
+		"run_at": "document_start"
+	}, {
+		"matches": [ "http://stylebot.me/styles/*" ],
+		"css": [ "css/import.css" ],
+		"js": [ "js/io/stylebot.js" ],
 		"run_at": "document_start"
 	}, {
 		"matches": [ "<all_urls>" ],

@@ -8,7 +8,8 @@
 var editorCSS,
 	editorHeadJS,
 	editorBodyJS,
-	hasEditorChanged = false;
+	hasEditorChanged = false,
+	hasEditorLoaded = false;
 
 function buildEditor(i) {
 	var options = modules[i].options;
@@ -116,6 +117,10 @@ function buildEditor(i) {
 		}
 	});
 	addEditorListeners();
+	if (!hasEditorLoaded) {
+		addEditorOneTimeListeners();
+		hasEditorLoaded = true;
+	}
 }
 
 function initSyntax() {
@@ -171,9 +176,6 @@ function deleteOption(j) {
 
 function addEditorListeners() {	
 	$('#saveEdits').addClass('disabled').text('Save Changes');
-	$('#saveEdits').click(function(event) {
-		saveEdits(event.shiftKey);
-	});	
 
 	$('#moduleMetaLi').click(function(){
 		$('#optionTree .current').removeClass('current');
@@ -188,35 +190,6 @@ function addEditorListeners() {
 		$(this).parent().parent().addClass('hidden');
 	});
 
-	$('#newField').live('click', function() {
-		var count = $(this).siblings('.fieldRow').length + 1;
-		$(this).before($(
-			'<div class="fieldRow" count="' + count + '">'
-				+ '<input type="field" class="s desc normal" size="20" tip="field description">'
-	 			+ '<input type="field" class="s var normal" size="10" tip="var name">'
-	 			+ '<input type="field" class="s def normal" size="10" tip="default value">'
-				+ '<input class="isColor" id="isColor_' + count + '" type="checkbox">'
-				+ '<label for="isColor_' + count + '" tip="whether this field should have a color picker attached to it."><div class="input"></div>Color Picker</label>'
-				+ '<a href="javascript:;" class="removeField">&#10008;</a>'
-			+ '</div>'
-		));
-		$('#p_edi input[tip]').tipsy({trigger: 'focus', gravity: 's'});
-	});
-
-	$(".isColor").live('click', function() {
-		if ($(this).is(':checked')) {
-			$(this).prev().wheelColorPicker({
-				dir: '../../img/colorpicker/',
-				format: 'hex',
-				preview: true,
-				userinput: true,
-				validate: true,
-				color: null
-			});
-		} else {
-			$(this).prev().wheelColorPicker('destroy');
-		}
-	});
 	$('#optionNew').click(makeNewOption);
 
 	$('#optionTree > li > span, #optionTree > li > ul > li > span').click(function() {
@@ -268,11 +241,6 @@ function addEditorListeners() {
 		navigateToOption($(this).parent().attr('id').substr(11));
 	});
 
-	$('.removeField').live('click', function() {
-		$(this).parent().remove();
-		activateEditSaveButton();
-	});
-
 	$('#moduleMeta input, #optionMeta input').live('keypress', activateEditSaveButton);
 	$('#moduleMeta input, #optionMeta input').live('keydown', checkForChange);
 	$('#optionMeta input[type="checkbox"]').live('change', activateEditSaveButton);
@@ -280,6 +248,54 @@ function addEditorListeners() {
 	editorCSS.getSession().on('change', activateEditSaveButton);
 	editorHeadJS.getSession().on('change', activateEditSaveButton);
 	editorBodyJS.getSession().on('change', activateEditSaveButton);
+}
+
+function addEditorOneTimeListeners() {
+	$('#saveEdits').click(function(event) {
+		saveEdits(event.shiftKey);
+	});
+	$('#deleteScreen').live('click', function() {
+		$(this).prev()
+				.remove()
+				.next()
+					.remove()
+		;
+		activateEditSaveButton();
+	});
+	$(".isColor").live('click', function() {
+		if ($(this).is(':checked')) {
+			$(this).prev().wheelColorPicker({
+				dir: '../../img/colorpicker/',
+				format: 'hex',
+				preview: true,
+				userinput: true,
+				validate: true,
+				color: null
+			});
+		} else {
+			$(this).prev().wheelColorPicker('destroy');
+		}
+	});
+
+	$('#newField').live('click', function() {
+		var count = $(this).siblings('.fieldRow').length + 1;
+		$(this).before($(
+			'<div class="fieldRow" count="' + count + '">'
+				+ '<input type="field" class="s desc normal" size="20" tip="field description">'
+	 			+ '<input type="field" class="s var normal" size="10" tip="var name">'
+	 			+ '<input type="field" class="s def normal" size="10" tip="default value">'
+				+ '<input class="isColor" id="isColor_' + count + '" type="checkbox">'
+				+ '<label for="isColor_' + count + '" tip="whether this field should have a color picker attached to it."><div class="input"></div>Color Picker</label>'
+				+ '<a href="javascript:;" class="removeField">&#10008;</a>'
+			+ '</div>'
+		));
+		$('#p_edi input[tip]').tipsy({trigger: 'focus', gravity: 's'});
+	});
+
+	$('.removeField').live('click', function() {
+		$(this).parent().remove();
+		activateEditSaveButton();
+	});
 
 	addSaveHotkey();
 }
@@ -332,7 +348,7 @@ function navigateToOption(j) {
 
 		$('#optionPreview').parent().html('<div id="optionPreview"></div><input type="file" onchange="updateScreenshot(this.files)">');
 		if (option.hasOwnProperty('screen')) {
-			$('#optionPreview').append('<img src="' + option.screen + '"/>');				
+			$('#optionPreview').append('<img src="' + option.screen + '"/><a href="javascript:;" id="deleteScreen">Delete image</span>');				
 		}
 		
 		editorCSS.getSession().setValue('');
@@ -374,6 +390,7 @@ function navigateToOption(j) {
 			validate: true,
 			color: null
 		});
+		window.location = '#';
 	//}
 }
 
@@ -422,7 +439,7 @@ function disableEditSaveButton() {
 }*/
 
 function saveEdits(noReload) {
-	if (!$(this).hasClass('disabled')) {
+	if (!$('#saveEdits').hasClass('disabled')) {
 		var i = $('#p_edi h1').attr('id').substr(7),
 			j = null;
 		if ($('#moduleMetaLi').hasClass('current')) {
@@ -490,6 +507,8 @@ function saveEdits(noReload) {
 
 			if ($('#optionPreview').children('img').length > 0) {
 				option.screen = $('#optionPreview img').attr('src');
+			} else {
+				delete option.screen;
 			}
 			modules[i].options[j] = option;
 		}
@@ -515,6 +534,6 @@ function updateScreenshot(files) {
 }
 
 function previewImage(e) { 
-    $('#optionPreview').empty().append('<img src="' + e.target.result + '"/>');  
+    $('#optionPreview').empty().append('<img src="' + e.target.result + '"/><a href="javascript:;" id="deleteScreen">Delete image</span>');  
     activateEditSaveButton();
 }
