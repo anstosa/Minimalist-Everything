@@ -11,10 +11,10 @@ function debug(message) {
 	}
 }
 
-$(document).bind('openTab', function(event) {
+document.addEventListener('openTab', function() {
 	chrome.extension.sendRequest({
 		name: 'openTab',
-		url: $('#openTab').text(),
+		url: document.getElementById('openTab').textContent,
 		isSelected: (document.getElementById('openTab').getAttribute('selected') == 'true')
 	});
 });

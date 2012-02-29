@@ -140,12 +140,6 @@ function saveOptions() {
 	if (!$(this).hasClass('disabled')) {
 		var i = $('#p_opt h1').attr('id').substr(7),
 			options = modules[i].options;
-			
-		$('.color').each(function() {
-			if ($(this).val().indexOf('#') < 0) {
-				$(this).val('#' + $(this).val());	
-			}
-		});
 
 		for (var j = 0, l = options.length; j < l; j++) {
 			if ($('#option_' + j).is(':checked')) {

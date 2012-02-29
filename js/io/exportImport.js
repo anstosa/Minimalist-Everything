@@ -23,6 +23,12 @@ $('#sync').click(function() {
 	}
 });
 
+$('#reset').click(function() {
+	chrome.extension.sendRequest({name: 'reset'}, function(response) {
+		window.close();
+	});
+});
+
 /*$('#reinit').click(function() {
 	chrome.extension.sendRequest({name: 'reinit'}, function(response) {});
 });*/
@@ -121,17 +127,17 @@ $('#import').click(function() {
 		if (importData.indexOf('###') == -1) {
 			importData = '0.1.3###true|||' + importData;
 		}
-		chrome.extension.sendRequest({name: 'setRawData', prefs: {isSyncing: importData.split('###')[1].split('|||')[0], isEnabled: importData.split('###')[1].split('|||')[1]}, moduleData: importData.split('###')[1].split('|||').slice(2)}, function(response) {
-			//if (response.wasSuccessful) {
+		chrome.extension.sendRequest({name: 'setRawData', prefs: {isSyncing: importData.split('###')[1].split('|||')[0], isEnabled: importData.split('###')[1].split('|||')[1]}, moduleData: importData.split('###')[1].split('|||')[2]}, function(response) {
+			if (response.wasSuccessful) {
 				$('#import').text('Success!');
 				buildDashboard(false);
-			/*} else {
+			} else {
 				$('#import')
 					.text('Failed!')
 					.removeClass('green')
 					.addClass('red')
 				;
-			}*/
+			}
 		});
 	}
 });

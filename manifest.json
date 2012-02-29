@@ -1,6 +1,6 @@
 {
 	"name": "Minimalist for Everything [Beta]",
-	"version": "0.5.17",
+	"version": "0.5.20",
 	"description": "You live in webapps. Make them yours",
 	"icons": {
 		 "16": "img/icons/icon16.png",
@@ -14,23 +14,23 @@
 	"background_page": "background.html",
 	"content_scripts": [ {
 		"matches": [ "<all_urls>" ],
-		"js": [ "js/libs/jquery.js", "js/libs/runtime.js" ],
+		"js": [ "js/libs/runtime.js" ],
 		"run_at": "document_start",
 		"all_frames": true
 	}, {
 		"matches": [ "http://userstyles.org/styles/*" ],
 		"css": [ "css/import.css" ],
-		"js": [ "js/io/userstyles.js" ],
+		"js": [ "js/libs/jquery.js", "js/io/userstyles.js" ],
 		"run_at": "document_start"
 	}, {
 		"matches": [ "http://userscripts.org/scripts/*" ],
 		"css": [ "css/import.css" ],
-		"js": [ "js/io/userscripts.js" ],
+		"js": [ "js/libs/jquery.js", "js/io/userscripts.js" ],
 		"run_at": "document_start"
 	}, {
 		"matches": [ "http://stylebot.me/styles/*" ],
 		"css": [ "css/import.css" ],
-		"js": [ "js/io/stylebot.js" ],
+		"js": [ "js/libs/jquery.js", "js/io/stylebot.js" ],
 		"run_at": "document_start"
 	}, {
 		"matches": [ "<all_urls>" ],

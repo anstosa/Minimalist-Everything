@@ -1,6 +1,6 @@
 == ANNOUNCEMENTS ==
 
-  Now compatible with the new Google Bar!
+  Sorry about the lack of updates. Been busy at real work, will continue to maintain.
 
   Please post bugs and feature requests in the issue tracker: [http://code.google.com/p/minimalist/issues]
 
@@ -13,7 +13,6 @@
 
   
 == WHAT DOES IT DO? ==
-
   * Centralized script and style management
   * Core Modules that customize web experience
   * Easily develop and deploy custom styles and scripts
@@ -100,8 +99,25 @@
 
   NOTE: versions ending in 't' are test versions only published to trusted testers.
 
+ === 0.6.20 (11 JAN) ===
+  * Fixed: new rgba colors broken by save button (prepends "#")
+ === 0.6.19 (11 JAN) ===
+  * Fixed: Auto-update didn't fire because I forgot to increment a version number
+ === 0.6.18 (11 JAN) ===
+  * Added: Reset settings buttong (database persists across reinstalls)
+  * Fixed: openTab event handling not working because of new content-script sandboxing in dev channel
+  * Fixed: Export/Import everything not working
+  * Fixed: Minimalist icon looking bad on dark backgrounds
+  * Fixed: Userscripts not importing with @includes when declared.
+  * Fixed: (Gmail) Hide Compose + Hide Mail/Contacts/Tasks makes top sidebar items unclickable
+  * Fixed: (Gmail) Highlight starred items only working for standard star (may have only fixed English language)
+  * Fixed: (Gmail) Hide chat hiding resize handle
+  * Fixed: (Reader) New subscription popup obscured by new Google Bar when Subscription button hidden
+  * Removed: (Gmail) Animate transitions
+  * Removed: (Gmail) Hide new look popup
  === 0.6.17 (3 DEC) ===
   * Changed: Color pickers now use rgba instead of hex to allow transparency
+  * Fixed: (Gmail) Highlight Starred items not working consistently
  === 0.5.17 (3 DEC) ===
   * Added: (Gmail) Force Refresh to show in split-pane view
   * Added: (Gmail) Collapse Gadget Pane

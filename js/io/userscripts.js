@@ -9,7 +9,7 @@ function importScript() {
         var module = {
                 name: getValue("a2a_linkname"),
                 author: $('.author a').text(),
-                includes: '*',
+                includes: getJS().includes,
                 about: getAbout(),
                 isEnabled: true,
                 options: [
@@ -20,12 +20,12 @@ function importScript() {
                                 section: 'Imported',
                                 type: 'checkbox',
                                 head: {
-                                        js: getJS()
+                                        js: getJS().js
                                 },
                                 load: {}
                         }
                 ]
-        }
+        };
         chrome.extension.sendRequest({name: 'addModule', module: module}, function(response) {
                 $('#minimalistInstall').text('Installed!');
         });
@@ -60,7 +60,7 @@ function getAbout() {
 }
 
 function getJS() {
-        var code;
+        var code = {};
 
         if (location.href.indexOf("/review/") >= 0) {
                 code = $('#source').text().split('\n');
@@ -70,7 +70,12 @@ function getJS() {
                         url: link,
                         async: false,
                         success: function (data) {
-                                code = $("<div id='minimalistTemp' style='display: none;'>" + data + "</div>").appendTo("body").find("#source").text().split('\n');
+                                if (/@include.*$/.exec($('#source').text()) !== null) {
+                                        code.includes = /@include.*$/.exec($('#source').text()).replace(/^@include[s \t][ \t]*/,'');
+                                } else {
+                                        code.includes = '*';
+                                }
+                                code.js = $("<div id='minimalistTemp' style='display: none;'>" + data + "</div>").appendTo("body").find("#source").text().split('\n');
                                 $("#minimalistTemp").remove();
                         }
                 });

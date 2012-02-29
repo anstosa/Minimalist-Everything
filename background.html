@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="js/io/sync.js"></script>
 	<script type="text/javascript">
 
-		var VERSION = '0.5.17',
+		var VERSION = '0.5.19',
 			KILLSYNC = true,
 			prefs = {
 				isEnabled: true,
@@ -122,6 +122,12 @@
 							}
 							sendResponse({});
 							break;
+
+						case 'reset' :
+							minDB.reset();
+							localStorage.removeItem('Modules');
+							localStorage.removeItem('Legacy');
+							window.location.reload();
 
 						case 'isEnabled' :
 							sendResponse({isEnabled: prefs.isEnabled});

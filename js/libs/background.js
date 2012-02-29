@@ -203,18 +203,21 @@ function deleteModule(target) {
 }
 
 function setRawData(newPrefs, moduleData) {
-	for (var i = 0, l = moduleData.length; i < l; i++) {
-		try {
-			moduleData[i] = JSON.parse(moduleData[i]);
-		} catch(e) {
-			debug(e);
+	try {
+		for (var i = 0, l = moduleData.length; i < l; i++) {
+			try {
+				moduleData[i] = JSON.parse(moduleData[i]);
+			} catch(e) {
+				debug(e);
+			}
 		}
-	}
-	prefs = newPrefs;
-	if (moduleData == '') {
-		modules = moduleData;
-	}
-	save(false);
+		prefs = newPrefs;
+		if (moduleData == '') {
+			modules = moduleData;
+		}
+		save(false);
+		return true;
+	} catch(e) { return false; }
 }
 
 function getRawData() {
