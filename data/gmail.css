@@ -1,0 +1,165 @@
+/* ### Google Bar - Hide Gooogle Bar ### */
+
+/* style for toggle*/
+#gbarToggle {
+    background-color: rgba(0,0,0,0);
+    height: 10px !important;
+    cursor: pointer !important;
+}
+#gbarToggle:hover {
+    background-color: rgba(0,0,0,.15);
+}
+/* offset gbar */
+#gbz,   /* content */
+#gbx3 { /* background */
+    top: 10px !important;
+}
+/* offset header */
+#gbx1,  /* background */
+#gbq,   /* left content */
+#gbu {  /* right content*/
+    top: 42px !important;
+}
+#gb[min-gbar="hidden"] #gbx1,
+#gb[min-gbar="hidden"] #gbq,
+#gb[min-gbar="hidden"] #gbu {
+    top: 10px !important;
+}
+/* offset content */
+#gb {
+    height: 102px !important;
+}
+#gb[min-gbar="hidden"] {
+    height: 72px !important;
+}
+/* Hide gbar and background */
+#gb[min-gbar="hidden"] #gbz,
+#gb[min-gbar="hidden"] #gbx3 {
+    display: none;
+}
+@media screen and (max-width: 1060px), screen and (max-height: 590px) {
+    /* offset header */
+    #gbx1,  /* background */
+    #gbq,   /* left content */
+    #gbu {  /* right content*/
+        top: 35px !important;
+    }
+    /* offset content */
+    #gb {
+        height: 71px !important;
+    }
+    #gb[min-gbar="hidden"] {
+        height: 47px !important;
+    }
+}
+
+
+/* ### Google Bar - Hide Background ### */
+
+/* Hide background */
+#gbx3 {
+    background: -webkit-gradient(radial,100 36,0,100 -40,120,from(#fafafa),to(#f1f1f1)),#f1f1f1 !important;
+    border-color: transparent !important;
+}
+/* change link color */
+#gb #gbz .gbzt,  /* Link */
+#gb #gbz .gbgt { /* More */
+    color: #777 !important;
+}
+/* change current link color */
+#gb #gbz .gbz0l .gbts {
+    color: #222 !important;
+}
+
+
+/* ### Header - Hide email ### */
+
+/* Hide email */
+#gbvg > ol > :first-child {
+    display: none;
+}
+
+
+/* ### Header - Hide G+ notifications ### */
+
+/* Hide G+ counter */
+#gbvg > ol > :nth-child(2) {
+    display: none;
+}
+
+
+/* ### Header - Hide G+ "Share..." ### */
+
+/* Hide share and divider */
+#gbvg > ol > :nth-child(3) {
+    display: none;
+}
+
+
+/* ### Header - Hide user photo ### */
+
+/* Hide photo unless menu is open */
+#gbvg > ol > :not(.gbto):nth-child(4),
+#gbgsa { /* Hide Share pointer */
+    display: none;
+}
+
+
+/* ### Google Bar - Hide Gooogle Bar ### */
+
+/* style for toggle*/
+#gbarToggle {
+    background-color: rgba(0,0,0,0);
+    height: 10px !important;
+    cursor: pointer !important;
+}
+#gbarToggle:hover {
+    background-color: rgba(0,0,0,.15);
+}
+/* offset gbar */
+#gbz,   /* content */
+#gbx3 { /* background */
+    top: 10px !important;
+}
+/* offset header */
+#gbx1,  /* background */
+#gbq,   /* left content */
+#gbu {  /* right content*/
+    top: 42px !important;
+}
+#gb[min-header="hidden"] #gbx1,
+#gb[min-header="hidden"] #gbq,
+#gb[min-header="hidden"] #gbu {
+    top: 10px !important;
+}
+/* offset content */
+#gb {
+    height: 102px !important;
+}
+#gb[min-header="hidden"] {
+    height: 30px !important;
+}
+#gb[min-gbar="hidden"][min-header="hidden"] {
+    display: none;
+}
+/* Hide header and background */
+#gb[min-header="hidden"] #gbx1,  /* background */
+#gb[min-header="hidden"] #gbq,   /* left content */
+#gb[min-header="hidden"] #gbu {  /* right content*/
+    display: none;
+}
+@media screen and (max-width: 1060px), screen and (max-height: 590px) {
+    /* offset header */
+    #gbx1,  /* background */
+    #gbq,   /* left content */
+    #gbu {  /* right content*/
+        top: 36px !important;
+    }
+    /* offset content */
+    #gb {
+        height: 73px !important;
+    }
+    #gb[min-header="hidden"] {
+        height: 24px !important;
+    }
+}
