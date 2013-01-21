@@ -1,139 +1,31 @@
 /**
  * Import Styles for Minimalist
- * 
- * © 2011 Ansel Santosa
+ *
+ * © 2013 Ansel Santosa
  * Licensed under GNU GPL v3
  **/
 
-/* BUTTONS */
-a.button {
-	-webkit-transition-property: background, border-color, box-shadow, opacity;
-	-webkit-transition-duration: .15s;
-	background: -webkit-gradient(linear, left bottom, left top, from(rgba(0,0,0,.20)), to(rgba(0,0,0,0)));
-	background-color: #999 !important;
-	border: 1px solid #666;
-	border-radius: 2px;
-	color: #fff;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 5px 15px;
-	position: relative;
-	text-decoration: none;
-	text-shadow: 0 0 1px rgba(0,0,0,.05);
-	z-index: 2;
-}
-	a.red {
-		background-color: #dd4b39 !important;
-		border-color: #b0281a;
-	}
-		a.group.subtle.red:hover + a.group {
-			border-left-color: #b0281a;
-		}
-	a.blue {
-		background-color: #4d90fe !important;
-		border-color: #2f5bb7;
-	}
-		a.group.subtle.blue:hover + a.group {
-			border-left-color: #2f5bb7;
-		}
-	a.green {
-		background-color: #3d9400 !important;
-		border-color: #29691d;
-	}
-		a.group.subtle.green:hover + a.group {
-			border-left-color: #29691d;
-		}
-	a.button.subtle:not(:hover) {
-		background-color: #bbb !important;
-		border-color: #666;
-	}
-	a.big {
-		font-size: 14px;
-		padding: 10px 20px;
-	}
-	a.button span {
-		font-size: 30px;
-		font-weight: normal;
-		left: 15px;
-		position: absolute;
-		top: -2px;
-	}
-	a.button.square {
-		padding: 5px 9px;
-	}
-	a.group {
-		border-radius: 0;
-		margin: 0;
-	}
-	a.group.subtle {
-		border-right-width: 0;
-	}
-	a.group:not(.subtle) + a.subtle:not(:hover) {
-		border-left-width: 0;
-	}
-	a.group:not(.subtle) + a.subtle:hover {
-		margin-left: -1px;
-	}
-	a.group.first {
-		border-bottom-left-radius: 2px;
-		border-top-left-radius: 2px;
-	}
-	a.group.last {
-		border-bottom-right-radius: 2px;
-		border-right-width: 1px;
-		border-top-right-radius: 2px;	
-	}
-a.button:hover {
-	background: -webkit-gradient(linear, left bottom, left top, from(rgba(0,0,0,.35)), to(rgba(0,0,0,0)));
-	box-shadow: 0 1px 3px rgba(0,0,0,.35);
-	color: #fff;
-	text-shadow: -1px -1px 1px rgba(0,0,0,.25);
-	z-index: 3;
-}
-a.button:focus {
-	box-shadow: inset 0 0 0 1px #fff;
-	outline: none;
-}
-a.button:active {
-	background: -webkit-gradient(linear, left bottom, left top, from(rgba(0,0,0,.30)), to(rgba(0,0,0,0)));
-	box-shadow: 0 1px 5px rgba(0,0,0,.45) inset;
-	text-shadow: 1px 1px 1px rgba(0,0,0,.25);
-}
-a.button.disabled,
-a.button.disabled:hover,
-a.button.disabled:active {
-	background: #ccc !important;
-	border-color: #999;
-	cursor: default;
-	box-shadow: none;
-	text-shadow: none;
-}
-a.button.hidden {
-	display: none;
-}
-
 .minimalist {
-	background: #ddd;
-	border-radius: 5px;
-	height: 70px;
-	padding: .25em 1em;
-	position: relative;
-	margin-top: 1em;
-	text-align: center;
-	width: 380px;
+    background: #ddd;
+    border-radius: 5px;
+    height: 70px;
+    padding: .25em 1em;
+    position: relative;
+    margin-top: 1em;
+    text-align: center;
+    width: 380px;
 }
 
 #install + .minimalist a {
-	left: 100px;
-	position: absolute;
-	top: 20px;
+    left: 100px;
+    position: absolute;
+    top: 20px;
 }
 
 .post_links .minimalistInstall {
-	border-color: #2F5BB7;
-	border-radius: 2px;
-	color: #fff;
-	display: block;
-	padding: 3px 10px;
-	
+    border-color: #2F5BB7;
+    border-radius: 2px;
+    color: #fff;
+    display: block;
+    padding: 3px 10px;
 }

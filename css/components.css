@@ -1,0 +1,324 @@
+/**
+ * Component Styles for Minimalist
+ *
+ * © 2013 Ansel Santosa
+ * Licensed under GNU GPL v3
+ **/
+
+::selection {
+    background: #333;
+    color: #fff;
+    text-shadow: none;
+}
+
+a,
+a:link,
+a:visited {
+    color: #000;
+}
+
+a:hover {
+    color: rgb(71,135,237);
+    text-decoration: none;
+}
+
+a:focus {
+    outline: thin dotted;
+}
+
+/* Buttons
+------------------------------------------------------------ */
+
+.button,
+a.button {
+    -webkit-transition-property: background, border-color, box-shadow, opacity;
+    background: -webkit-linear-gradient(bottom, rgba(0,0,0,.20) 0%, rgba(0,0,0,0) 100%);
+    background-color: #999;
+    border: 1px solid #666;
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 15px;
+    position: relative;
+    text-decoration: none;
+    text-shadow: 0 0 1px rgba(0,0,0,.05);
+    -webkit-user-select: none;
+    z-index: 2;
+}
+
+    .button div[class*="icon-"].pull-left {
+        float: none;
+        line-height: 16px;
+        margin: 0 5px 0 -5px;
+    }
+
+.button.big {
+    font-size: 14px;
+    line-height: 19px;
+    min-height: 41px;
+    padding: 10px 20px;
+}
+
+    .button.big div[class*="icon-"] {
+        line-height: 18px;
+    }
+
+.button.square {
+    float: left;
+    height: 32px;
+    padding: 5px 9px;
+}
+
+.button.group {
+    border-radius: 0;
+    display: block;
+    float: left;
+    margin: 0 -4px 0 0;
+}
+
+.button.group.subtle {
+    border-right-width: 0;
+}
+
+.button.group:not(.subtle) + .subtle {
+    border-left-width: 0;
+}
+
+.button.group:not(.subtle) + .subtle:hover {
+    border-left-width: 1px;
+    margin-left: -1px;
+}
+
+.button.group.first {
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+}
+
+.button.group.last {
+    border-bottom-right-radius: 2px;
+    border-right-width: 1px;
+    border-top-right-radius: 2px;
+}
+
+.button:hover {
+    background: -webkit-linear-gradient(bottom, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 100%);
+    box-shadow: 0 1px 3px rgba(0,0,0,.35);
+    color: #fff;
+    text-shadow: -1px -1px 1px rgba(0,0,0,.25);
+    z-index: 3;
+}
+
+.button:focus {
+    box-shadow: inset 0 0 0 1px #fff;
+    outline: none;
+}
+
+.button:active {
+    background: -webkit-linear-gradient(bottom, rgba(0,0,0,.30) 0%, rgba(0,0,0,0) 100%);
+    box-shadow: 0 1px 5px rgba(0,0,0,.45) inset;
+    text-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+.button.hidden {
+    display: none;
+}
+
+.button.red {
+    background-color: #dd4b39 !important;
+    border-color: #b0281a;
+}
+
+.button.group.subtle.red:hover + .button.group {
+    border-left-color: #b0281a;
+}
+
+.button.blue {
+    background-color: #4d90fe !important;
+    border-color: #2f5bb7;
+}
+
+.button.group.subtle.blue:hover + .button.group {
+    border-left-color: #2f5bb7;
+}
+
+.button.green {
+    background-color: #3d9400 !important;
+    border-color: #29691d;
+}
+
+.button.group.subtle.green:hover + .button.group {
+    border-left-color: #29691d;
+}
+
+.button.subtle:not(:hover) {
+    background-color: #bbb !important;
+    border-color: #666;
+}
+
+.button.disabled,
+.button.disabled:hover,
+.button.disabled:active {
+    background: #ccc !important;
+    border-color: #999;
+    cursor: default;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+/* Fields
+------------------------------------------------------------ */
+
+input[type="text"],
+textarea {
+    -webkit-transition-property: background, border, box-shadow, color;
+    padding: 0 2px 2px 2px;
+    margin: 2px 0 2px 25px;
+    border: 1px solid #333;
+}
+
+input[type="text"]:hover,
+input[type="text"]:focus,
+textarea:focus {
+    background: #eee;
+    color: #222;
+    outline: none;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    background: #fff;
+    color: #000;
+    box-shadow:0 0 10px rgba(71,135,237,.5);
+    border: 1px solid #09f;
+}
+
+textarea {
+    display: -webkit-box;
+    margin-left: 2px;
+    width: 100%;
+}
+
+input[type="text"].subtle {
+    background: transparent;
+    border: 1px solid rgba(0,0,0,.1);
+    font-size: 18px;
+    margin-left: 0;
+    padding: 4px 5px 3px 5px;
+    width: 100%;
+}
+
+input[type="text"].subtle:hover {
+    background: #fff;
+    border-color: #333;
+    color: #000;
+}
+
+input[type="text"].subtle:focus {
+    background: #fff;
+    border: 1px solid #09f;
+}
+
+input[type="text"].normal {
+    font-size: 12px;
+}
+
+
+/* Checkboxes and Radio Buttons
+------------------------------------------------------------ */
+
+input[type="checkbox"],
+input[type="radio"] {
+    display: none;
+}
+
+input[type="checkbox"] + label .input,
+input[type="radio"] + label .input {
+    background-color: #aaa !important;
+    border: 1px solid #444;
+    border-radius: 2px;
+    box-shadow: inset 0 0 0 1px #f1f1f1;
+    color: transparent;
+    line-height: 12px;
+    margin: 0 10px -3px 0;
+    display: inline-block;
+    height: 15px;
+    text-align: center;
+    width: 15px;
+}
+
+input[type="radio"] + label .input {
+    border-radius: 15px;
+    color: transparent;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 12px;
+    text-align: center;
+}
+
+input[type="checkbox"]:checked + label .input,
+input[type="radio"]:checked + label .input {
+    background-color: #4d90fe !important;
+    border-color: #2f5bb7;
+    font-weight: normal;
+    color: #fff;
+}
+
+input[type="checkbox"] + label:hover .input,
+input[type="checkbox"]:focus + label .input,
+input[type="radio"] + label:hover .input,
+input[type="radio"]:focus + label .input {
+    background: -webkit-linear-gradient(bottom, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 100%);
+}
+
+input[type="checkbox"] + label:active .input,
+input[type="radio"] + label:active .input {
+    background: -webkit-linear-gradient(bottom, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 100%);
+    border-color: #000;
+    box-shadow:
+        inset 0 0 0 1px #f1f1f1,
+        inset 0 1px 5px rgba(0,0,0,.65)
+    ;
+}
+
+/* Tooltips
+------------------------------------------------------------ */
+
+.tooltip {
+    background-image: url(/img/tooltips.gif);
+    background-repeat: no-repeat;
+    font-size: 10px;
+    filter: alpha(opacity=80);
+    opacity: .8;
+    padding: 5px;
+}
+
+.tooltip-inner {
+    background-color: #000;
+    color: #FFF;
+    max-width: 200px;
+    padding: 5px 8px 4px;
+    text-align: center;
+}
+
+.tooltip-inner {
+    border-radius: 3px;
+}
+
+.tooltip-north {
+    background-position: top center;
+}
+
+.tooltip-south {
+    background-position: bottom center;
+}
+
+.tooltip-east {
+    background-position: right center;
+}
+
+.tooltip-west {
+    background-position: left center;
+}

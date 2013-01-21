@@ -1,51 +1,71 @@
 {
-	"name": "Minimalist for Everything [Beta]",
-	"version": "0.5.20",
-	"description": "You live in webapps. Make them yours",
-	"icons": {
-		 "16": "img/icons/icon16.png",
-		 "48": "img/icons/icon48.png",
-		"128": "img/icons/icon128.png" },
-	"browser_action": {
-		"default_icon": "img/icons/icon19.png",
-		"default_title": "minimalist",
-		"default_popup": "modal/browserAction.html"
-	},
-	"background_page": "background.html",
-	"content_scripts": [ {
-		"matches": [ "<all_urls>" ],
-		"js": [ "js/libs/runtime.js" ],
-		"run_at": "document_start",
-		"all_frames": true
-	}, {
-		"matches": [ "http://userstyles.org/styles/*" ],
-		"css": [ "css/import.css" ],
-		"js": [ "js/libs/jquery.js", "js/io/userstyles.js" ],
-		"run_at": "document_start"
-	}, {
-		"matches": [ "http://userscripts.org/scripts/*" ],
-		"css": [ "css/import.css" ],
-		"js": [ "js/libs/jquery.js", "js/io/userscripts.js" ],
-		"run_at": "document_start"
-	}, {
-		"matches": [ "http://stylebot.me/styles/*" ],
-		"css": [ "css/import.css" ],
-		"js": [ "js/libs/jquery.js", "js/io/stylebot.js" ],
-		"run_at": "document_start"
-	}, {
-		"matches": [ "<all_urls>" ],
-		"js": [ "js/minimalist.js", "js/inject.js", "js/init.js" ],
-		"run_at": "document_start",
-		"all_frames": true
-	} ],
-	"options_page": "options.html",	
-	"permissions": [
-		"<all_urls>",
-		"bookmarks",
-		"clipboardWrite",
-		"contextMenus",
-		"notifications",
-		"tabs",
-		"unlimitedStorage"
-	]
+    "name": "Minimalist",
+    "version": "0.6.0",
+    "manifest_version": 2,
+    "description": "You live in webapps. Make them yours",
+    "icons": {
+       "16": "img/icons/16.png",
+       "48": "img/icons/48.png",
+       "128": "img/icons/128.png" },
+    "browser_action": {
+       "default_icon": "img/icons/19.png",
+       "default_title": "Minimalist",
+       "default_popup": "html/browserAction.html"
+    },
+    "background": {
+        "scripts": [
+            "js/data.js",
+            "js/Module.js",
+            "js/background.js"
+        ],
+        "persistent": true
+    },
+    "content_scripts": [
+        {
+            "matches": [ "<all_urls>" ],
+            "js": [ "js/runtime-minimalist.js" ],
+            "run_at": "document_start",
+            "all_frames": true
+        }, {
+            "matches": [ "http://userstyles.org/styles/*" ],
+            "css": [
+                "css/components.css",
+                "css/import.css"
+            ],
+            "js": [
+                "js/libs/jquery.min.js",
+                "js/runtime-userstyles.js"
+            ],
+            "run_at": "document_start"
+        }, {
+            "matches": [ "http://userscripts.org/scripts/*" ],
+            "css": [
+                "css/components.css",
+                "css/import.css"
+            ],
+            "js": [
+                "js/libs/jquery.min.js",
+                "js/runtime-userscripts.js"
+            ],
+            "run_at": "document_start"
+        }, {
+            "matches": [ "http://stylebot.me/styles/*" ],
+            "css": [ "css/import.css" ],
+            "js": [
+                "js/libs/jquery.min.js",
+                "js/runtime-stylebot.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "options_page": "html/options.html",
+    "permissions": [
+       "<all_urls>",
+       "bookmarks",
+       "clipboardWrite",
+       "contextMenus",
+       "notifications",
+       "tabs",
+       "unlimitedStorage"
+    ]
 }
