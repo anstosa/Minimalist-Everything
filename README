@@ -1,4 +1,5 @@
-== ANNOUNCEMENTS ==
+Announcements
+=============
 
   Sorry about the lack of updates. Been busy at real work, will continue to maintain.
 
@@ -8,28 +9,35 @@
 
   Right now the UI is not where I want it. Especially the Edit page, it's busy and cumbersome.
   This will be improving a lot, I promise.
-  
+
   Questions about permissions? See PERMISSIONS section below.
 
-  
-== WHAT DOES IT DO? ==
+
+What Does it Do?
+================
   * Centralized script and style management
   * Core Modules that customize web experience
   * Easily develop and deploy custom styles and scripts
 
 
-== PERMISSIONS ==
+Permissions
+===========
 
- === "tabs" ===
+ "tabs"
+ ------
   * This permissions results in the "This extensions can access your tabs and browsing activity" warning.
   * I *NEVER* store or transmit your browsing activity.
   * I need this permission to check the URL of websites so I know which module to activate (if any).
   * This permission is also used to refresh tabs and open new tabs (only when initiated by you, the user).
- === "bookmarks" ===
+
+ "bookmarks"
+ -----------
   * This permission results in the "This item can access your bookmars" warning.
   * I *NEVER* access, read, modify, store, or transmit any of bookmarks.
   * I need this permission to create a bookmark that is used to sync your Minimalist Data accross computers.
- === "all_urls" ===
+
+ "all_urls"
+ ----------
   * This permission results in the "This extension can access your data on all websites" warning.
   * I *NEVER* access, read, modify, store, or transmit your personal data.
   * I need this permission to run user scripts on specific pages in the browser.
@@ -38,7 +46,8 @@
   Want to check for yourself? Go to [https://github.com/anstosa/Minimalist-Everything] to see the entire source code.
 
 
-== FEATURES ==
+Features
+========
 
   * Powerful, easy-to-use options pages for modules
   * Syntax highlighting in module code editor
@@ -47,7 +56,7 @@
   * Import from [UserScripts.org]
   * Import from [UserStyles.org]
   * Import Stylebot (Coming soon...)
-  
+
   See the features of the default modules at their respective GitHub projects:
   * Gmail: 2.0.1 is out! (Feature list coming Soon...)
   * Google Calendar: (Coming Soon...)
@@ -56,54 +65,95 @@
   Find more modules on the wiki: (Coming soon)
 
 
-== HOW DO I WORK IT? ==
+How do I use it?
+=================
 
   All the instructions you need are on the support page:
   [http://code.google.com/p/minimalist/wiki/Support]
 
 
-== ISSUES TRACKING ==
+Issue Tracking
+==============
 
   I test as thoroughly as I can before each release, but bugs are bound to get through.
   Read, track, and submit bugs in the issue tracker:
   [http://code.google.com/p/minimalist/issues]
 
 
-== QUESTION? ==
+Questions?
+==========
 
   * Ping me on Twitter: @anstosa
   * Shoot me an email: ansel@anselsantosa.com
 
 
-== COMING SOON ==
+ToDo List
+=========
 
- === Stable ===
   * Export modules as user scripts
-  * Copy options to new module
-  * Google Calendar module
-  * Google Reader module
-  * Google+ module
-
- === Other planned modules ===
-  * LastPass
-
- === 1.1 ===
+  * Child modules
+  * Module: Google Calendar
+  * Module: Google+
+  * Module: LastPass
   * Keyboard shortcuts (Dashboard navigation, open dashboard, toggle Minimalist)
 
- === Did I miss something? ===
+  Did I miss something?
+  ---------------------
   Submit a feature request in the issue tracker!
   [http://code.google.com/p/minimalist/issues]
 
 
-== CHANGELOG ==
+Changelog
+=========
 
   NOTE: versions ending in 't' are test versions only published to trusted testers.
 
- === 0.6.20 (11 JAN) ===
+ 0.6.0 (Jan 23)
+ --------------
+  * Added: Minor UI facelift
+  * Added: Minor UX improvements
+  * Added: Refactored and modernized entire codebase
+  * Changed: Changed editors from Ace to CodeMirror
+  * Changed: (Gmail) Refactored and modernized all options
+  * Changed: (Gmail) Moved Google User section to Header tab
+  * Changed: (Gmail) Hide user photos also hides point of Share button
+  * Changed: (Gmail) Hiding the last button in a group uses a more reliable method or preserving the gutter
+  * Fixed: Dashboard not loading
+  * Fixed: (Gmail) Hide Google Bar
+      * Not appearing correctly
+      * Toggling when using new compose window
+  * Fixed: (Gmail) Hide Header
+      * Not appearing correctly
+      * Toggling when using compose window
+  * Fixed: (Gmail) Show checkbox tools list not hiding button or repositioning sidebars
+  * Fixed: (Gmail) Hide back not working
+  * Fixed: (Gmail) Hide report spam not working
+  * Fixed: (Gmail) Hide delete not working
+  * Fixed: (Gmail) Hide Move to Inbox not working
+  * Fixed: (Gmail) Hide Refresh not working
+  * Fixed: (Gmail) Hide Move to not working
+  * Fixed: (Gmail) Hide Labels not working
+  * Fixed: (Gmail) Hide More working
+  * Fixed: (Gmail) Hide page count not working
+  * Fixed: (Gmail) Hide page navigation not working
+  * Fixed: (Gmail) Hide Preview Pane button not working
+  * Removed: (Gmail) Hide Google links. No longer necessary
+  * Removed: (Gmail) Hide Google settings. No longer necessary
+  * Removed: (Gmail) Hide Google+ link. No longer necessary
+  * Removed: (Gmail) Hide privacy link. Reprioritization
+  * Removed: (Gmail) Add + operant support in search. No longer necessary
+  * Removed: (Gmail) Hide More tip. No longer necessary
+
+ 0.5.20 (Jan 11)
+ ---------------
   * Fixed: new rgba colors broken by save button (prepends "#")
- === 0.6.19 (11 JAN) ===
+
+ 0.5.19 (Jan 11)
+ ---------------
   * Fixed: Auto-update didn't fire because I forgot to increment a version number
- === 0.6.18 (11 JAN) ===
+
+ 0.5.18 (Jan 11)
+ ---------------
   * Added: Reset settings buttong (database persists across reinstalls)
   * Fixed: openTab event handling not working because of new content-script sandboxing in dev channel
   * Fixed: Export/Import everything not working
@@ -115,29 +165,42 @@
   * Fixed: (Reader) New subscription popup obscured by new Google Bar when Subscription button hidden
   * Removed: (Gmail) Animate transitions
   * Removed: (Gmail) Hide new look popup
- === 0.6.17 (3 DEC) ===
-  * Changed: Color pickers now use rgba instead of hex to allow transparency
-  * Fixed: (Gmail) Highlight Starred items not working consistently
- === 0.5.17 (3 DEC) ===
+
+ 0.5.17 (Dec 3)
+ --------------
   * Added: (Gmail) Force Refresh to show in split-pane view
   * Added: (Gmail) Collapse Gadget Pane
   * Added: (Reader) Hide Send to
   * Added: (Reader) Better item style (some styles by david.rixon)
   * Added: Ability to delete screenshots from features
+  * Changed: Color pickers now use rgba instead of hex to allow transparency
+  * Fixed: (Gmail) Highlight Starred items not working consistently
   * Fixed: (Gmail) Highlight starred not working in non-english Gmail
   * Fixed: Import from userscripts.org not compatible with Black Canvas Script Handler (thanks jiefoxi)
   * MORE!: See 0.5.11 for more updates this version
- === 0.5.16t (3 DEC) ===
+
+ 0.5.16t (Dec 3)
+ ---------------
   * Fixed: Options page not accepting database data until extension reload
- === 0.5.15t (3 DEC) ===
+
+ 0.5.15t (Dec 3)
+ ---------------
   * Fixed: Storing legacy data exceeding localStorage data limit
- === 0.5.14t (3 DEC) ===
+
+ 0.5.14t (Dec 3)
+ ---------------
   * Changed: LocalStorage to WebkitIndexDB for module storage
- === 0.5.13t (30 NOV) ===
+
+ 0.5.13t (Nov 30)
+ ----------------
   * Changed: Testing for cause of "QUOTA_EXCEEDED_ERR: DOM Exception 22"
- === 0.5.12t (30 NOV) ===
+
+ 0.5.12t (Nov 30)
+ ----------------
   * Changed: Testing for cause of "QUOTA_EXCEEDED_ERR: DOM Exception 22"
- === 0.5.11t (30 NOV) ===
+
+ 0.5.11t (Nov 30)
+ ----------------
   * Added: (Gmail, Reader) Support for new Google Bar
   * Added: (Reader) Hide No Entries message
   * Added: (Reader) Hide Home sidebar
@@ -148,13 +211,19 @@
   * Changed: Editor page scrolls to top when a new option is selected
   * Fixed: Re-initialization of Editor listeners causing each save to be progressively slower
   * Removed: (Reader) Force compact layout density (Google finally pushed the new settings menu and built-in responsive layout for Reader)
- === 0.5.10 (25 NOV) ===
+
+ 0.5.10 (Nov 25)
+ ---------------
   * Fixed: Typo on options page
   * Fixed: Export selected not exporting the correct module consistently
- === 0.5.9 (22 NOV) ===
+
+ 0.5.9 (Nov 22)
+ --------------
   * Added: Import from [stylebot.me] (thanks jiefoxi)
   * Fixed: (Gmail) Hide Header breaking all following options that involve CSS
- === 0.5.8 (21 NOV) ===
+
+ 0.5.8 (Nov 21)
+ --------------
   * Added: Toggle options on and off from edit page
   * Added: Change field values from options page
   * Added: (Gmail) Highlight checked items
@@ -166,7 +235,9 @@
   * Fixed: (Gmail) Highlight unread items not working consistently
   * Fixed: (Gmail) Hide Google Bar fatally polluting global namespace on accounts without G+ profiles
   * Fixed: (Gmail) Hide Move To and Hide Labels hidding Settings on some accounts (Thanks jiefoxi)
- === 0.5.7 (21 NOV) ===
+
+ 0.5.7 (Nov 21)
+ --------------
   * Added: (Gmail) Hide Labels
   * Added: (Gmail) Hide Move To
   * Added: (Gmail) Hide Back
@@ -178,9 +249,13 @@
   * Fixed: (Gmail) Inconsistent or not functional options under Main > Toolbars
   * Fixed: (Gmail) Hide Google logo not working
   * Fixed: (Gmail) Hide Move To and Hide Labels causing Labels dropdown to loose anchor point
- === 0.5.6 (20 NOV) ===
+
+ 0.5.6 (Nov 20)
+ --------------
   * Fixed: Display bug in popup
- === 0.5.5 (20 NOV) ===
+
+ 0.5.5 (Nov 20)
+ --------------
   * Added: Tooltip in popup to make enable/disable action clearer
   * Added: (Gmail) Hide consider including
   * Added: "(disabled)" after the names of disabled modules in dashboard and popup
@@ -188,7 +263,9 @@
   * Fixed: (Gmail) Google Bar background covering up elements when Google Links were hidden
   * Fixed: (Gmail) Show checkbox tools list not working
   * Removed: Sync (again). It won't work because of limitations in Chrome. See: http://goo.gl/53Fg4
- === 0.5.4 (19 NOV) ===
+
+ 0.5.4 (Nov 19)
+ --------------
   * Changed: (Gmail) Alerts appear even when header is hidden
   * Changed: (Gmail) [ / ] can no longer close the Google Bar (See next change)
   * Fixed: (Gmail) [ / ] while header is already open just focuses the search field instead of hidding the header
@@ -199,7 +276,9 @@
   * Fixed: (Gmail) Hide more tip not working
   * Fixed: (Gmail) Highlight starred items not working consistently
   * Fixed: (Reader) Force comopact layout density not working consistently
- === 0.5.3 (18 NOV) ===
+
+ 0.5.3 (Nov 18)
+ --------------
   * Added: Sync is back and hopefully more stable (it still doesn't work all the time but it won't slow down Chrome anymore.)
   * Added: (Reader) Force compact layout density
   * Added: (Reader) Hide row borders in list view
@@ -214,15 +293,23 @@
   * Fixed: (Gmail) Hide Google Links not hiding background and border
   * Fixed: (Gmail) Hide unstarred stars not working
   * Fixed: (Gmail) Show checkbox tools list not working
- === 0.5.2 (15 NOV) ===
+
+ 0.5.2 (Nov 15)
+ --------------
   * Fixed: Syntax error in manifest
- === 0.5.1 (15 NOV) ===
+
+ 0.5.1 (Nov 15)
+ --------------
   * Fixed: (Gmail) Highlight starred items not working
   * Fixed: (Gmail) Highlight selected items not working with keyboard shortcuts
   * Removed: Sync (temporarily). It is too unstable for public use at the moment. I'll get it back ASAP
- === 0.5.0 (15 NOV) ===
+
+ 0.5.0 (Nov 15)
+ --------------
   * Changed: Incremented version to trigger update notification
- === 0.4.9t (15 NOV) ===
+
+ 0.4.9t (Nov 15)
+ ---------------
   * Added: Custom event 'openTab'. $('#openTab').innerHTML() is the url and $('#openTab').attr('selected') is whether the tab should open in the foreground.
   * Added: (Reader) Core Google Reader module
   * Changed: (Gmail) Moved Show checkbox tools list from bottom of Toolbar section to 3rd from top
@@ -237,15 +324,25 @@
   * Fixed: (Gmail) Hide offline not working for some
   * Fixed: (Gmail) Hide privacy link and hide Google+ link hiding links under the more menu
   * Fixed: (Gmail) Hide sidebar not working in split pane views
- === 0.4.8 (12 NOV) ===
+
+ 0.4.8 (Nov 12)
+ --------------
   * Fixed: Just kidding it wasn't broken, just forgot to update the VERSION var :-)
- === 0.4.7 (12 NOV) ===
+
+ 0.4.7 (Nov 12)
+ --------------
   * Fixed: Broken version handler in 0.4.6 causing core modules not to update.
- === 0.4.6 (12 NOV) ===
+
+ 0.4.6 (Nov 12)
+ --------------
   * Fixed: Some options incorrectly enabled by default in the core modules
- === 0.4.5t (12 NOV) ===
+
+ 0.4.5t (Nov 12)
+ ---------------
   * Fixed: Core module data not updated
- === 0.4.4t (12 NOV) ===
+
+ 0.4.4t (Nov 12)
+ ---------------
   * Added: (Gmail) Show checkbox tools list
   * Added: (Gmail) Hide zero-inbox Google Reader ad
   * Added: (Gmail) Hide Mail/Contacts/Tasks menu
@@ -259,31 +356,47 @@
   * Fixed: @includes in imports from [UserStyles.org] not being sanitized for single or double quotes
   * Fixed: Force updating imports from [UserScripts.org] and [UserStyles.org] did not replace exisiting installs
   * Removed: Starter module. It was corrupt and redundant.
- === 0.4.3 (07 NOV) ===
+
+ 0.4.3 (Nov 07)
+ ---------------
   * Fixed: See changes button not opening changelog
   * Fixed: Version number not updating for bugfixes
-  * Fixed: Notification not appearing for 
- === 0.4.2t (07 NOV) ===
+  * Fixed: Notification not appearing for
+
+ 0.4.2t (Nov 07)
+ ---------------
   * Fixed: Core module installation failed
- === 0.4.1t (07 NOV) ===
+
+ 0.4.1t (Nov 07)
+ ---------------
   * Changed: Install starter module to install Core modules
- === 0.4.0t (07 NOV) ===
+
+ 0.4.0t (Nov 07)
+ ---------------
   * Added: Adding fields to options
   * Added: Adding color pickers to options
   * Added: Support for core module updating
   * Added: Gmail core module
   * Fixed: Screenshot upload button not resetings after switching features
- === 0.3.1 (25 SEP) ===
+
+ 0.3.1 (Sep 25)
+ --------------
   * Fixed: Import from bookmark failing when debugging is off
- === 0.3.0 (25 SEP) ===
+
+ 0.3.0 (Sep 25)
+ --------------
   * Added: Import from [userstyles.org]
   * Added: Import from [userscripts.org]
   * Fixed: Sync failing to remove duplicate bookmarks
   * Fixed: Update notifications showing without real update (maybe)
- === 0.2.0 (17 SEP) ===
+
+ 0.2.0 (Sep 17)
+ --------------
   * Changed: Update notifications no longer shown for bugfixes (x.x.X)
   * Fixed: Sync bookmark not being updated after saves
- === 0.1.4 (17 SEP) ===
+
+ 0.1.4 (Sep 17)
+ --------------
   * Added: Two way sync using a bookmark (experimental)
   * Added: Share via URL after export. MinEverything users that click on your link will have their Import fields populated with your export data
   * Added: Update notifications
@@ -292,7 +405,9 @@
   * Added: Importing single modules will only overwrite modules with the same name & author. Otherwise they will be appended
   * Changed: Copy Code button now becomes disabled when copy is successful to avoid excited users making their processors angry
   * Fixed: Toggling modules from dropdown only working if module index and active module index match
- === 0.1.3 (09 SEP) ===
+
+ 0.1.3 (Sep 09)
+ --------------
   * Added:   Tooltips to document confusing things
   * Changed: New modules are enabled by default
   * Changed: New options are enabled by default
@@ -300,19 +415,27 @@
   * Fixed: Creating a new module when no modules exist no redirecting to infinite loading page
   * Fixed: Expanding collapsed items in the editor tree causing overlap
   * Fixed: Syntax highlighted fields not initializing consistently
- === 0.1.2 (08 SEP) ===
+
+ 0.1.2 (Sep 08)
+ --------------
   * Fixed: Link to market page from Dashboard works
   * Fixed: Link change from 0.1.1
- === 0.1.1 (08 SEP) ===
+
+ 0.1.1 (Sep 08)
+ --------------
   * Changed: a URL in the manifest (to make sure it won't trigger a permissions auto-disable)
- === 0.1.0 (08 SEP) ===
+
+ 0.1.0 (Sep 08)
+ --------------
   * Alpha released!
 
 
-== LEGAL ==
+Legal
+=====
 
-  I am not a Google Employee or officially affiliated with Google in any way. This extension is not endorsed by Google.
-  Google, Gmail, Google Calendar, Google Reader, Google+, and their respective logos are trademarks of Google Inc.
+  I am not a Google Employee nor am I officially affiliated with Google in any way.
+  This extension is not endorsed by Google. Google, Gmail, Google Calendar,
+  Google Reader, Google+, and their respective logos are trademarks of Google Inc.
   Use of these trademarks is subject to Google Permissions.
 
-  All modules are owned by their authors and licensed under GNU GPL v3. 
+  All modules are owned by their authors and licensed under GNU GPL v3.
