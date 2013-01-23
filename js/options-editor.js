@@ -1,3 +1,4 @@
+
 /**
  * Module editor for Minimalist
  *
@@ -266,8 +267,8 @@ function addEditorListeners() {
         .on('click', '.isColor', function() {
             if ($(this).is(':checked')) {
                 $(this).prev().colorPicker({
-                    dir: '../../img/colorpicker/',
-                    format: 'hex',
+                    dir: '../../img/libs/',
+                    format: 'rgba',
                     preview: true,
                     userinput: true,
                     validate: true,
@@ -412,8 +413,8 @@ function editOption(optionIndex) {
     $('#page-edit input[tip]').tooltip({trigger: 'focus', gravity: 's'});
 
     $('.isColor:checked').prev().colorPicker({
-        dir: '../../img/colorpicker/',
-        format: 'hex',
+        dir: '../../img/libs/',
+        format: 'rgba',
         preview: true,
         userinput: true,
         validate: true,
@@ -473,9 +474,9 @@ function disableEditSaveButton() {
 
 /**
  * Save current edits
- * @param {Boolean} andReload optional, false if relevant tabs should NOT reload after save
+ * @param {Boolean} andSuppressReload optional, false if relevant tabs should NOT reload after save
  */
-function saveEdits(andReload) {
+function saveEdits(andSuppressReload) {
     if (!$('#save-edits').hasClass('disabled')) {
 
         var moduleIndex = $('#page-edit h1').attr('id').replace('module-',''),
@@ -517,13 +518,6 @@ function saveEdits(andReload) {
                 delete option.load.js;
             }
 
-            $('.isColor:checked').each(function() {
-                $self = $(this).prev();
-                if ($self.val().indexOf('#') < 0) {
-                    $self.val('#' + $self.val());
-                }
-            });
-
             option.isEnabled = $('#optionState').is(':checked');
             option.description = $('#optionDescription').val();
             option.tab = $('#optionTab').val();
@@ -535,7 +529,7 @@ function saveEdits(andReload) {
                 option.fields[i] = {
                     description: $('.field-row:nth-child(' + (i + 1) + ') .field-description').val(),
                     name: $('.field-row:nth-child(' + (i + 1) + ') .field-variable').val(),
-                    val: $('.field-row:nth-child(' + (i + 1) + ') .field-defaul').val(),
+                    val: $('.field-row:nth-child(' + (i + 1) + ') .field-default').val(),
                     isColor: $('.field-row:nth-child(' + (i + 1) + ') .isColor').is(':checked')
                 };
             }
@@ -549,12 +543,14 @@ function saveEdits(andReload) {
         }
 
         chrome.extension.sendMessage({name: 'save', modules: modules});
-        if (typeof andReload !== 'undefined' || !andReload) {
+        if (typeof andSuppressReload === 'undefined' || !andSuppressReload) {
             chrome.extension.sendMessage({name: 'reload', module: moduleIndex});
         }
 
         buildEditor($('#page-edit h1').attr('id').replace('module-',''), function() {
-            editOption(optionIndex);
+            if (optionIndex) {
+                editOption(optionIndex);
+            }
         });
         buildDashboard(false);
 

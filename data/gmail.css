@@ -392,3 +392,24 @@
 [gh="s"] {
     display: none !important;
 }
+
+
+/* ### Main - Hide row borders  ### */
+
+.zA  td, /* rows */
+.Wg {    /* headers */
+    border-color: transparent !important;
+}
+
+
+/* ### Main - Highlight Read items  ### */
+
+.yO {
+    background-color: _min.rowsR !important;
+}
+
+/* ### Main - Highlight unRead items  ### */
+
+.zE {
+    background-color: _min.rowsU !important;
+}

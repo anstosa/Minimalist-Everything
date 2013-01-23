@@ -87,7 +87,10 @@ function loadModules(callback) {
 function checkUpdate() {
     debug('checking for updates...');
     if (localStorage.version === '0.5.20') {
-        debug('INCOMPATIBLE VERSION FOUND. Nuking DB...');
+        debug('INCOMPATIBLE VERSION FOUND.');
+        debug('Attempting to backup db to localStorage...');
+        localStorage.legacyBackup = getRawData();
+        debug('Nuking DB...');
         localStorage.isLegacy = true;
         minDB.reset();
     }

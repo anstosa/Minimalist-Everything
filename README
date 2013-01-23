@@ -111,6 +111,11 @@ Changelog
  0.6.0 (Jan 23)
  --------------
   * Added: Minor UI facelift
+    * FontAwesome for icons
+    * Roboto for fonts
+    * Moved to flexboxes for complex layout
+    * CSS modernization
+    * Other misc tweaks
   * Added: Minor UX improvements
   * Added: Refactored and modernized entire codebase
   * Changed: Changed editors from Ace to CodeMirror
@@ -119,6 +124,7 @@ Changelog
   * Changed: (Gmail) Hide user photos also hides point of Share button
   * Changed: (Gmail) Hiding the last button in a group uses a more reliable method or preserving the gutter
   * Fixed: Dashboard not loading
+  * Fixed: Active browserAction icon now has a transparent background
   * Fixed: (Gmail) Hide Google Bar
       * Not appearing correctly
       * Toggling when using new compose window

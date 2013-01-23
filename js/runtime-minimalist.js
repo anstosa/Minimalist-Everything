@@ -129,7 +129,7 @@ function buildModules() {
         bodyScripts = bodyScripts.replace(/_min\./g, '_min[' + i + '].');
         headScripts = headScripts.replace(/_min\./g, '_min[' + i + '].');
         while (styles.indexOf('_min.') != -1) {
-            styles = styles.replace(styles.substring(styles.indexOf('_min.'), styles.indexOf(' ', styles.indexOf('_min.'))), JSON.parse(MIN[i])[styles.substring(styles.indexOf('_min.') + 5,styles.indexOf(' ', styles.indexOf('_min.')))]);
+            styles = styles.replace(styles.substring(styles.indexOf('_min.'), styles.indexOf(' ', styles.indexOf('_min.'))), JSON.parse(_min[i])[styles.substring(styles.indexOf('_min.') + 5, styles.indexOf(' ', styles.indexOf('_min.')))]);
         }
     }
     headScripts = '\n    var _min = [' + _min + '];' + headScripts;
