@@ -40,8 +40,8 @@ var preferences,
     document.addEventListener('openTab', function() {
         chrome.extension.sendMessage({
             name: 'openTab',
-            url: _min.openTab.url,
-            isSelected: _min.openTab.isSelected
+            url: event.detail.url,
+            isSelected: event.detail.isSelected
         });
     });
 })();

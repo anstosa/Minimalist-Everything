@@ -1,14 +1,7 @@
 Announcements
 =============
 
-  Sorry about the lack of updates. Been busy at real work, will continue to maintain.
-
-  Please post bugs and feature requests in the issue tracker: [http://code.google.com/p/minimalist/issues]
-
-  Please ask questions or give feedback to me at my email: [ansel@anselsantosa.com]
-
-  Right now the UI is not where I want it. Especially the Edit page, it's busy and cumbersome.
-  This will be improving a lot, I promise.
+  I'm back! I will be continuing to maintain Minimalist from now on.
 
   Questions about permissions? See PERMISSIONS section below.
 
@@ -50,20 +43,10 @@ Features
 ========
 
   * Powerful, easy-to-use options pages for modules
+  * Pages and pages of customization options for Gmail and Google Reader
   * Syntax highlighting in module code editor
-  * Data sync
-  * Export User Scripts (Coming soon...)
   * Import from [UserScripts.org]
   * Import from [UserStyles.org]
-  * Import Stylebot (Coming soon...)
-
-  See the features of the default modules at their respective GitHub projects:
-  * Gmail: 2.0.1 is out! (Feature list coming Soon...)
-  * Google Calendar: (Coming Soon...)
-  * Google Reader: 2.0.0 is out! (Feature list coming Soon...)
-  * Google+: (Coming Soon...)
-  Find more modules on the wiki: (Coming soon)
-
 
 How do I use it?
 =================
@@ -108,6 +91,14 @@ Changelog
 
   NOTE: versions ending in 't' are test versions only published to trusted testers.
 
+ 0.6.2 (Jan 23)
+ --------------
+  * Fixed: update notification opens the correct pages now
+
+ 0.6.1 (Jan 23)
+ --------------
+  * Fixed: syntax error in master data file
+
  0.6.0 (Jan 23)
  --------------
   * Added: Minor UI facelift
@@ -118,11 +109,17 @@ Changelog
     * Other misc tweaks
   * Added: Minor UX improvements
   * Added: Refactored and modernized entire codebase
+  * Added: (Gmail) m4a support in better attachment icons
   * Changed: Changed editors from Ace to CodeMirror
+  * Changed: Moved screenshot data for core modules to file instead of module storage
   * Changed: (Gmail) Refactored and modernized all options
   * Changed: (Gmail) Moved Google User section to Header tab
   * Changed: (Gmail) Hide user photos also hides point of Share button
   * Changed: (Gmail) Hiding the last button in a group uses a more reliable method or preserving the gutter
+  * Changed: (Gmail) Performance and reliability improvements for highlight starred items
+  * Changed: (Gmail) Performance and reliability improvements for highlight selected
+  * Changed: (Gmail) Reliability improvements for hide unstarred stars
+  * Changed: (Gmail) Hide zero-inbox Google Reader ad to Hide Zero-inbox message
   * Fixed: Dashboard not loading
   * Fixed: Active browserAction icon now has a transparent background
   * Fixed: (Gmail) Hide Google Bar
@@ -143,12 +140,43 @@ Changelog
   * Fixed: (Gmail) Hide page count not working
   * Fixed: (Gmail) Hide page navigation not working
   * Fixed: (Gmail) Hide Preview Pane button not working
-  * Removed: (Gmail) Hide Google links. No longer necessary
+  * Fixed: (Gmail) Highlight read items not working
+  * Fixed: (Gmail) Highlight unread items not Fixed
+  * working: (Gmail) Hide reply placeholder not working
+  * Fixed: (Gmail) Hide sidebar ads not working
+  * Fixed: (Gmail) Hide trash message only partially hiding message
+  * Fixed: (Gmail) Hide call phone not working
+  * Fixed: (Gmail) Hide storage not working
+  * Fixed: (Gmail) Hide storage management not working
+  * Fixed: (Gmail) Hide legal not working
+  * Fixed: (Gmail) Hide account activity not working
+  * Fixed: (Reader) Open items in background not working
+  * Fixed: (Reader) Hide Google Bar not working
+  * Fixed: (Reader) Hide background and border not working
+  * Removed: (Gmail) Hide Google links. Redundant
   * Removed: (Gmail) Hide Google settings. No longer necessary
   * Removed: (Gmail) Hide Google+ link. No longer necessary
   * Removed: (Gmail) Hide privacy link. Reprioritization
-  * Removed: (Gmail) Add + operant support in search. No longer necessary
+  * Removed: (Gmail) Right align share button. No longer necessary
+  * Removed: (Gmail) Add + operand support in search. No longer necessary
   * Removed: (Gmail) Hide More tip. No longer necessary
+  * Removed: (Gmail) Hide consider including. No easy CSS solution. May re-introduce later.
+  * Removed: (Gmail) Hide "Invite X to Gmail". No longer necessary
+  * Removed: (Gmail) Hide Chat title bar. No longer necessary
+  * Removed: (Gmail) Hide Me in Chat. No longer necessary
+  * Removed: (Gmail) Hide Set Status. No longer necessary
+  * Removed: (Gmail) Hide Invites. No longer necessary
+  * Removed: (Gmail) Collapse gadget pane.
+  * Removed: (Reader) Animate transitions. As elegant as a sawed off shotgun...
+  * Removed: (Reader) Hide Google Links. Redundant
+  * Removed: (Reader) Right align share button. No longer necessary
+  * Removed: (Reader) Hide Google+ link. No longer necessary
+  * Removed: (Reader) Hide privacy link. Reprioritization
+  * Removed: (Reader) Hide Google settings. No longer necessary
+  * Removed: (Reader) Hide Search filter. No longer necessary
+  * Removed: (Reader) Hide Snippet view. Not necessary
+  * Removed: (Reader) Hide Reader blog. Not necessary
+  * Removed: (Reader) Hide Send to. Not necessary
 
  0.5.20 (Jan 11)
  ---------------

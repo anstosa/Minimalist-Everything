@@ -15,7 +15,7 @@ _min.gbar = {
         if (_min.gbar.originalElement === null) {
             setTimeout(_min.gbar.bootstrap, 500);
         } else {
-            _min.gbar.originalElement.setAttribute('min-gbar','hidden');
+            _min.gbar.originalElement.gbar.setAttribute('min-gbar','hidden');
             // don't create toggle if it exists
             if (document.getElementById('gbarToggle') === null) {
                 _min.gbar.toggleElement = document.createElement('div');
@@ -99,21 +99,25 @@ _min.header.bootstrap();
 _min.starred = {
     stars: undefined,
     inboxes: undefined,
-    starsInit: function() {
+    bootstrap: function() {
         if (document.querySelectorAll('.T-KT').length > 0) {
-            window.removeEventListener('DOMSubtreeModified', _min.starred.starsInit);
-            window.addEventListener('click', _min.starred.checkStars);
-            window.addEventListener('keypress', _min.starred.checkStars);
+            window.removeEventListener('DOMSubtreeModified', _min.starred.bootstrap);
+            window.addEventListener('click', _min.starred.update);
+            window.addEventListener('keypress', _min.starred.update);
         }
     },
-    checkStars: function() {
+    update: function() {
+        /* skip unrelated keystrokes */
+        if (event.type === 'keypress' &&
+            String.fromCharCode(event.which) !== 's'
+        ) { return; }
         /* Find stars and inboxes */
         _min.starred.stars = document.querySelectorAll('.T-KT');
         _min.starred.inboxes = document.querySelectorAll('.ae4');
         /* ignore star modifications */
         for (var i = 0, l = _min.starred.inboxes.length; i < l; i++) {
-            window.removeEventListener('click', _min.starred.checkStars);
-            window.removeEventListener('keypress', _min.starred.checkStars);
+            window.removeEventListener('click', _min.starred.update);
+            window.removeEventListener('keypress', _min.starred.update);
         }
         /* loop through stars */
         for (var i = 0, l = _min.starred.stars.length; i < l; i++) {
@@ -129,14 +133,13 @@ _min.starred = {
         }
         /* listen for star modifications */
         for (var i = 0, l = _min.starred.inboxes.length; i < l; i++) {
-            window.addEventListener('click', _min.starred.checkStars);
-            window.addEventListener('keypress', _min.starred.checkStars);
+            window.addEventListener('click', _min.starred.update);
+            window.addEventListener('keypress', _min.starred.update);
         }
     }
 };
-
 /* Listen for DOM modifications */
-window.addEventListener('DOMSubtreeModified', _min.starred.starsInit);
+window.addEventListener('DOMSubtreeModified', _min.starred.bootstrap);
 
 
 /* ### Main - Highlight starred rows ### */
@@ -217,3 +220,65 @@ document.addEventListener('keypress', function(event) {
         }, 1);
     }
 });
+
+
+/* ### Sidebar - Hide offline ### */
+
+_min.offline = {
+    chatList: undefined,
+    icons: undefined,
+    bootstrap: (function() {
+        console.log(document.body.getAttribute('class'));
+        _min.offline.icons = document.querySelectorAll('.vt');
+        if (_min.offline.icons.length > 0) {
+            _min.offline.chatList = _min.offlineicons[0].parentNode.parentNode.parentNode.parentNode;
+            _min.offline.chatList.addEventListener('DOMSubtreeModified', _min.offline.update);
+            _min.offline.update();
+        } else {
+            window.setTimeout(_min.offline.bootstrap, 1000);
+        }
+    })(),
+    update: function() {
+        _min.offline.chatList.removeEventListener('DOMSubtreeModified', _min.offline.update);
+        _min.offline.icons = document.querySelectorAll('.vt');
+        for (var i = 0, l = _min.offline.icons.length; i < l; i++) {
+            if (_min.offline.icons[i].getAttribute('class').indexOf('df') > 0) {
+                _min.offline.icons[i].parentNode.parentNode.parentNode.setAttribute('offline','true');
+            } else {
+                _min.offline.icons[i].parentNode.parentNode.parentNode.setAttribute('offline','');
+            }
+        }
+        _min.offline.chatList.addEventListener('DOMSubtreeModified', _min.offline.update);
+    }
+};
+
+
+/* ### Sidebar - Hide away ### */
+
+_min.away = {
+    chatList: undefined,
+    icons: undefined,
+    bootstrap: (function() {
+        console.log(document.body.getAttribute('class'));
+        _min.away.icons = document.querySelectorAll('.vt');
+        if (_min.away.icons.length > 0) {
+            _min.away.chatList = _min.awayicons[0].parentNode.parentNode.parentNode.parentNode;
+            _min.away.chatList.addEventListener('DOMSubtreeModified', _min.away.update);
+            _min.away.update();
+        } else {
+            window.setTimeout(_min.away.bootstrap, 1000);
+        }
+    })(),
+    update: function() {
+        _min.away.chatList.removeEventListener('DOMSubtreeModified', _min.away.update);
+        _min.away.icons = document.querySelectorAll('.vt');
+        for (var i = 0, l = _min.away.icons.length; i < l; i++) {
+            if (_min.away.icons[i].getAttribute('class').match(/\b(dc|da|dk)\b/) > 0) {
+                _min.away.icons[i].parentNode.parentNode.parentNode.setAttribute('away','true');
+            } else {
+                _min.away.icons[i].parentNode.parentNode.parentNode.setAttribute('away','');
+            }
+        }
+        _min.away.chatList.addEventListener('DOMSubtreeModified', _min.away.update);
+    }
+};

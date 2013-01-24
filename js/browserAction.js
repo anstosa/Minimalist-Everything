@@ -64,7 +64,7 @@ var allModules,
                     $('\
                         <li>\
                             <button class="toggle-module button subtle square" data-index="' + i + '" tip="Error: Could not get module state"><div class="icon-off"></div></button>\
-                            <span>' + modules[i].name + '</span>\
+                            <span>' + modules[i].name + '&nbsp;</span>\
                         </li>\
                     ').appendTo($('#activeModules'));
                     toggleButton(i);

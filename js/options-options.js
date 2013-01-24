@@ -31,6 +31,11 @@ function buildOptions(moduleIndex) {
         // add screenshot if exists
         if (option.hasOwnProperty('screen')) {
             $label.attr('screen', option.screen);
+        } else if (
+            modules[moduleIndex].author === 'Ansel Santosa' &&
+            SCREENS[modules[moduleIndex].name].hasOwnProperty(options[i].description)
+        ) {
+            $label.attr('screen', SCREENS[modules[moduleIndex].name][options[i].description]);
         }
 
         // check if option belongs to tab
@@ -59,7 +64,7 @@ function buildOptions(moduleIndex) {
                 var classes = option.fields[j].isColor ? 'color' : '',
                     value = option.fields[j].val || '';
                 $fields.append($(
-                    '<div class="option-' + j + ' field-row">' +
+                    '<div class="option-' + i + ' field-row">' +
                         '<label>' + option.fields[j].description + ': </label>' +
                         '<input type="text" class="' + classes + '" value="' + value + '">' +
                     '</div>'
@@ -188,8 +193,8 @@ function saveOptions() {
         modules[moduleIndex].options[i].isEnabled = $('#option-' + i).is(':checked');
 
         // loop through fields
-        for (var j = 0, m = $('.option-' + i + '.field').length; j < m; j++) {
-            modules[moduleIndex].options[i].fields[j].val = $('.option-' + i + '.field:nth-child(' + (j + 1) + ') input').val();
+        for (var j = 0, m = $('.option-' + i + '.field-row').length; j < m; j++) {
+            modules[moduleIndex].options[i].fields[j].val = $('.option-' + i + '.field-row:nth-child(' + (j + 1) + ') input').val();
         }
     }
     // send updated module

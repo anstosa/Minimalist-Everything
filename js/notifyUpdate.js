@@ -9,8 +9,10 @@ var modules;
 
 (function() {
     $('#minimalistUpdate').on('click', function() {
-        chrome.tabs.create({url: 'http://code.google.com/p/minimalist/#CHANGELOG'}, function() {
-            window.close();
+        chrome.tabs.create({url: 'https://code.google.com/p/minimalist/wiki/Changelog'}, function() {
+            chrome.tabs.create({url: chrome.extension.getURL('/html/options.html')}, function() {
+                window.close();
+            });
         });
     });
 })();

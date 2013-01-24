@@ -1,6 +1,6 @@
 {
-    "name": "Minimalist",
-    "version": "0.6.0",
+    "name": "Minimalist for Everything",
+    "version": "0.6.2",
     "manifest_version": 2,
     "description": "You live in webapps. Make them yours",
     "icons": {
@@ -14,7 +14,7 @@
     },
     "background": {
         "scripts": [
-            "js/data.js",
+            "data/master.js",
             "js/Module.js",
             "js/background.js"
         ],

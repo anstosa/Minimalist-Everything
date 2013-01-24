@@ -7,8 +7,7 @@
  **/
 
 var editorCss,
-    editorJsHead,
-    editorJsBody,
+    editorJs,
     editorAbout;
 
 /**
@@ -109,13 +108,7 @@ function buildEditor(moduleIndex, callback) {
         lineNumbers: true
     });
 
-    editorJsHead = editorJsHead || CodeMirror.fromTextArea($('#editor-js-head')[0], {
-        mode: 'javascript',
-        indentUnit: 4,
-        lineNumbers: true
-    });
-
-    editorJsBody = editorJsBody || CodeMirror.fromTextArea($('#editor-js-body')[0], {
+    editorJs = editorJs || CodeMirror.fromTextArea($('#editor-js')[0], {
         mode: 'javascript',
         indentUnit: 4,
         lineNumbers: true
@@ -133,8 +126,7 @@ function buildEditor(moduleIndex, callback) {
 
     editorAbout.on('change', activateEditSaveButton);
     editorCss.on('change', activateEditSaveButton);
-    editorJsHead.on('change', activateEditSaveButton);
-    editorJsBody.on('change', activateEditSaveButton);
+    editorJs.on('change', activateEditSaveButton);
 
     if (typeof callback === 'function') { callback(); }
 }
@@ -391,23 +383,15 @@ function editOption(optionIndex) {
         editorCss.setValue(content);
     }
 
-    editorJsHead.setValue('');
+    editorJs.setValue('');
     if (option.head && option.head.js) {
         var content = option.head.js[0];
         for (var i = 1, l = option.head.js.length; i < l; i++) {
             content += '\n' + option.head.js[i];
         }
-        editorJsHead.setValue(content);
+        editorJs.setValue(content);
     }
 
-    editorJsBody.setValue('');
-    if (option.hasOwnProperty('load') && option.load.hasOwnProperty('js')) {
-        var content = option.load.js[0];
-        for (var i = 1, l = option.load.js.length; i < l; i++) {
-            content += '\n' + option.load.js[i];
-        }
-        editorJsBody.setValue(content);
-    }
     disableEditSaveButton();
 
     $('#page-edit input[tip]').tooltip({trigger: 'focus', gravity: 's'});
@@ -499,8 +483,7 @@ function saveEdits(andSuppressReload) {
             var optionIndex = $('#options-tree .current').attr('id').replace('edit-option-',''),
                 option = modules[moduleIndex].options[optionIndex],
                 css = editorCss.getValue(),
-                jsHead = editorJsHead.getValue(),
-                jsBody = editorJsBody.getValue();
+                jsHead = editorJs.getValue();
 
             if (css.length > 0) {
                 option.head.css = css.split('\n');
@@ -511,11 +494,6 @@ function saveEdits(andSuppressReload) {
                 option.head.js = jsHead.split('\n');
             } else if (option.head && option.head.js) {
                 delete option.head.js;
-            }
-            if (jsBody.length > 0) {
-                option.load.js = jsBody.split('\n');
-            } else if (option.head && option.head.js) {
-                delete option.load.js;
             }
 
             option.isEnabled = $('#optionState').is(':checked');
@@ -534,7 +512,7 @@ function saveEdits(andSuppressReload) {
                 };
             }
 
-            if ($('#optionPreview').children('img').length > 0) {
+            if ($('#optionPreview').attr('src') !== undefined) {
                 option.screen = $('#optionPreview').attr('src');
             } else {
                 delete option.screen;

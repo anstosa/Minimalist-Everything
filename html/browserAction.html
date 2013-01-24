@@ -14,7 +14,7 @@
 
         h1 {
             color: #fff;
-            margin: 0;
+            margin: -10px 0 0;
             text-shadow: 0 0 1px rgba(255,255,255,.25);
         }
 
@@ -29,8 +29,13 @@
         li {
             color: #fff;
             list-style-type: none;
-            margin-bottom: 5px;
             overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        li + li {
+            margin-top: 5px;
         }
 
         .browser-action .button.group {
@@ -47,7 +52,7 @@
         li span {
             float: left;
             display: inline-block;
-            margin: 6px 0 0 5px;
+            margin: 3px 0 0 5px;
             width: 130px;
         }
 

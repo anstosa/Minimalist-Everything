@@ -346,7 +346,6 @@ header {
         float: left;
         line-height: 40px;
         margin: 0 20px;
-        overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         max-width: 370px
@@ -570,10 +569,9 @@ header {
 }
 
     #editor-css,
-    #editor-js-head,
-    #editor-js-body,
+    #editor-js,
     #editor-about {
-        min-height: 300px;
+        min-height: 400px;
         position: relative;
     }
 

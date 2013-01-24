@@ -408,8 +408,230 @@
     background-color: _min.rowsR !important;
 }
 
+
 /* ### Main - Highlight unRead items  ### */
 
 .zE {
     background-color: _min.rowsU !important;
 }
+
+
+/* ### Main - Highlight unRead items  ### */
+
+.zA[starred="true"] {
+    background-color: _min.rowsS ;
+}
+
+
+/* ### Main - Highlight checked  ### */
+
+.x7 {
+    background-color: _min.chkd !important;
+}
+
+
+/* ### Main - Highlight selected  ### */
+
+.zA:hover,
+.zE:hover,
+.zA[selected="true"],
+.zE[selected="true"]{
+    background-color: _min.rowsH !important;
+}
+
+
+/* ### Main - Hide unstarred stars ### */
+
+/* Hide stars */
+.T-KT {
+    opacity: 0;
+}
+/* Show stars */
+.zA:hover .T-KT,    /* row hover */
+.PF.PE ~ td .T-KT,  /* row select */
+.T-KT.T-KT-Jp {     /* starred */
+    opacity: 1;
+}
+
+
+/* ### Main - Better attachement icons ### */
+
+table img[title$="ods"], table img[title$="xls"], table img[title$="XLS"], table img[title$="xlsx"], table img[title$="XLSX"] { width: 0px !important; height: 0px !important; padding: 16px 0 0 16px !important; background-position: top left !important; background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAzSURBVDjLYxBbnnoeiP+jYQYsYuj4/P///xlwKSTGgP/DyACy8WggjhqAbABluRFEUIIB5xoeIOjKcLkAAAAASUVORK5CYII=) !important; }
+table img[title$="mp3"], table img[title$="MP3"], table img[title$="m4a"], table img[title$="M4A"], table img[title$="wma"], table img[title$="WMA"], table img[title$="aac"], table img[title$="AAC"], table img[title$="wav"], table img[title$="WAV"], table img[title$="flac"], table img[title$="FLAC"] { width: 0 !important; height: 0 !important; padding: 16px 0 0 16px !important; background-position: top left !important; background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABxSURBVDjLY/j//z8DJRhCEAeagdgNWYCQAeFo/Ewg7gHiIiDmJGRAOFQxOrCFiifgMwCmuQeHy/yhcsrYDEDWjGwA3NlQGhQeCcgG9ODAMNADDQMUi0g1AJnvNiAG4PUCxYFItWikSkKiSlImLTNRggGh29zHlFouTQAAAABJRU5ErkJggg==) !important; }
+table img[title$="odf"], table img[title$="odt"], table img[title$="txt"], table img[title$="doc"], table img[title$="DOC"], table img[title$="docx"], table img[title$="DOCX"] { width: 0 !important; height: 0 !important; padding: 16px 0 0 16px !important; background-position: top left !important;  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAzSURBVDjLY8ie9/88EP8nA5////8/AwOZmsGYJgYwEIFHXTAyXUDflEiWAZTlRhBBCQYAgc/cUg2HY7YAAAAASUVORK5CYII=) !important; }
+table img[title$="html"], table img[title$="HTML"], table img[title$="js"], table img[title$="xml"] { width: 0 !important; height: 0 !important; padding: 16px 0 0 16px !important; background-position: top left !important;  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAA4SURBVDiNY6jMe3ceiP+Tgc////+fgYFMzWCMbgADCZg2BtDcC/8JuWDUgGFhANkJibLcCCIowQBFYHK8tWrQGAAAAABJRU5ErkJggg==) !important; }
+table img[title$="js"], table img[title$="py"], table img[title$="java"], table img[title$="class"] { width: 0 !important; height: 0 !important; padding: 16px 0 0 16px !important; background-position: top left !important;  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAB+SURBVDjLY2DAATzbngsAcQOIxqXm////eDWfB+L/UFqAaAOQNIOwAhJbgKABaJoFcIlhNQCfQlxycANwKYB5A5casAEEbAYF4nsgDsBmCMwAWGgTwv3ohpBqwHxcBsAE9uPxQgJOLxARiAZ4A5Eq0UiVhESVpEyVzERqdgYAL9pZyhSoofsAAAAASUVORK5CYII=) !important; }
+table img[title$="jar"], table img[title$="db"], table img[title$="apk"], table img[title$="zip"], table img[title$="ZIP"], table img[title$="rar"], table img[title$="RAR"], table img[title$="tgz"], table img[title$="TGZ"], table img[title$="tar"], table img[title$="TAR"] { width: 0 !important; height: 0 !important; padding: 16px 0 0 16px !important; background-position: top left !important;background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABDSURBVDjLY/j//z8DJZhh8BkABD24MN0MwAlGkBeKcLigiFgDOLEYAuJzkuIFISBuhmoG0VKkeAEGpJA1E23A0MtMANu+Q/DWtwsZAAAAAElFTkSuQmCC) !important; }
+table img[title$="pdf"], table img[title$="PDF"] { width: 0 !important; height: 0 !important; padding: 16px 0 0 16px !important; background-position: top left !important; background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAACaSURBVDjLY/j//z8DJZjht48+NjwfiN8DsQEOeYIGnIdiB3INuA/E/ykxYD3UAAZyDWiAhgEDpS4IIMcABajm9dCwECDVgAaoRuTYECDWAAGo3xOg7ACoa0Bi+5FwAS4DGpCcD9M0Hylh3Ye66D82A2Ah34AnBTpAXReAbIAAzFSozQzEYGQDYAH1HleIEzLgP6GMg9cASrMzAFbJ+7pbxYEnAAAAAElFTkSuQmCC) !important; }
+table img[title$="psd"], table img[title$="odg"], td.yf img[title$="tif"], td.yf img[title$="tiff"], td.yf img[title$="jpeg"], td.yf img[title$="JPEG"], td.yf img[title$="TIF"], td.yf img[title$="TIFF"], td.yf img[title$="bmp"], td.yf img[title$="jpg"], td.yf img[title$="gif"], td.yf img[title$="png"], td.yf img[title$="BMP"], td.yf img[title$="JPG"], td.yf img[title$="GIF"], td.yf img[title$="PNG"], td.gH img[title$="tif"], td.gH img[title$="tiff"], td.gH img[title$="jpeg"], td.gH img[title$="JPEG"], td.gH img[title$="TIF"], td.gH img[title$="TIFF"], td.gH img[title$="bmp"], td.gH img[title$="jpg"], td.gH img[title$="gif"], td.gH img[title$="png"], td.gH img[title$="BMP"], td.gH img[title$="JPG"], td.gH img[title$="GIF"], td.gH img[title$="PNG"] { width: 0 !important; height: 0 !important; padding: 16px 0 0 16px !important; background-position: top left !important; background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABaSURBVDjLY2BgYMgA4gYycMb///8ZGMjUDMajBuA3oIASAwIYICCAkKHYDMhgQAUJUPEIbIaiGwDSzIFmAAdUEwcSPwOXAeiacQEOXAaQAgZZOqAsN4IISjAAAWm6BHV+IMUAAAAASUVORK5CYII=) !important; }
+table img[title$="odp"], table img[title$="ppt"], table img[title$="pps"], table img[title$="PPT"], table img[title$="PPS"], table img[title$="pptx"], table img[title$="ppsx"], table img[title$="PPTX"], table img[title$="pot"], table img[title$="PPSX"] { width: 0 !important; height: 0 !important; padding: 16px 0 0 16px !important;background-position: top left !important;background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAwSURBVDjLY3jgZX8eiP+Tgc////+fgYFMzWA8+AxgIAGPGjBoDRjCKZGy3AgiKMEAQeIstyyBWPoAAAAASUVORK5CYII=) !important;}
+table img[title$="mov"], table img[title$="MOV"], table img[title$="m4v"], table img[title$="mp4"], table img[title$="M4V"], table img[title$="MP4"], table img[title$="avi"], table img[title$="AVI"], table img[title$="wmv"], table img[title$="WMV"], table img[title$="amv"], table img[title$="AMV"], table img[title$="mpeg"], table img[title$="MPEG"], table img[title$="mkv"], table img[title$="MKV"], table img[title$="flv"], table img[title$="FLV"] { width: 0 !important; height: 0 !important; padding: 16px 0 0 16px !important;background-position: top left !important;background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABRSURBVDiNY/j//z8DJRgEKoDYgwECMoC4AYoJisEMgEkqALEEEp+gGLoBBUDMAcQOxIrBDCAboLuAZEx1A0gBtHHBqAEUGFBBpgEVYAMozc4A2DreP69kX2YAAAAASUVORK5CYII=) !important;}
+
+
+/* ### Main - Hide reply placeholder ### */
+
+.gA {
+    display: none;
+}
+
+
+/* ### Main - Hide sidebar ads ### */
+
+.oM {
+    display: none;
+}
+
+
+/* ### Main - Hide bottom ads ### */
+
+.PS {
+    display: none;
+}
+
+
+/* ### Main - Hide zero-inbox message ### */
+
+.TC[colspan="3"] {
+    display: none;
+}
+
+
+/* ### Main - Hide sidebar ### */
+
+.Bu:not(:first-child) {
+    display: none;
+}
+
+
+/* ### Main - Hide trash message ### */
+
+.ya {
+    display: none;
+}
+
+
+/* ### sidebar - Hide Mail/Contacts/Tasks menu ### */
+
+/* Hide menu */
+.aki {
+    display: none;
+}
+/* reposition compose */
+.z0 {
+    margin: 10px 0 20px 8px;
+    position: relative;
+    z-index: 99;
+}
+@media screen and (max-width: 1060px), screen and (max-height: 590px) {
+    /* reposition compose */
+    .z0 {
+        margin: 3px 0 20px 8px;
+    }
+}
+
+
+/* ### sidebar - Hide Compose button ### */
+
+.z0 {
+    display: none;
+}
+
+/* ### sidebar - Hide more link ### */
+
+[gh="mll"] {
+    display: none !important;
+}
+
+
+/* ### sidebar - Hide chat ### */
+
+[gh="c"] {
+    display: none;
+}
+
+
+/* ### sidebar - Hide chat search ### */
+
+.dF {
+    display: none;
+}
+
+
+/* ### sidebar - Hide You are Invisible alert ### */
+
+.ul {
+    display: none;
+}
+
+
+/* ### sidebar - Hide call phone ### */
+
+/* Hide button */
+.T-I-Js-IF {
+    display: none !important;
+}
+/* round corners on hangout */
+.T-I-Js-Gs {
+    border-radius: 2px !important;
+}
+
+
+/* ### sidebar - Hide statuses ### */
+
+.M3aZbb + tr {
+    display: none;
+}
+
+
+/* ### sidebar - Hide offline ### */
+
+[offline="true"] {
+    display: none;
+}
+
+
+/* ### sidebar - Hide away ### */
+
+[away="true"] {
+    display: none;
+}
+
+
+/* ### sidebar - Hide spam count ### */
+
+[href$='#spam'] {
+    visibility: hidden;
+}
+[href$='#spam']:before {
+    content: 'Spam';
+    visibility: visible;
+    font-weight: 400;
+}
+
+/* ### footer - Hide storage ### */
+
+.mh {
+    visibility: hidden;
+}
+
+
+/* ### Main - Hide stoprage manage ### */
+
+.aeY {
+    display: none;
+}
+
+
+/* ### Main - Hide legal ### */
+
+.aeU {
+    visibility: hidden;
+}
+
+
+/* ### Main - Hide account activity ### */
+
+.ae3 {
+    display: none;
+}
+

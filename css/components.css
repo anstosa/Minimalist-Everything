@@ -68,8 +68,8 @@ a.button {
 
 .button.square {
     float: left;
-    height: 32px;
-    padding: 5px 9px;
+    height: 25px;
+    padding: 5px 4px;
 }
 
 .button.group {
