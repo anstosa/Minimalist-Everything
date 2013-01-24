@@ -91,6 +91,10 @@ Changelog
 
   NOTE: versions ending in 't' are test versions only published to trusted testers.
 
+ 0.6.3 (Jan 24)
+ --------------
+  * Fixed: Database migration failing for legacy accounts
+
  0.6.2 (Jan 23)
  --------------
   * Fixed: update notification opens the correct pages now

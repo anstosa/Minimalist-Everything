@@ -1,4 +1,4 @@
-var VERSION = '0.6.2',
+var VERSION = '0.6.3',
     preferences = {
         isEnabled: true,
         isDebugging: setDebugging() // must pre-load for init debugging
@@ -18,10 +18,12 @@ var VERSION = '0.6.2',
     debug('initializing...');
     loadPreferences();
     // Request local database
-    var request = webkitIndexedDB.open('Minimalist', 2);
+    var request = webkitIndexedDB.open('Minimalist', 3);
     request.onupgradeneeded = function(e) {
         debug('migrating database...');
-        request.result.createObjectStore('Modules', {keyPath: 'index'});
+        if (!request.result.objectStoreNames.contains('Modules')) {
+            request.result.createObjectStore('Modules', {keyPath: 'index'});
+        }
         minDB.onSave = function() {
             window.location.reload();
         };
@@ -86,7 +88,11 @@ function loadModules(callback) {
  */
 function checkUpdate() {
     debug('checking for updates...');
-    if (localStorage.version === '0.5.20') {
+    if (localStorage.version === '0.5.20' ||
+        localStorage.version === '0.6.0' ||
+        localStorage.version === '0.6.1' ||
+        localStorage.version === '0.6.2'
+    ) {
         debug('INCOMPATIBLE VERSION FOUND.');
         debug('Attempting to backup db to localStorage...');
         localStorage.legacyBackup = getRawData();
