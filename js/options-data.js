@@ -14,6 +14,24 @@ var tabId;
         tabId = response.id;
     });
 
+    $('#repair').on('click', function() {
+        $('#repair').html(
+            '<div class="icon-spinner icon-spin pull-left"></div>' +
+            'Repairing...'
+        );
+        chrome.extension.sendMessage({name: 'updateCoreModulesModule'}, function(response) {
+            buildDashboard(false);
+            setTimeout(function() {
+                $('#repair').html(
+                    '<div class="icon-ambulance pull-left"></div>' +
+                    'Repairing Core Modules'
+                );
+                navigate('Dashboard');
+            }, 750);
+        });
+
+    });
+
     $('#reset').on('click', function() {
         $('#reset-cancel, #reset-confirm')
             .removeClass('hidden')
@@ -43,16 +61,18 @@ var tabId;
                 'Nuke Settings'
             );
             buildDashboard();
-        },2000);
+        }, 2000);
     });
 
     $('#sync-upload').on('click', function() {
         $(this).find('span').text('Uploading...');
         chrome.extension.sendMessage({name: 'upload'}, function() {
-            $('#sync-upload span').text('Uploaded!');
             setTimeout(function() {
-                $('#sync-upload span').text('Upload Data');
-            }, 2000);
+                $('#sync-upload span').text('Uploaded!');
+                setTimeout(function() {
+                    $('#sync-upload span').text('Upload Data');
+                }, 2000);
+            }, 750);
         });
     });
 
@@ -60,12 +80,15 @@ var tabId;
         $(this).find('span').text('Downloading...');
         chrome.extension.onMessage.addListener(function(request) {
             if (request.action == 'onDownload') {
-                console.log(request);
                 if (request.response) {
-                    $('#sync-download span').text('Downloaded!');
-                    setTimeout(buildDashboard,2000);
+                    setTimeout(function() {
+                        $('#sync-download span').text('Downloaded!');
+                        setTimeout(buildDashboard, 2000);
+                    }, 750);
                 } else {
-                    $('#sync-download span').text('No Cloud Data!');
+                    setTimeout(function() {
+                        $('#sync-download span').text('No Cloud Data!');
+                    }, 750);
                 }
                 setTimeout(function() {
                     $('#sync-download span').text('Download Data');

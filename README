@@ -75,6 +75,11 @@ ToDo List
 Changelog
 =========
 
+ 0.6.7 (Feb 03)
+ --------------
+  * Added: Repair Core Modules option in Data. This will restore your core modules while preserving your options
+  * Fixed: (Reader) Open items in background not working with highlighted items
+
  0.6.6 (Feb 03)
  --------------
   * Fixed: Downloading data from sync breaking modules
@@ -91,10 +96,10 @@ Changelog
   * Changed: Import now overwrites conflicting modules and leaves others alone
   * Changed: Update notifications for minor updates
   * Changed: Copy code button is visible whenever there is something to be copied
-  * Fixed: Hide Storage not working in some non-US locales
-  * Fixed: Hide Storage Manage not working in some non-US locales
-  * Fixed: Hide Call Phone button hiding other buttons
-  * Fixed: Hide reply placeholder also hiding reply compose window
+  * Fixed: (Gmail) Hide Storage not working in some non-US locales
+  * Fixed: (Gmail) Hide Storage Manage not working in some non-US locales
+  * Fixed: (Gmail) Hide Call Phone button hiding other buttons
+  * Fixed: (Gmail) Hide reply placeholder also hiding reply compose window
   * Fixed: Install from UserScripts not working
   * Fixed: Install from UserStyles not working
   * Fixed: Install from StyleBot not working

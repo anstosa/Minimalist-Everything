@@ -262,24 +262,6 @@
         <div class="page" id="page-data">
             <h1>Data</h1>
             <section>
-                <h3>Reset</h3>
-                <div>
-                    <p><strong>WARNING:</strong> This will reset everything to its defaults. Backup your settings first.<p>
-                    <button id="reset" class="button red">
-                        <div class="icon-warning-sign pull-left"></div>
-                        Nuke Settings
-                    </button>
-                    <button id="reset-cancel" class="button group first green hidden">
-                        <div class="icon-remove pull-left"></div>
-                        Cancel Nuke
-                    </button>
-                    <button id="reset-confirm" class="button group last red hidden">
-                        <div class="icon-ok pull-left"></div>
-                        Confirm Nuke
-                    </button>
-                </div>
-            </section>
-            <section>
                 <h3>Sync</h3>
                 <div>
                     <p>Minimalist can sync your module options accross computers.<p>
@@ -290,6 +272,35 @@
                     <button id="sync-download" class="button group last subtle green">
                         <div class="icon-cloud-download pull-left"></div>
                         <span>Download Data</span>
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h3>Repair</h3>
+                <div>
+                    <p>If you are seeing a corrupted options or edit page, try this automated repair before you Nuke your settings.<p>
+                    <p>The automated repair will restore your core modules to their original state while preserving your selected options<p>
+                    <button id="repair" class="button green">
+                        <div class="icon-ambulance pull-left"></div>
+                        <span>Repair Core Modules</span>
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h3>Reset</h3>
+                <div>
+                    <p><strong>WARNING:</strong> This will reset everything to its defaults. Backup your settings first.<p>
+                    <button id="reset" class="button subtle red">
+                        <div class="icon-warning-sign pull-left"></div>
+                        Nuke Settings
+                    </button>
+                    <button id="reset-cancel" class="button group first green hidden">
+                        <div class="icon-remove pull-left"></div>
+                        Cancel Nuke
+                    </button>
+                    <button id="reset-confirm" class="button group last red hidden">
+                        <div class="icon-ok pull-left"></div>
+                        Confirm Nuke
                     </button>
                 </div>
             </section>

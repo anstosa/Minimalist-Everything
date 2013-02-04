@@ -1,4 +1,4 @@
-var VERSION = '0.6.6',
+var VERSION = '0.6.7',
     preferences = {
         isEnabled: true,
         isDebugging: setDebugging() // must pre-load for init debugging
