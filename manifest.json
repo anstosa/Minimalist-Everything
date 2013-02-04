@@ -1,6 +1,6 @@
 {
     "name": "Minimalist for Everything",
-    "version": "0.6.3",
+    "version": "0.6.6",
     "manifest_version": 2,
     "description": "You live in webapps. Make them yours",
     "icons": {
@@ -27,32 +27,29 @@
             "run_at": "document_start",
             "all_frames": true
         }, {
-            "matches": [ "http://userstyles.org/styles/*" ],
+            "matches": [ "*://userstyles.org/styles/*" ],
             "css": [
                 "css/components.css",
                 "css/import.css"
             ],
             "js": [
-                "js/libs/jquery.min.js",
                 "js/runtime-userstyles.js"
             ],
             "run_at": "document_start"
         }, {
-            "matches": [ "http://userscripts.org/scripts/*" ],
+            "matches": [ "*://userscripts.org/scripts/*" ],
             "css": [
                 "css/components.css",
                 "css/import.css"
             ],
             "js": [
-                "js/libs/jquery.min.js",
                 "js/runtime-userscripts.js"
             ],
             "run_at": "document_start"
         }, {
-            "matches": [ "http://stylebot.me/styles/*" ],
+            "matches": [ "*://stylebot.me/styles/*" ],
             "css": [ "css/import.css" ],
             "js": [
-                "js/libs/jquery.min.js",
                 "js/runtime-stylebot.js"
             ],
             "run_at": "document_start"
@@ -61,11 +58,10 @@
     "options_page": "html/options.html",
     "permissions": [
        "<all_urls>",
-       "bookmarks",
        "clipboardWrite",
-       "contextMenus",
        "notifications",
        "tabs",
+       "storage",
        "unlimitedStorage"
     ]
 }

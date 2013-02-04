@@ -1,4 +1,4 @@
-var VERSION = '0.6.3',
+var VERSION = '0.6.6',
     preferences = {
         isEnabled: true,
         isDebugging: setDebugging() // must pre-load for init debugging
@@ -97,7 +97,7 @@ function checkUpdate() {
         debug('Attempting to backup db to localStorage...');
         localStorage.legacyBackup = getRawData();
         debug('Nuking DB...');
-        localStorage.isLegacy = true;
+        localStorage.hasUpdated = true;
         minDB.reset();
     }
     if (!localStorage.version) {
@@ -107,11 +107,10 @@ function checkUpdate() {
     }
     if (localStorage.version !== VERSION) {
         debug('Updated to version ' + VERSION);
+        localStorage.hasUpdated = true;
         updateCoreModules();
-        if (isMajorUpdate(localStorage.version)) {
-            var notification = webkitNotifications.createHTMLNotification('html/notifyUpdate.html#-1');
-                notification.show();
-        }
+        var notification = webkitNotifications.createHTMLNotification('html/notifyUpdate.html#-1');
+            notification.show();
         localStorage.version = VERSION;
     }
 }
@@ -168,9 +167,9 @@ function loadMessageService() {
 
                 case 'getGranularRawData':
                     sendResponse({
-                        modules: modules,
-                        isEnabled: preferences.isEnabled,
-                        version: VERSION
+                        'version': VERSION,
+                        'preferences': preferences,
+                        'modules': modules
                     });
                     break;
 
@@ -192,8 +191,7 @@ function loadMessageService() {
                     break;
 
                 case 'openTab':
-                    chrome.tabs.create({'url': request.url, 'selected': request.isSelected});
-                    sendResponse();
+                    chrome.tabs.create({'url': request.url, 'selected': request.isSelected}, sendResponse);
                     break;
 
                 case 'reinit':
@@ -229,9 +227,46 @@ function loadMessageService() {
                     sendResponse();
                     break;
 
-                case 'setRawData':
-                    sendResponse({wasSuccessful: setRawData(request.preferences, request.moduleData)});
+                case 'importRawData':
+                    importRawData(request.data, sendResponse);
                     break;
+
+                case 'upload':
+                    chrome.storage.sync.clear();
+                    var data = getRawData(true);
+                    if (data.length > Math.floor(chrome.storage.sync.QUOTA_BYTES_PER_ITEM / 6)) {
+                       data = data.match(new RegExp('.{1,' + Math.floor(chrome.storage.sync.QUOTA_BYTES_PER_ITEM / 6) + '}', 'g'));
+                       console.log(data);
+                    }
+                    var buffer = {};
+                    for (var i = 0, l = data.length; i < l; i++) {
+                        buffer['data' + (i < 10 ? '0' + i : i)] = data[i];
+                    }
+                    chrome.storage.sync.set(buffer);
+                    sendResponse();
+                    break;
+
+                case 'download':
+                    chrome.storage.sync.get(null, function(response) {
+                        if (Object.keys(response).length > 0) {
+                            var buffer = '';
+                            for (var key in response) {
+                                buffer += response[key];
+                            }
+                            importRawData(buffer, function() {
+                                chrome.tabs.sendMessage(request.tabId, {
+                                    action: 'onDownload',
+                                    response: true
+                                });
+                            });
+                        } else {
+                            chrome.tabs.sendMessage(request.tabId, {
+                                action: 'onDownload',
+                                response: false
+                            });
+                        }
+                    });
+                    return true;
 
                 default:
                     console.error('Unexpected message: ' + request.name);
@@ -429,6 +464,7 @@ function getModuleIndex(name, author) {
     return -1;
 }
 
+
 /**
  * Installs or updates given module
  * @param {Object} module module to be added
@@ -456,39 +492,82 @@ function uninstallModule(i) {
 }
 
 /**
- * Replace all local data with given data
- * @param {Object} preferenceData new preferences
- * @param {Array} moduleData      Array of Stringified modules
- * @param {function} callback     optional callback function
+ * Import raw data, overwriting conflicts
+ * @param {String}   data     Raw data
+ * @param {function} callback Optional callback function
  */
-function setRawData(preferenceData, moduleData, callback) {
-    try {
-        for (var i = 0, l = moduleData.length; i < l; i++) {
-            try {
-                moduleData[i] = JSON.parse(moduleData[i]);
-            } catch(e) {
-                debug(e);
+function importRawData(data, callback) {
+    data = JSON.parse(data);
+
+    preferences = data.preferences;
+    for (var i = 0, l = data.modules.length; i < l; i++) {
+        var replaced = false;
+        for (var j = 0, m = modules.length; j < m; j++) {
+            if (data.modules[i].author === modules[j].author &&
+                data.modules[i].name === modules[j].name
+            ) {
+                modules[j] = data.isStripped ? unStrip(data.modules[i], modules[j]) : data.modules[i];
+                replaced = true;
+                break;
             }
         }
-        preferences = preferenceData;
-        modules = moduleData;
-        save();
-        if (typeof callback === 'function') { callback(true); }
-    } catch(e) {
-        if (typeof callback === 'function') { callback(false); }
+        if (!replaced) {
+            modules.push(data.modules[i]);
+        }
     }
+    save();
+    if (typeof callback === 'function') { callback(); }
+}
+
+/**
+ * Apply stripped options to existing module
+ * @param  {Object} stripped   Module with stripped options
+ * @param  {Object} unstripped Existing module
+ * @return {Object}            Module with applied options
+ */
+function unStrip(stripped, unstripped) {
+    for (var i = 0, l = stripped.options.length; i < l; i++) {
+        for (var j = 0, m = unstripped.options.length; j < m; j++) {
+            if (stripped.options[i].description == unstripped.options[j].description) {
+                for (var key in stripped.options[i]) {
+                    unstripped.options[j][key] = stripped.options[i][key];
+                }
+                break;
+            }
+        }
+    }
+    return unstripped;
 }
 
 /**
  * Get raw data for export
+ * @param {Boolean} strip Strip out option data
  * @return {String} raw data
  */
-function getRawData() {
-    var moduleString = JSON.stringify(modules[0]);
-    for (var i = 1, l = modules.length; i < l; i++) {
-        moduleString += '|||' + JSON.stringify(modules[i]);
+function getRawData(strip) {
+    var exportModules = modules;
+    if (strip) {
+        for (var i = 0, l = modules.length; i < l; i++) {
+            for (var j = 0, m = modules[i].options.length; j < m; j++) {
+                for (var key in modules[i].options[j]) {
+                    if (key !== 'description' &&
+                        key !== 'isEnabled' &&
+                        key !== 'fields'
+                    ) {
+                        delete modules[i].options[j][key];
+                    }
+                }
+            }
+        }
     }
-    return VERSION + '###' + preferences.isEnabled + '|||' + moduleString;
+    return JSON.stringify({
+        'version': VERSION,
+        'isStripped': strip,
+        'preferences': {
+            'isEnabled': preferences.isEnabled
+        },
+        'modules': exportModules
+    });
 }
 
 /**

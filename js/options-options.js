@@ -33,6 +33,7 @@ function buildOptions(moduleIndex) {
             $label.attr('screen', option.screen);
         } else if (
             modules[moduleIndex].author === 'Ansel Santosa' &&
+            SCREENS[modules[moduleIndex].name] &&
             SCREENS[modules[moduleIndex].name].hasOwnProperty(options[i].description)
         ) {
             $label.attr('screen', SCREENS[modules[moduleIndex].name][options[i].description]);

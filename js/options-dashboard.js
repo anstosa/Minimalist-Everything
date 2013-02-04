@@ -129,18 +129,12 @@ var modules,
         $('#version').text(localStorage.version);
 
         // populate update
-        if (localStorage.isLegacy) {
-            // install core modules if not isntalled
-            if ($('#module-0').length < 1) {
-                chrome.extension.sendMessage({name: 'updateCoreModulesModule'}, function(response) {
-                    buildDashboard();
-                });
-            }
+        if (localStorage.hasUpdated) {
             // show notice
-            $('#legacy-notice').removeClass('hidden');
-            $('#legacy-dismiss').on('click', function() {
-                $('#legacy-notice').addClass('hidden');
-                delete localStorage.isLegacy;
+            $('#update-notice').removeClass('hidden');
+            $('#update-dismiss').on('click', function() {
+                $('#update-notice').addClass('hidden');
+                delete localStorage.hasUpdated;
             });
         }
     });
@@ -171,6 +165,11 @@ function buildDashboard(andSwitch, callback) {
         var $moduleList = $('#module-list').empty();
 
         if (modules.length === 0) {
+            if (localStorage.hasUpdated) {
+                chrome.extension.sendMessage({name: 'updateCoreModulesModule'}, function(response) {
+                    buildDashboard();
+                });
+            }
             $moduleList.html(
                 '<h2>You have no modules installed...</h2>' +
                 '<br>' +
@@ -205,6 +204,19 @@ function buildDashboard(andSwitch, callback) {
                         .find('span')
                             .text('Enable')
                 ;
+            }
+        }
+
+        for (var i = 0, l = modules.length; i < l; i++) {
+            if (modules[i].author === 'Ansel Santosa' &&
+                modules[i].name.indexOf('Minimalist for') > -1
+            ) {
+                chrome.extension.sendMessage({
+                    name: 'uninstallModule',
+                    module: i
+                }, function(response) {
+                    buildDashboard();
+                });
             }
         }
 

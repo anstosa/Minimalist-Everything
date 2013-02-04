@@ -6,9 +6,14 @@
  **/
 
 var exportTimer;
+var tabId;
 
 /* Initialize data tab*/
 (function() {
+    chrome.tabs.getCurrent(function(response) {
+        tabId = response.id;
+    });
+
     $('#reset').on('click', function() {
         $('#reset-cancel, #reset-confirm')
             .removeClass('hidden')
@@ -32,7 +37,45 @@ var exportTimer;
             '<div class="icon-spinner icon-spin pull-left"></div>' +
             'Reseting Data...'
         );
-        setTimeout(buildDashboard,2000);
+        setTimeout(function() {
+            $('#reset').html(
+                '<div class="icon-warning-sign pull-left"></div>' +
+                'Nuke Settings'
+            );
+            buildDashboard();
+        },2000);
+    });
+
+    $('#sync-upload').on('click', function() {
+        $(this).find('span').text('Uploading...');
+        chrome.extension.sendMessage({name: 'upload'}, function() {
+            $('#sync-upload span').text('Uploaded!');
+            setTimeout(function() {
+                $('#sync-upload span').text('Upload Data');
+            }, 2000);
+        });
+    });
+
+    $('#sync-download').on('click', function() {
+        $(this).find('span').text('Downloading...');
+        chrome.extension.onMessage.addListener(function(request) {
+            if (request.action == 'onDownload') {
+                console.log(request);
+                if (request.response) {
+                    $('#sync-download span').text('Downloaded!');
+                    setTimeout(buildDashboard,2000);
+                } else {
+                    $('#sync-download span').text('No Cloud Data!');
+                }
+                setTimeout(function() {
+                    $('#sync-download span').text('Download Data');
+                }, 2000);
+            }
+        });
+        chrome.extension.sendMessage({
+            name: 'download',
+            tabId: tabId
+        });
     });
 
     $('#export').on('click', function() {
@@ -42,8 +85,6 @@ var exportTimer;
             .siblings('#exportSome, #exportAll')
                 .removeClass('hidden')
                 .end()
-            .siblings('#exportCopy')
-                .addClass('hidden')
         ;
         exportTimer = setTimeout(hideExportOptions, 10000);
     });
@@ -52,27 +93,21 @@ var exportTimer;
         chrome.extension.sendMessage({name: 'getRawData'}, function(response) {
             $('#dataField').val(response.data);
             $('#import span').text('Import');
-            $('#exportCopy').removeClass('hidden');
             hideExportOptions();
         });
     });
 
     $('#exportSelected').on('click', function() {
         chrome.extension.sendMessage({name: 'getGranularRawData'}, function(response) {
-            var modulesData = response.modules;
-                exportData = response.version + '$$$';
+            var exportData = response;
 
-            for (var i = modulesData.length - 1; i >= 0; i--) {
+            for (var i = exportData.modules.length - 1; i >= 0; i--) {
                 if (!$('#export-' + i).is(':checked')) {
-                    modulesData.splice(i,1);
-                } else {
-                    modulesData[i] = JSON.stringify(modulesData[i]);
+                    exportData.modules.splice(i,1);
                 }
             }
-            exportData += modulesData.join('|||');
-            $('#dataField').val(exportData);
+            $('#dataField').val(JSON.stringify(exportData));
             $('#import span').text('Import');
-            $('#exportCopy').removeClass('hidden');
             hideExportOptions();
         });
     });
@@ -96,44 +131,28 @@ var exportTimer;
                         .text('Import')
                 ;
             }, 2000);
-        } else if (importData.indexOf('$$$') > -1) {
-            var newModules = importData.split('$$$')[1].split('|||');
-
-            for (var i = 0, l = newModules.length; i < l; i++) {
-                newModules[i] = JSON.parse(newModules[i]);
-                var hasFoundMatch = false;
-                for (var j = 0, m = modules.length; j < m; j++) {
-                    if (newModules[i].name == modules[j].name && newModules[i].author == modules[j].author) {
-                        hasFoundMatch = true;
-                        modules[j] = newModules[i];
-                        break;
-                    }
-                }
-                if (!hasFoundMatch) {
-                    modules.push(newModules[i]);
-                }
-            }
-            chrome.extension.sendMessage({name: 'save', modules: modules}, function(response) {
-                $('#import span').text('Success!');
-                buildDashboard(false);
-            });
+        } else if (importData.substr(0,1) !== '{') {
+            $('#import')
+                .removeClass('green')
+                .addClass('red')
+                .find('span')
+                    .text('Incompatible!')
+            ;
+            setTimeout(function() {
+                $('#import')
+                    .removeClass('red')
+                    .addClass('green')
+                    .find('span')
+                        .text('Import')
+                ;
+            }, 2000);
         } else {
-            // check for alpha
-            if (importData.indexOf('###') < 0) {
-                importData = '0.1.3###true|||' + importData;
-            }
-            chrome.extension.sendMessage({name: 'setRawData', prefs: {isEnabled: importData.split('###')[1].split('|||')[0]}, moduleData: importData.split('###')[1].split('|||')[1]}, function(response) {
-                if (response.wasSuccessful) {
-                    $('#import').text('Success!');
-                    buildDashboard(false);
-                } else {
-                    $('#import')
-                        .removeClass('green')
-                        .addClass('red')
-                        .find('span')
-                            .text('Failed!')
-                    ;
-                }
+            chrome.extension.sendMessage({name: 'importRawData', data: importData}, function(response) {
+                $('#import span').text('Success!');
+                setTimeout(function() {
+                    $('#import span').text('Import');
+                    buildDashboard();
+                }, 2000);
             });
         }
     });
@@ -150,7 +169,6 @@ var exportTimer;
             $('#exportCopy')
                 .removeClass('subtle')
                 .removeClass('disabled')
-                .addClass('hidden')
                 .find('span')
                     .text('Copy Code')
             ;
@@ -178,6 +196,14 @@ var exportTimer;
             .parent().siblings().children('input').prop('checked', false)
         ;
     });
+
+    $('#dataField').on('input propertychange', function() {
+        if ($(this).val().length > 0) {
+            $('#exportCopy').removeClass('hidden');
+        } else {
+            $('#exportCopy').addClass('hidden');
+        }
+    });
 })();
 
 /**
@@ -186,7 +212,7 @@ var exportTimer;
 function hideExportOptions() {
     $('#export')
         .removeClass('hidden')
-        .siblings('#exportSome, #exportAll, #exportSelected, #exportCopy')
+        .siblings('#exportSome, #exportAll, #exportSelected')
             .addClass('hidden')
     ;
 }

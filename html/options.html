@@ -55,16 +55,30 @@
         <div class="page current" id="page-loading"></div>
         <div class="page" id="page-dashboard">
             <h1>Dashboard</h1>
-            <section id="legacy-notice" class="hidden">
+            <section id="update-notice" class="hidden">
                 <h3>Update</h3>
                 <div>
-                    <h2><strong>PLEASE READ:</strong> Huge Update to Minimalist</h2>
-                    <p>First of all, I'm sorry for almost a year without updates. I'm a full-time student in addition to working 30hrs a week.</p>
-                    <p>However, the state of disrepair that I've let Minimalist fall into is inexcusable. Going forward I plan to push regular maintenece updates in addition to new features when possible.</p>
-                    <p><strong>Data Reset:</strong></p>
-                    <p>Because the changes to Chrome have been so dramatic since last year, old user data simply wasn't salvage able. You will have to start from scratch in this version. I'm very sorry.</p>
+                    <h2>Minimalist has been updated</h2>
+                    <p>I tried to keep legacy support going with the previous update but it's becoming clear that it's a timesink...<p>
+                    <p><strong>Good News:</strong></p>
+                    <ul class="bullets">
+                        <li>Data sync! You can find the upload and download buttons in the Data tab</li>
+                    </ul>
+                    <p><strong>Bad News:</strong></p>
+                    <ul class="bullets">
+                        <li>Legacy imports (pre 0.6.4) are no longer compatible.</li>
+                    </ul>
+                    <p><strong>Other News:</strong></p>
+                    <ul class="bullets">
+                        <li>Old, incompatible modules will be deleted automatically.</li>
+                        <li>Permissions audit: I removed two permissions that I didn't need: contextMenus, and bookmarks</li>
+                        <li>Fixed several broken options in Gmail (See full changelog below)</li>
+                        <li>Fixed import from third party sites</li>
+                    </ul>
+                    <h2>Full Changelog:</h2>
+                    <p>Read the full <a href="https://code.google.com/p/minimalist/wiki/Changelog">changelog on Google Code <span class="icon-external-link"></span></a></p>
                     <br>
-                    <button id="legacy-dismiss" class="button group first red subtle">
+                    <button id="update-dismiss" class="button group first red subtle">
                         <div class="icon-remove-sign pull-left"></div>
                         Dismiss Message
                     </button>
@@ -266,6 +280,20 @@
                 </div>
             </section>
             <section>
+                <h3>Sync</h3>
+                <div>
+                    <p>Minimalist can sync your module options accross computers.<p>
+                    <button id="sync-upload" class="button group first subtle blue">
+                        <div class="icon-cloud-upload pull-left"></div>
+                        <span>Upload Data</span>
+                    </button>
+                    <button id="sync-download" class="button group last subtle green">
+                        <div class="icon-cloud-download pull-left"></div>
+                        <span>Download Data</span>
+                    </button>
+                </div>
+            </section>
+            <section>
                 <h3>Import/Export</h3>
                 <div>
                     <form name="io">
@@ -274,11 +302,11 @@
                             <button id="exportSome" class="button group big first hidden blue">Specific Modules</button>
                             <button id="exportAll" class="button group big hidden green">Everything</button>
                             <button id="export" class="button group big first blue">
-                                <div class="icon-cloud-download pull-left"></div>
+                                <div class="icon-save pull-left"></div>
                                 Export
                             </button>
                             <button id="exportSelected" class="button group big hidden first green">
-                                <div class="icon-cloud-download pull-left"></div>
+                                <div class="icon-save pull-left"></div>
                                 Export Selected
                             </button>
                             <button id="exportCopy" class="button group big hidden green">
@@ -286,7 +314,7 @@
                                 <span>Copy Code</span>
                             </button>
                             <button id="import" class="button group big subtle last green" tip="BACKUP BEFORE YOU IMPORT!">
-                                <div class="icon-cloud-upload pull-left"></div>
+                                <div class="icon-upload-alt pull-left"></div>
                                 <span>Import</span>
                             </button>
                         </div>
@@ -350,7 +378,12 @@
             <section>
                 <h3>Contributors</h3>
                 <div>
-                    <p>Big thanks to <a href="https://plus.google.com/u/0/114547499876825558502">jiefoxi</a> for contributing patches and selectors.</p>
+                    <p>Big thanks to all below for contributing patches and selectors:</p>
+                    <ul class="bullets">
+                        <li><a href="https://plus.google.com/u/0/114547499876825558502">jiefoxi</a></li>
+                        <li><a href="https://github.com/mrooney">Mike Rooney</a></li>
+                    </ul>
+                    <p>If you helped out, please <a href="mailto:ansel@anselsantosa.com" target="_blank">let me know</a> so I can put your name up here!</p>
                 </div>
             </section>
             <section>

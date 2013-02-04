@@ -241,7 +241,7 @@ body {
                 .CodeMirror {
                     background: #f1f1f1;
                     box-shadow: inset 0 0 5px rgba(0,0,0,.5);
-                    height: 200px;
+                    height: 300px;
                     margin: 10px 0;
                     min-width: 300px;
                     width: 100%;
@@ -299,7 +299,7 @@ body {
         font-weight: normal;
     }
 
-    #legacy-notice h2 {
+    #update-notice h2 {
         margin: 0 0 10px;
     }
 
@@ -644,6 +644,7 @@ header {
     #dataField {
         font-family: monospace;
         font-size: 9px;
+        width: calc(100% - 2px);
     }
 
     .export-controls {
