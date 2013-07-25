@@ -64,6 +64,21 @@ Submit a feature request in the issue tracker!
 
 ## Changelog
 
+#### 0.6.8 (Jul 25)
+ * Changed: Migrated update notification to Notification Center API
+ * Fixed: Section label display issue in Dashboard
+ * Fixed: (UserScripts.org) Fixed import
+ * Fixed: (Gmail) Hide Search not working
+ * Fixed: (Gmail) Hide Back button not working
+ * Fixed: (Gmail) Hide Chat Search box not working
+ * Fixed: (Gmail) Hide Call phone button not working
+ * Fixed: (Gmail) Hide storage manage link not working
+ * Removed: (Gmail) Hide Chat invisible message
+ * Removed: (Gmail) Hide Chat statuses
+ * Removed: (Gmail) Hide offline contacts
+ * Removed: (Gmail) Hide away contacts
+ * Removed: (Reader) Google Reader module :-(
+
 #### 0.6.7 (Feb 03)
  * Added: Repair Core Modules option in Data. This will restore your core modules while preserving your options
  * Fixed: (Reader) Open items in background not working with highlighted items

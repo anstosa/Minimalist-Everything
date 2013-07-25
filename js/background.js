@@ -1,4 +1,4 @@
-var VERSION = '0.6.7',
+var VERSION = '0.6.8',
     preferences = {
         isEnabled: true,
         isDebugging: setDebugging() // must pre-load for init debugging
@@ -109,8 +109,28 @@ function checkUpdate() {
         debug('Updated to version ' + VERSION);
         localStorage.hasUpdated = true;
         updateCoreModules();
-        var notification = webkitNotifications.createHTMLNotification('html/notifyUpdate.html#-1');
-            notification.show();
+
+        function showDashboard(notificationId, buttonIndex) {
+            if (notificationId === 'minimalistUpdate') {
+                chrome.tabs.create({url: chrome.extension.getURL('/html/options.html')});
+                chrome.notifications.clear('minimalistUpdate', function() {});
+            }
+        }
+        var notification = chrome.notifications.create('minimalistUpdate', {
+            type: 'basic',
+            iconUrl: chrome.extension.getURL('img/icons/128.png'),
+            title: 'Minimalist Updated!',
+            message: 'Minimalist for Everything has been updated.',
+            buttons: [
+                {
+                    title: 'See changes'
+                }
+            ]
+        }, function(notifications) {
+            chrome.notifications.onClicked.addListener(showDashboard);
+            chrome.notifications.onButtonClicked.addListener(showDashboard);
+        });
+
         localStorage.version = VERSION;
     }
 }
@@ -281,7 +301,7 @@ function loadMessageService() {
  */
 function updateCoreModules() {
     debug('Updating core modules...');
-    var core = [PLUS, MAIL, CALENDAR, READER];
+    var core = [PLUS, MAIL, CALENDAR];
     var isCoreFound = false;
     // loop through core modules
     for (var i = 0, l = core.length; i < l; i++) {

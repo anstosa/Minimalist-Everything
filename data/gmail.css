@@ -200,7 +200,7 @@
 
 /* Hide search */
 #gbq2 {
-    display: none;
+    display: none !important;
 }
 
 
@@ -545,55 +545,23 @@ table img[title$="mov"], table img[title$="MOV"], table img[title$="m4v"], table
 
 /* ### sidebar - Hide chat ### */
 
-[gh="c"] {
+/* hide chat */
+[gh = "c"] {
     display: none;
 }
 
 
 /* ### sidebar - Hide chat search ### */
 
-.dF {
-    display: none;
-}
-
-
-/* ### sidebar - Hide You are Invisible alert ### */
-
-.ul {
-    display: none;
+.YI {
+    display: none !important;
 }
 
 
 /* ### sidebar - Hide call phone ### */
 
-/* Hide button */
-.T-I-Js-IF {
+.Mqxrce {
     display: none !important;
-}
-/* round corners on hangout */
-.T-I-Js-Gs {
-    border-radius: 2px !important;
-}
-
-
-/* ### sidebar - Hide statuses ### */
-
-.M3aZbb + tr {
-    display: none;
-}
-
-
-/* ### sidebar - Hide offline ### */
-
-[offline="true"] {
-    display: none;
-}
-
-
-/* ### sidebar - Hide away ### */
-
-[away="true"] {
-    display: none;
 }
 
 
