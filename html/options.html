@@ -268,6 +268,22 @@
                 </div>
             </section>
             <section>
+                <h3>Save/Load</h3>
+                <div>
+					<div>
+						<input type='file' id='config-file' accept="text/plain">
+						<a href="#" id="config-save" class="button group big first blue dragout" tip="You can drag this button to save the file in a folder">
+							<div class="icon-save pull-left"></div>
+							Save File
+						</a>
+						<button id="config-load" class="button group big last green" tip="You can drop a file in the window to load it">
+							<div class="icon-upload-alt pull-left"></div>
+							<span>Load File</span>
+						</button>
+					</div>
+                </div>
+            </section>
+            <section>
                 <h3>Repair</h3>
                 <div>
                     <p>If you are seeing a corrupted options or edit page, try this automated repair before you Nuke your settings.<p>
@@ -420,5 +436,6 @@
     <script src="/js/options-preview.js"></script>
     <script src="/js/options-editor.js"></script>
     <script src="/js/options-data.js"></script>
+    <script src="/js/options-saveData.js"></script>
 </body>
 </html>

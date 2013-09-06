@@ -644,6 +644,11 @@ header {
         width: calc(100% - 2px);
     }
 
+    #config-file {
+        display: none;
+        visibility: hidden;
+    }
+
     .export-controls {
         float: right;
         padding: 10px 5px;

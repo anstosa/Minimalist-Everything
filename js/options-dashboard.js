@@ -6,7 +6,8 @@
  **/
 
 var modules,
-    preferences;
+    preferences,
+    currentPage;
 
 /**
  * Initialize
@@ -266,6 +267,7 @@ function makeNewModule(title, host) {
 function navigate(tag) {
     // truncate readable tags
     tag = tag.toLowerCase().replace('#','');
+    currentPage = tag;
     debug('Navigating to ' + tag + '...');
     $('nav a.current, .page.current').removeClass('current');
     $('#page-' + tag + ', #nav-' + tag).addClass('current');
