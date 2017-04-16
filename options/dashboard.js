@@ -1,10 +1,3 @@
-/**
- * Options page for Minimalist
- *
- * © 2013 Ansel Santosa
- * Licensed under GNU GPL v3
- **/
-
 var modules,
     preferences;
 
@@ -116,13 +109,6 @@ var modules,
             } else if (hash === 'data') {
                 navigate('data');
             }
-
-            // initialize toolips
-            $('[tip]:not(input)').tooltip({live: true, fade: true, gravity: 'n'});
-            $('.w[tip]:not(input)').tooltip({live: true, fade: true, gravity: 'w'});
-            $('.s[tip]:not(input)').tooltip({live: true, fade: true, gravity: 's'});
-            $('input[tip]').tooltip({live: true, trigger: 'focus', gravity: 'w'});
-            $('input.s[tip]').tooltip({live: true, trigger: 'focus', gravity: 's'});
         }
 
         // populate version
@@ -147,10 +133,10 @@ var modules,
  */
 function buildDashboard(andSwitch, callback) {
     modules = undefined;
-    debug('Loading Dashboard...');
+    console.debug('Loading Dashboard...');
 
     chrome.extension.sendMessage({name: 'getAllModules'}, function(response) {
-        modules = response.modules;
+        modules = _.map(response.modules, module => new Module(module));
 
         var $moduleControls = $(
             '<div class="module-control">' +
@@ -266,7 +252,7 @@ function makeNewModule(title, host) {
 function navigate(tag) {
     // truncate readable tags
     tag = tag.toLowerCase().replace('#','');
-    debug('Navigating to ' + tag + '...');
+    console.debug('Navigating to ' + tag + '...');
     $('nav a.current, .page.current').removeClass('current');
     $('#page-' + tag + ', #nav-' + tag).addClass('current');
 }
@@ -288,13 +274,3 @@ var getOptions = function (url) {
     });
     return option;
 };
-
-/**
- * Prints debug messages to console if debugging is enabled
- * @param  {Mixed} message message to print
- */
-function debug(message) {
-    if (localStorage.isDebugging) {
-        console.log('Minimalist: ' + message);
-    }
-}

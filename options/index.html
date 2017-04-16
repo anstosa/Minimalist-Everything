@@ -1,0 +1,396 @@
+<!doctype html>
+<html>
+<head>
+    <title>Minimalist</title>
+    <link rel="stylesheet" href="/node_modules/reset-css/reset.css">
+    <link rel="stylesheet" href="/node_modules/roboto-fontface/css/roboto/roboto-fontface.css">
+    <link rel="stylesheet" href="/node_modules/roboto-fontface/css/roboto-condensed/roboto-condensed-fontface.css">
+    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/node_modules/jquery-ui/themes/base/core.css">
+    <link rel="stylesheet" href="/node_modules/jquery-ui/themes/base/button.css">
+    <link rel="stylesheet" href="/node_modules/jquery-ui/themes/base/tabs.css">
+    <link rel="stylesheet" href="/node_modules/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="/lib/base.css">
+    <link rel="stylesheet" href="/lib/components.css">
+    <link rel="stylesheet" href="/options/style.css">
+</head>
+<body>
+    <div id="container">
+        <nav>
+            <a href="#dashboard" id="logo" class="nav"><h1>Minimalist</h1></a>
+            <ul>
+                <li>
+                    <a href="#dashboard" id="nav-dashboard" class="nav">
+                        Dashboard
+                        <div class="fa fa-home pull-right"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#data" id="nav-data" class="nav">
+                        Data
+                        <div class="fa fa-exchange pull-right"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=C5GNE665F894E" target="_blank">
+                        Donate
+                        <div class="fa fa-usd pull-right"></div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+            <div class="page current" id="page-loading"></div>
+            <div class="page" id="page-dashboard">
+                <h1>Dashboard</h1>
+                <section id="update-notice" class="hidden">
+                    <h3>Update</h3>
+                    <div>
+                        <h2>Minimalist has been updated</h2>
+                        <p>Minor update to make sure <a href="http://lifehacker.com/lifehacker-pack-for-chrome-2013-our-list-of-the-best-e-880863393">new Lifehackers</a> have the best experience possible!<p>
+                        <ul class="bullets">
+                            <li>Fixed some display issues on the dashboard</li>
+                            <li>Fixed import from <a href="http://userscripts.org">UserScripts.org</a></li>
+                            <li>Fixed a few Gmail features that were broken, mostly with Hangouts</li>
+                            <li>Removed some options that are no longer relevant with Hangouts</li>
+                            <li>Removed Google Reader module... :-( #RightInTheFeels</li>
+                        </ul>
+                        <h2>Full Changelog:</h2>
+                        <p>Read the full <a href="https://code.google.com/p/minimalist/wiki/Changelog">changelog on Google Code <span class="fa fa-external-link"></span></a></p>
+                        <br>
+                        <button id="update-dismiss" class="button group first red subtle">
+                            <div class="fa fa-remove-sign pull-left"></div>
+                            Dismiss Message
+                        </button>
+                        <a class="button group last green" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C5GNE665F894E" target="_blank">
+                            <div class="fa fa-heart pull-left"></div>
+                            Donate
+                        </a>
+                    </div>
+                </section>
+                <section>
+                    <h3 class="installed-modules">Installed Modules</h3>
+                    <div>
+                        <ul id="module-list"></ul>
+                    </div>
+                </section>
+                <section>
+                    <h3></h3>
+                    <div>
+                        <button id="new-module" class="button big subtle green">
+                            <div class="fa fa-plus-sign pull-left"></div>
+                            New Module
+                        </button>
+                    </div>
+                </section>
+            </div>
+            <div class="page" id="page-options">
+                <header>
+                    <a href="#dashboard" class="nav button blue big subtle">
+                        <div class="fa fa-arrow-left"></div>
+                    </a>
+                    <h1></h1>
+                    <button id="save-options" class="button green big disabled">
+                        <div class="fa fa-save pull-left"></div>
+                        <span>Save Changes</span>
+                    </button>
+                </header>
+                <div id="options-wrapper">
+                    <ul id="options-nav"></ul>
+                </div>
+            </div>
+            <div class="page" id="page-edit">
+                <header>
+                    <a href="#dashboard" class="nav button blue big subtle">
+                        <div class="fa fa-arrow-left"></div>
+                    </a>
+                    <h1></h1>
+                    <button id="save-edits" class="button green big disabled">
+                        <div class="fa fa-save pull-left"></div>
+                        <span>Save Changes</span>
+                    </button>
+                </header>
+                <div id="editor-wrapper">
+                    <ul id="options-tree">
+                        <li><div class="fa fa-spinner fa fa-spin"></div> Loading...</li>
+                    </ul>
+                    <div id="editor-wrapper-sub">
+                        <div id="meta-module">
+                            <div class="editor-row">
+                                <label for="moduleName">Name</label>
+                                <div>
+                                    <input id="moduleName" type="text" class="subtle" size="50">
+                                </div>
+                            </div>
+                            <div class="editor-row">
+                                <label for="moduleAuthor">By</label>
+                                <div>
+                                    <input id="moduleAuthor" type="text" class="subtle normal" size="50">
+                                </div>
+                            </div>
+                            <div class="editor-row">
+                                <label for="moduleIncludes">@includes</label>
+                                <div>
+                                    <input id="moduleIncludes" type="text" class="subtle normal" size="50" tip="Wildcard notation, seperate URLs with commas">
+                                </div>
+                            </div>
+                            <div class="editor-row">
+                                <label for="moduleVersion">version</label>
+                                <div>
+                                    <input id="moduleVersion" type="text" class="subtle normal" size="50">
+                                </div>
+                            </div>
+                            <div class="editor-row">
+                                <label for="editor-about">About</label>
+                                <div>
+                                    <textarea class="syntax-highlighted" id="editor-about"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="meta-option" class="table hidden">
+                            <div class="editor-row">
+                                <label for="option-delete">Name</label>
+                                <div>
+                                    <button id="option-delete" class="button subtle red">
+                                        <div class="fa fa-trash pull-left"></div>
+                                        Delete Option
+                                    </button>
+                                    <button id="option-delete-cancel" class="button group first green hidden">
+                                        <div class="fa fa-remove pull-left"></div>
+                                        Cancel Delete
+                                    </button>
+                                    <button id="option-delete-confirm" class="button group last red hidden">
+                                        <div class="fa fa-ok pull-left"></div>
+                                        Confirm Delete
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="editor-row">
+                                <label for="optionDescription">Name</label>
+                                <div>
+                                    <input id="optionDescription" type="text" class="subtle" size="80">
+                                </div>
+                            </div>
+                            <div class="editor-row">
+                                <label for="optionState">Default</label>
+                                <div>
+                                    <input id="optionState" type="checkbox">
+                                    <label for="optionState">
+                                        <div class="input">&#10003;</div>Enable option
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="editor-row hidden advanced">
+                                <label for="optionTab">Tab</label>
+                                <div>
+                                    <input id="optionTab" type="text" class="subtle normal" size="80" tip="Parent tab in the Options Page">
+                                </div>
+                            </div>
+                            <div class="editor-row hidden advanced">
+                                <label for="optionSection">Section</label>
+                                <div>
+                                    <input id="optionSection" type="text" class="subtle normal" size="80" tip="Parent sub-section in the Options Page">
+                                </div>
+                            </div>
+                            <div class="editor-row">
+                                <label for="optionAdvanced">More</label>
+                                <div>
+                                    <button class="button small green subtle" id="optionAdvanced">
+                                        <div class="fa fa-cogs pull-left"></div>
+                                        Advanced Options
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="editor-row hidden advanced">
+                                <label for="newField">Input</label>
+                                <div id="editor-fields"></div>
+                            </div>
+                        </div>
+                        <div id="editors" class="table hidden">
+                            <div class="editor-row">
+                                <label for="editor-css">CSS</label>
+                                <div>
+                                    <textarea class="syntax-highlighted" id="editor-css"></textarea>
+                                </div>
+                            </div>
+                            <div class="editor-row">
+                                <label for="editor-js">Head JS</label>
+                                <div>
+                                    <textarea class="syntax-highlighted" id="editor-js"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page" id="page-data">
+                <h1>Data</h1>
+                <section>
+                    <h3>Sync</h3>
+                    <div>
+                        <p>Minimalist can sync your module options accross computers.<p>
+                        <button id="sync-upload" class="button group first subtle blue">
+                            <div class="fa fa-cloud-upload pull-left"></div>
+                            <span>Upload Data</span>
+                        </button>
+                        <button id="sync-download" class="button group last subtle green">
+                            <div class="fa fa-cloud-download pull-left"></div>
+                            <span>Download Data</span>
+                        </button>
+                    </div>
+                </section>
+                <section>
+                    <h3>Repair</h3>
+                    <div>
+                        <p>If you are seeing a corrupted options or edit page, try this automated repair before you Nuke your settings.<p>
+                        <p>The automated repair will restore your core modules to their original state while preserving your selected options<p>
+                        <button id="repair" class="button green">
+                            <div class="fa fa-ambulance pull-left"></div>
+                            <span>Repair Core Modules</span>
+                        </button>
+                    </div>
+                </section>
+                <section>
+                    <h3>Reset</h3>
+                    <div>
+                        <p><strong>WARNING:</strong> This will reset everything to its defaults. Backup your settings first.<p>
+                        <button id="reset" class="button subtle red">
+                            <div class="fa fa-warning-sign pull-left"></div>
+                            Nuke Settings
+                        </button>
+                        <button id="reset-cancel" class="button group first green hidden">
+                            <div class="fa fa-remove pull-left"></div>
+                            Cancel Nuke
+                        </button>
+                        <button id="reset-confirm" class="button group last red hidden">
+                            <div class="fa fa-ok pull-left"></div>
+                            Confirm Nuke
+                        </button>
+                    </div>
+                </section>
+                <section>
+                    <h3>Import/Export</h3>
+                    <div>
+                        <form name="io">
+                            <textarea id="dataField" rows="15"></textarea>
+                            <div class="export-controls">
+                                <button id="exportSome" class="button group big first hidden blue">Specific Modules</button>
+                                <button id="exportAll" class="button group big hidden green">Everything</button>
+                                <button id="export" class="button group big first blue">
+                                    <div class="fa fa-save pull-left"></div>
+                                    Export
+                                </button>
+                                <button id="exportSelected" class="button group big hidden first green">
+                                    <div class="fa fa-save pull-left"></div>
+                                    Export Selected
+                                </button>
+                                <button id="exportCopy" class="button group big hidden green">
+                                    <div class="fa fa-copy pull-left"></div>
+                                    <span>Copy Code</span>
+                                </button>
+                                <button id="import" class="button group big subtle last green" tip="BACKUP BEFORE YOU IMPORT!">
+                                    <div class="fa fa-upload-alt pull-left"></div>
+                                    <span>Import</span>
+                                </button>
+                            </div>
+                        </form>
+                        <ul id="exportList" class="hidden">
+                            <li id="checkAllWrap">
+                                <input type="checkbox" id="checkAll">
+                                <label for="checkAll">
+                                    <div class="input">&#10003;</div>
+                                    <span>Check All</span>
+                                </label>
+                            <li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+            <div class="page" id="page-support">
+                <h1>Support</h1>
+                <section>
+                    <h3>Support Page</h3>
+                    <div>
+                        <p>Try the <a href="http://code.google.com/p/minimalist/wiki/Support" target="_blank">official support page</a> first. Otherwise, see below:</p>
+                    </div>
+                </section>
+                <section>
+                    <h3>Community</h3>
+                    <div>
+                        <p>I'm not always available to answer questions personally. Post questions on the <a href="https://groups.google.com/forum/?hl=en&pli=1#!forum/minimalist-everything" target="_blank">Google Group</a> to get help and tips from other Minimalist users</p>
+                    </div>
+                </section>
+                <section>
+                    <h3>Bugs &amp; Ideas</h3>
+                    <div>
+                        <p>I'm always looking to fix bugs and improve Minimalist.</p>
+                        <ul class="bullets">
+                            <li>Submit a bug or feature request: <a href="http://code.google.com/p/minimalist/issues" target="_blank">Official Issue Tracker</a></li>
+                            <li>Just have a question?
+                                <ul class="bullets">
+                                    <li>Ping me on Twitter: <a href="http://twitter.com/anstosa" target="_blank">@anstosa</a></li>
+                                    <li>Shoot me an email: <a href="https://mail.google.com/mail/?view=cm&tf=0&to=ansel@anselsantosa.com&fs=1" target="_blank">ansel@anselsantosa.com</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+            <div class="page" id="page-about">
+                <h1>About</h1>
+                <section>
+                    <h3>Version</h3>
+                    <div id="version"></div>
+                </section>
+                <section>
+                    <h3>Credits</h3>
+                    <div>
+                        <p>My name is <a href="http://ansel.com" target="_blank">Ansel Santosa</a> [<a href="http://twitter.com/anstosa" target="_blank">@anstosa</a>].</p>
+                        <p>I'm a student, UX Designer, and Front-end Web Developer. I solve problems, write code, follow tech news, and play games.</p>
+                        <p>I created Minimalist to enable people to take control of the way they experience their favorite websites. Inspired by the success of my four other Minimalist extensions, I wanted users to be able to customize <em>any</em> website, not just <em>my</em> personal favorites.</p>
+                    </div>
+                </section>
+                <section>
+                    <h3>Contributors</h3>
+                    <div>
+                        <p>Big thanks to all below for contributing patches and selectors:</p>
+                        <ul class="bullets">
+                            <li><a href="https://plus.google.com/u/0/114547499876825558502">jiefoxi</a></li>
+                            <li><a href="https://github.com/mrooney">Mike Rooney</a></li>
+                        </ul>
+                        <p>If you helped out, please <a href="mailto:ansel@anselsantosa.com" target="_blank">let me know</a> so I can put your name up here!</p>
+                    </div>
+                </section>
+                <section>
+                    <h3>Rate &amp; Review</h3>
+                    <div>
+                        <p>Do you like Minimalist? Please <a href="https://chrome.google.com/webstore/detail/minimalist-for-everything/bmihblnpomgpjkfddepdpdafhhepdbek/reviews" target="_blank">rate and review it in the Web Store!</a></p>
+                    </div>
+                </section>
+                <section>
+                    <h3>Donate</h3>
+                    <div>
+                        <p>This is a personal project and I am a full-time student, please <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4RVCM5TZRYBK8">support me by donating</a> so I can keep Minimalist up-to-date and competitive.</p>
+                        <br>
+                        <a class="button big green" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C5GNE665F894E" target="_blank">
+                            <div class="fa fa-heart pull-left"></div>
+                            Donate
+                        </a>
+                    </div>
+                </section>
+        </main>
+    </div>
+
+    <script src="/node_modules/lodash/lodash.min.js"></script>
+    <script src="/node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/material-components-web/dist/material-components-web.js"></script>
+    <script src="/lib/colorpicker.js"></script>
+    <script src="/lib/Module.js"></script>
+    <script src="/options/dashboard.js"></script>
+    <script src="/options/options.js"></script>
+    <script src="/options/preview.js"></script>
+    <script src="/options/editor.js"></script>
+    <script src="/options/data.js"></script>
+    <script src="/options/script.js"></script>
+</body>
+</html>

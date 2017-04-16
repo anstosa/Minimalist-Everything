@@ -170,7 +170,7 @@ function deleteOption(optionIndex) {
  * Add event listeners to editor
  */
 function addEditorListeners() {
-    debug('Adding editor listeners...');
+    console.debug('Adding editor listeners...');
 
     // reset save button
     $('#save-edits').addClass('disabled').text('Save Changes');
@@ -284,9 +284,7 @@ function addEditorListeners() {
                     '</button>' +
                 '</div>'
             ));
-            $('#page-edit input[tip]').tooltip({trigger: 'focus', gravity: 's'});
         })
-        .on('change', '#uploadScreen', updateScreenshot)
         .on('click', '.removeField', function() {
             $(this).parent().remove();
             activateEditSaveButton();
@@ -393,8 +391,6 @@ function editOption(optionIndex) {
     }
 
     disableEditSaveButton();
-
-    $('#page-edit input[tip]').tooltip({trigger: 'focus', gravity: 's'});
 
     $('.isColor:checked').prev().colorPicker({
         dir: '../../img/libs/',
@@ -538,18 +534,4 @@ function saveEdits(andSuppressReload) {
                 .text('Changes Saved!')
         ;
     }
-}
-
-/**
- * Processes uploading screenshots
- */
-function updateScreenshot() {
-    debug('processing screenshot...');
-    var reader = new FileReader();
-        reader.onload = function(event) {
-            $('#optionPreview').attr('src', event.target.result);
-            $('#uploadScreenButton').addClass('group last');
-            activateEditSaveButton();
-        };
-        reader.readAsDataURL(this.files[0]);
 }

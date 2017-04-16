@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>Minimalist</title>
+    <link rel="stylesheet" href="/node_modules/reset-css/reset.css">
+    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/node_modules/roboto-fontface/css/roboto-condensed/roboto-condensed-fontface.css">
+    <link rel="stylesheet" href="/node_modules/roboto-fontface/css/roboto/roboto-fontface.css">
+    <link rel="stylesheet" href="/lib/base.css">
+    <link rel="stylesheet" href="/lib/components.css">
+    <link rel="stylesheet" href="/action/style.css">
+</head>
+<body class="browser-action">
+    <h1>Minimalist</h1>
+    <button id="open-dashboard" class="button group first blue"><div class="icon-home pull-left"></div>Dashboard</button>
+    <button id="toggle-minimalist" class="button group last disabled subtle toggle-module" data-index="-1"><div class="icon-off pull-left"></div><span>Loading</span></button>
+    <ul id="activeModules">
+        <li style="text-align:center;width:100%;"><img src="/img/loadingSmall.gif"></li>
+    </ul>
+    <button id="new-module" class="button big subtle green"><div class="icon-plus-sign pull-left"></div>New Module</button>
+    <script src="/node_modules/lodash/lodash.min.js"></script>
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/Module.js"></script>
+    <script src="/action/script.js"></script>
+</body>
+</html>

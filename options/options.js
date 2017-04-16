@@ -1,16 +1,9 @@
 /**
- * Module option for Minimalist
- *
- * © 2013 Ansel Santosa
- * Licensed under GNU GPL v3
- **/
-
-/**
  * Build options page
  * @param  {Int} i index of module to load options for
  */
 function buildOptions(moduleIndex) {
-    debug('Loading options page for ' + modules[moduleIndex].name + '...');
+    console.debug('Loading options page for ' + modules[moduleIndex].name + '...');
     var options = modules[moduleIndex].options,
         tabs = {};
 
@@ -27,17 +20,6 @@ function buildOptions(moduleIndex) {
         // create input element
         var $input = $('<input id="option-' + i + '" type="' + option.type + '">').prop('checked', option.isEnabled),
             $label = $('<label for="option-' + i + '"><div class="input">&#10003;</div>' + option.description + '</label>');
-
-        // add screenshot if exists
-        if (option.hasOwnProperty('screen')) {
-            $label.attr('screen', option.screen);
-        } else if (
-            modules[moduleIndex].author === 'Ansel Santosa' &&
-            SCREENS[modules[moduleIndex].name] &&
-            SCREENS[modules[moduleIndex].name].hasOwnProperty(options[i].description)
-        ) {
-            $label.attr('screen', SCREENS[modules[moduleIndex].name][options[i].description]);
-        }
 
         // check if option belongs to tab
         var optionTab = option.tab;
@@ -148,7 +130,7 @@ function buildOptions(moduleIndex) {
  * Adds event listeners for options page
  */
 function addOptionsListeners() {
-    debug('Adding options listeners...');
+    console.debug('Adding options listeners...');
     $('#save-options').on('click', saveOptions);
     addSaveHotkey();
 

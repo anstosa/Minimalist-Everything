@@ -1,0 +1,52 @@
+body {
+    background: url("../img/bg.png") repeat-x #222;
+    padding: 20px;
+    text-align: center;
+    width: 240px;
+}
+h1 {
+    color: #fff;
+    margin: -10px 0 0;
+    text-shadow: 0 0 1px rgba(255,255,255,.25);
+}
+ul {
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
+    padding: 10px 0;
+    text-align: left;
+}
+li {
+    color: #fff;
+    list-style-type: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+li + li {
+    margin-top: 5px;
+}
+.browser-action .button.group {
+    display: inline-block;
+    float: none;
+}
+a.anchor,
+a.anchor:link,
+a.anchor:visited {
+    color: #fff;
+}
+li span {
+    float: left;
+    display: inline-block;
+    margin: 3px 0 0 5px;
+    width: 130px;
+}
+.green + span {
+    opacity: .5;
+}
+.green + span:after {
+    content: " (disabled) ";
+}
+#new-module {
+    width: 200px;
+}

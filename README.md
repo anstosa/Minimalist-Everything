@@ -1,3 +1,5 @@
+# Minimalist for Everything
+
 ## What Does it Do?
   * Centralized script and style management
   * Core Modules that customize web experience
@@ -24,47 +26,20 @@
 ## Features
 
   * Powerful, easy-to-use options pages for modules
-  * Pages and pages of customization options for Gmail and Google Reader
+  * Pages and pages of customization options for Gmail
   * Syntax highlighting in module code editor
-  * Import from [UserScripts.org]
-  * Import from [UserStyles.org]
-
-## How do I use it?
-
-  All the instructions you need are on the support page:
-  [http://code.google.com/p/minimalist/wiki/Support]
-
-
-## Issue Tracking
-
-  I test as thoroughly as I can before each release, but bugs are bound to get through.
-  Read, track, and submit bugs in the issue tracker:
-  [http://code.google.com/p/minimalist/issues]
-
-
-## Questions?
-
-  * Ping me on Twitter: @anstosa
-  * Shoot me an email: ansel@anselsantosa.com
-
-
-## ToDo List
-
-  * Export modules as user scripts
-  * Child modules
-  * Module: Google Calendar
-  * Module: Google+
-  * Module: LastPass
-  * Keyboard shortcuts (Dashboard navigation, open dashboard, toggle Minimalist)
-
-#### Did I miss something?
-Submit a feature request in the issue tracker!
-[http://code.google.com/p/minimalist/issues]
 
 
 ## Changelog
 
-#### 0.6.8 (Jul 25)
+#### 0.7.0 (Apr 13, 2017)
+ * Changed: Minor code refactor to modern-ish standards
+ * Fixed: UI and engine broken
+ * Removed: Third-party site imports
+ * Removed: Pages in dashboard with obsolete information
+ * Removed: Screenshots
+
+#### 0.6.8 (Jul 25, 2013)
  * Changed: Migrated update notification to Notification Center API
  * Fixed: Section label display issue in Dashboard
  * Fixed: (UserScripts.org) Fixed import
@@ -79,17 +54,17 @@ Submit a feature request in the issue tracker!
  * Removed: (Gmail) Hide away contacts
  * Removed: (Reader) Google Reader module :-(
 
-#### 0.6.7 (Feb 03)
+#### 0.6.7 (Feb 03, 2013)
  * Added: Repair Core Modules option in Data. This will restore your core modules while preserving your options
  * Fixed: (Reader) Open items in background not working with highlighted items
 
-#### 0.6.6 (Feb 03)
+#### 0.6.6 (Feb 03, 2013)
  * Fixed: Downloading data from sync breaking modules
 
-#### 0.6.5 (Feb 03)
+#### 0.6.5 (Feb 03, 2013)
  * Fixed: Upload Data button not responding after data uploaded
 
-#### 0.6.4 (Feb 03)
+#### 0.6.4 (Feb 03, 2013)
  * Added: Basic sync support
  * Added: Permission request for storage to make the new sync method possible
  * Added: Support for https:// import from userscript, userstyles and stylebot
@@ -109,16 +84,16 @@ Submit a feature request in the issue tracker!
  * Removed: Support for old export styles. It was making it too easy for people to break things
  * Removed: Unnecessary or deprecated permissions: contextMenus, bookmarks
 
-#### 0.6.3 (Jan 24)
+#### 0.6.3 (Jan 24, 2013)
  * Fixed: Database migration failing for legacy accounts
 
-#### 0.6.2 (Jan 23)
+#### 0.6.2 (Jan 23, 2013)
  * Fixed: update notification opens the correct pages now
 
-#### 0.6.1 (Jan 23)
+#### 0.6.1 (Jan 23, 2013)
  * Fixed: syntax error in master data file
 
-#### 0.6.0 (Jan 23)
+#### 0.6.0 (Jan 23, 2013)
  * Added: Minor UI facelift
    * FontAwesome for icons
    * Roboto for fonts
@@ -198,13 +173,13 @@ Submit a feature request in the issue tracker!
  * Removed: (Reader) Hide Reader blog. Not necessary
  * Removed: (Reader) Hide Send to. Not necessary
 
-#### 0.5.20 (Jan 11)
+#### 0.5.20 (Jan 11, 2013)
  * Fixed: new rgba colors broken by save button (prepends "#")
 
-#### 0.5.19 (Jan 11)
+#### 0.5.19 (Jan 11, 2013)
  * Fixed: Auto-update didn't fire because I forgot to increment a version number
 
-#### 0.5.18 (Jan 11)
+#### 0.5.18 (Jan 11, 2013)
  * Added: Reset settings buttong (database persists across reinstalls)
  * Fixed: openTab event handling not working because of new content-script sandboxing in dev channel
  * Fixed: Export/Import everything not working
@@ -217,7 +192,7 @@ Submit a feature request in the issue tracker!
  * Removed: (Gmail) Animate transitions
  * Removed: (Gmail) Hide new look popup
 
-#### 0.5.17 (Dec 3)
+#### 0.5.17 (Dec 03, 2011)
  * Added: (Gmail) Force Refresh to show in split-pane view
  * Added: (Gmail) Collapse Gadget Pane
  * Added: (Reader) Hide Send to
@@ -229,22 +204,22 @@ Submit a feature request in the issue tracker!
  * Fixed: Import from userscripts.org not compatible with Black Canvas Script Handler (thanks jiefoxi)
  * MORE!: See 0.5.11 for more updates this version
 
-#### 0.5.16t (Dec 3)
+#### 0.5.16t (Dec 03, 2011)
  * Fixed: Options page not accepting database data until extension reload
 
-#### 0.5.15t (Dec 3)
+#### 0.5.15t (Dec 03, 2011)
  * Fixed: Storing legacy data exceeding localStorage data limit
 
-#### 0.5.14t (Dec 3)
+#### 0.5.14t (Dec 03, 2011)
  * Changed: LocalStorage to WebkitIndexDB for module storage
 
-#### 0.5.13t (Nov 30)-
+#### 0.5.13t (Nov 30, 2011)
  * Changed: Testing for cause of "QUOTA_EXCEEDED_ERR: DOM Exception 22"
 
-#### 0.5.12t (Nov 30)-
+#### 0.5.12t (Nov 30, 2011)
  * Changed: Testing for cause of "QUOTA_EXCEEDED_ERR: DOM Exception 22"
 
-#### 0.5.11t (Nov 30)-
+#### 0.5.11t (Nov 30, 2011)
  * Added: (Gmail, Reader) Support for new Google Bar
  * Added: (Reader) Hide No Entries message
  * Added: (Reader) Hide Home sidebar
@@ -256,15 +231,15 @@ Submit a feature request in the issue tracker!
  * Fixed: Re-initialization of Editor listeners causing each save to be progressively slower
  * Removed: (Reader) Force compact layout density (Google finally pushed the new settings menu and built-in responsive layout for Reader)
 
-#### 0.5.10 (Nov 25)
+#### 0.5.10 (Nov 25, 2011)
  * Fixed: Typo on options page
  * Fixed: Export selected not exporting the correct module consistently
 
-#### 0.5.9 (Nov 22)
+#### 0.5.9 (Nov 22, 2011)
  * Added: Import from [stylebot.me] (thanks jiefoxi)
  * Fixed: (Gmail) Hide Header breaking all following options that involve CSS
 
-#### 0.5.8 (Nov 21)
+#### 0.5.8 (Nov 21, 2011)
  * Added: Toggle options on and off from edit page
  * Added: Change field values from options page
  * Added: (Gmail) Highlight checked items
@@ -277,7 +252,7 @@ Submit a feature request in the issue tracker!
  * Fixed: (Gmail) Hide Google Bar fatally polluting global namespace on accounts without G+ profiles
  * Fixed: (Gmail) Hide Move To and Hide Labels hidding Settings on some accounts (Thanks jiefoxi)
 
-#### 0.5.7 (Nov 21)
+#### 0.5.7 (Nov 21, 2011)
  * Added: (Gmail) Hide Labels
  * Added: (Gmail) Hide Move To
  * Added: (Gmail) Hide Back
@@ -290,10 +265,10 @@ Submit a feature request in the issue tracker!
  * Fixed: (Gmail) Hide Google logo not working
  * Fixed: (Gmail) Hide Move To and Hide Labels causing Labels dropdown to loose anchor point
 
-#### 0.5.6 (Nov 20)
+#### 0.5.6 (Nov 20, 2011)
  * Fixed: Display bug in popup
 
-#### 0.5.5 (Nov 20)
+#### 0.5.5 (Nov 20, 2011)
  * Added: Tooltip in popup to make enable/disable action clearer
  * Added: (Gmail) Hide consider including
  * Added: "(disabled)" after the names of disabled modules in dashboard and popup
@@ -302,7 +277,7 @@ Submit a feature request in the issue tracker!
  * Fixed: (Gmail) Show checkbox tools list not working
  * Removed: Sync (again). It won't work because of limitations in Chrome. See: http://goo.gl/53Fg4
 
-#### 0.5.4 (Nov 19)
+#### 0.5.4 (Nov 19, 2011)
  * Changed: (Gmail) Alerts appear even when header is hidden
  * Changed: (Gmail) [ / ] can no longer close the Google Bar (See next change)
  * Fixed: (Gmail) [ / ] while header is already open just focuses the search field instead of hidding the header
@@ -314,7 +289,7 @@ Submit a feature request in the issue tracker!
  * Fixed: (Gmail) Highlight starred items not working consistently
  * Fixed: (Reader) Force comopact layout density not working consistently
 
-#### 0.5.3 (Nov 18)
+#### 0.5.3 (Nov 18, 2011)
  * Added: Sync is back and hopefully more stable (it still doesn't work all the time but it won't slow down Chrome anymore.)
  * Added: (Reader) Force compact layout density
  * Added: (Reader) Hide row borders in list view
@@ -330,18 +305,18 @@ Submit a feature request in the issue tracker!
  * Fixed: (Gmail) Hide unstarred stars not working
  * Fixed: (Gmail) Show checkbox tools list not working
 
-#### 0.5.2 (Nov 15)
+#### 0.5.2 (Nov 15, 2011)
  * Fixed: Syntax error in manifest
 
-#### 0.5.1 (Nov 15)
+#### 0.5.1 (Nov 15, 2011)
  * Fixed: (Gmail) Highlight starred items not working
  * Fixed: (Gmail) Highlight selected items not working with keyboard shortcuts
  * Removed: Sync (temporarily). It is too unstable for public use at the moment. I'll get it back ASAP
 
-#### 0.5.0 (Nov 15)
+#### 0.5.0 (Nov 15, 2011)
  * Changed: Incremented version to trigger update notification
 
-#### 0.4.9t (Nov 15)
+#### 0.4.9t (Nov 15, 2011)
  * Added: Custom event 'openTab'. $('#openTab').innerHTML() is the url and $('#openTab').attr('selected') is whether the tab should open in the foreground.
  * Added: (Reader) Core Google Reader module
  * Changed: (Gmail) Moved Show checkbox tools list from bottom of Toolbar section to 3rd from top
@@ -357,19 +332,19 @@ Submit a feature request in the issue tracker!
  * Fixed: (Gmail) Hide privacy link and hide Google+ link hiding links under the more menu
  * Fixed: (Gmail) Hide sidebar not working in split pane views
 
-#### 0.4.8 (Nov 12)
+#### 0.4.8 (Nov 12, 2011)
  * Fixed: Just kidding it wasn't broken, just forgot to update the VERSION var :-)
 
-#### 0.4.7 (Nov 12)
+#### 0.4.7 (Nov 12, 2011)
  * Fixed: Broken version handler in 0.4.6 causing core modules not to update.
 
-#### 0.4.6 (Nov 12)
+#### 0.4.6 (Nov 12, 2011)
  * Fixed: Some options incorrectly enabled by default in the core modules
 
-#### 0.4.5t (Nov 12)
+#### 0.4.5t (Nov 12, 2011)
  * Fixed: Core module data not updated
 
-#### 0.4.4t (Nov 12)
+#### 0.4.4t (Nov 12, 2011)
  * Added: (Gmail) Show checkbox tools list
  * Added: (Gmail) Hide zero-inbox Google Reader ad
  * Added: (Gmail) Hide Mail/Contacts/Tasks menu
@@ -384,38 +359,38 @@ Submit a feature request in the issue tracker!
  * Fixed: Force updating imports from [UserScripts.org] and [UserStyles.org] did not replace exisiting installs
  * Removed: Starter module. It was corrupt and redundant.
 
-#### 0.4.3 (Nov 07)
+#### 0.4.3 (Nov 07, 2011)
  * Fixed: See changes button not opening changelog
  * Fixed: Version number not updating for bugfixes
  * Fixed: Notification not appearing for
 
-#### 0.4.2t (Nov 07)
+#### 0.4.2t (Nov 07, 2011)
  * Fixed: Core module installation failed
 
-#### 0.4.1t (Nov 07)
+#### 0.4.1t (Nov 07, 2011)
  * Changed: Install starter module to install Core modules
 
-#### 0.4.0t (Nov 07)
+#### 0.4.0t (Nov 07, 2011)
  * Added: Adding fields to options
  * Added: Adding color pickers to options
  * Added: Support for core module updating
  * Added: Gmail core module
  * Fixed: Screenshot upload button not resetings after switching features
 
-#### 0.3.1 (Sep 25)
+#### 0.3.1 (Sep 25, 2011)
  * Fixed: Import from bookmark failing when debugging is off
 
-#### 0.3.0 (Sep 25)
+#### 0.3.0 (Sep 25, 2011)
  * Added: Import from [userstyles.org]
  * Added: Import from [userscripts.org]
  * Fixed: Sync failing to remove duplicate bookmarks
  * Fixed: Update notifications showing without real update (maybe)
 
-#### 0.2.0 (Sep 17)
+#### 0.2.0 (Sep 17, 2011)
  * Changed: Update notifications no longer shown for bugfixes (x.x.X)
  * Fixed: Sync bookmark not being updated after saves
 
-#### 0.1.4 (Sep 17)
+#### 0.1.4 (Sep 17, 2011)
  * Added: Two way sync using a bookmark (experimental)
  * Added: Share via URL after export. MinEverything users that click on your link will have their Import fields populated with your export data
  * Added: Update notifications
@@ -425,7 +400,7 @@ Submit a feature request in the issue tracker!
  * Changed: Copy Code button now becomes disabled when copy is successful to avoid excited users making their processors angry
  * Fixed: Toggling modules from dropdown only working if module index and active module index match
 
-#### 0.1.3 (Sep 09)
+#### 0.1.3 (Sep 09, 2011)
  * Added:   Tooltips to document confusing things
  * Changed: New modules are enabled by default
  * Changed: New options are enabled by default
@@ -434,14 +409,14 @@ Submit a feature request in the issue tracker!
  * Fixed: Expanding collapsed items in the editor tree causing overlap
  * Fixed: Syntax highlighted fields not initializing consistently
 
-#### 0.1.2 (Sep 08)
+#### 0.1.2 (Sep 08, 2011)
  * Fixed: Link to market page from Dashboard works
  * Fixed: Link change from 0.1.1
 
-#### 0.1.1 (Sep 08)
+#### 0.1.1 (Sep 08, 2011)
  * Changed: a URL in the manifest (to make sure it won't trigger a permissions auto-disable)
 
-#### 0.1.0 (Sep 08)
+#### 0.1.0 (Sep 08, 2011)
  * Alpha released!
 
 

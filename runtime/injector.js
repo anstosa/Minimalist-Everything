@@ -28,7 +28,7 @@ var preferences,
                     if (modules[0].bootstrapTarget) {
                         window.addEventListener('DOMSubtreeModified', init);
                     } else {
-                        debug('no bootstrap target. Skipping load...');
+                        console.debug('no bootstrap target. Skipping load...');
                         injectBody();
                     }
                 }
@@ -58,7 +58,7 @@ function getTarget() {
  * Recursively check for full initialization for AJAX pages
  */
 function init() {
-    debug('bootstrapping...');
+    console.debug('bootstrapping...');
     if (getTarget() == lastCheck) {
         return;
     }
@@ -140,7 +140,7 @@ function buildModules() {
  */
 function injectBody() {
     if (bodyScripts.length > 0) {
-        debug('injecting body JavaScript...');
+        console.debug('injecting body JavaScript...');
         var bodies = document.getElementsByTagName('body');
         if (bodies.length > 0) {
             var scriptBlock = document.createElement('script');
@@ -155,7 +155,7 @@ function injectBody() {
  */
 function injectHead() {
     if (styles.length > 0 || headScripts.length > 0) {
-        debug('injecting CSS...');
+        console.debug('injecting CSS...');
         var heads = document.getElementsByTagName('head');
         if (heads.length > 0) {
             if (styles.length > 0) {
@@ -169,15 +169,5 @@ function injectHead() {
                 heads[0].appendChild(scriptBlock);
             }
         }
-    }
-}
-
-/**
- * Prints debug messages to console if debugging is enabled
- * @param  {Mixed} message message to print
- */
-function debug(message) {
-    if (preferences.isDebugging) {
-        console.log('Minimalist: ' + message);
     }
 }
