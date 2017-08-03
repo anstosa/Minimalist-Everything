@@ -157,7 +157,7 @@ function openOptions(target) {
     } else if (target === 'find') {
         chrome.tabs.create({url:'http://wiki.minimalistsuite.com/modules'});
     } else {
-        chrome.tabs.create({url:chrome.extension.getURL('html/options.html')});
+        chrome.tabs.create({url:chrome.extension.getURL('options/index.html')});
     }
 }
 
