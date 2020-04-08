@@ -1,5 +1,5 @@
-## Are you interested in selling Minimalist
-A couple times a year I get contacted by people asking if I'm interested in selling Minimalist. I've obviously turned down these offers and I thought I'd answer publicly for disclosure and to give me something to link them to.
+## Are you interested in selling or monetizing Minimalist
+A couple times a year I get contacted by people asking if I'm interested in selling Minimalist or asking to monetize it with "analytics" suites. I've obviously turned down these offers and I thought I'd answer publicly for disclosure and to give me something to link them to.
 
 If I had to give one reason: I don't need the money. So I have the luxury of doing what's right for my product and my users and and not having to worry about whether it's right for me.
 
