@@ -66,9 +66,9 @@ chrome.tabs.getSelected(null, function(tab) {
             $('li span').on('click', function(event) {
                 let i = $(this).prev().data('index');
                 if (event.ctrlKey) {
-                    chrome.tabs.create({url: chrome.extension.getURL('/html/options.html?cmd=Options&index=' + getTrueIndex(i))});
+                    chrome.tabs.create({url: chrome.extension.getURL('/options/index.html?cmd=Options&index=' + getTrueIndex(i))});
                 } else if (event.shiftKey) {
-                    chrome.tabs.create({url: chrome.extension.getURL('/html/options.html?cmd=Edit&index=' + getTrueIndex(i))});
+                    chrome.tabs.create({url: chrome.extension.getURL('/options/index.html?cmd=Edit&index=' + getTrueIndex(i))});
                 }
             });
         });
@@ -153,11 +153,11 @@ function getTrueIndex(target) {
  */
 function openOptions(target) {
     if (target === 'new') {
-        chrome.tabs.create({url:chrome.extension.getURL('html/options.html#new=' + stripHost(url) + '&title=' + title)});
+        chrome.tabs.create({url:chrome.extension.getURL('options/index.html#new=' + stripHost(url) + '&title=' + title)});
     } else if (target === 'find') {
         chrome.tabs.create({url:'http://wiki.minimalistsuite.com/modules'});
     } else {
-        chrome.tabs.create({url:chrome.extension.getURL('html/options.html')});
+        chrome.tabs.create({url:chrome.extension.getURL('options/index.html')});
     }
 }
 
