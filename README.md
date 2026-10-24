@@ -1,3 +1,4 @@
+# ⚠️ UNMAINTAINED
 # Minimalist for Everything
 
 ## What Does it Do?
