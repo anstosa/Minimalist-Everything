@@ -1,5 +1,30 @@
-# ⚠️ UNMAINTAINED
 # Minimalist for Everything
+
+> **Archive notice · Historical / unmaintained.** This extension is preserved as engineering and product history, not as actively supported software. Current browser APIs and third-party interfaces have not been validated. Do not run historical extension code without reviewing permissions and security.
+
+## Retrospective
+
+### Problem and product
+
+A configurable Chrome extension platform for site-specific styles, scripts, and reusable UI modules.
+
+### Engineering and UX approach
+
+Centralized module management, customization settings, import/export, synchronization, and a script/style editing interface extended the earlier single-site Minimalist concept.
+
+### Tradeoffs and lasting lessons
+
+Building a reusable browser-customization platform increased flexibility but also expanded security and compatibility responsibilities across websites.
+
+### Historical documentation
+
+The original changelog and permission explanations remain below. The extension was already labeled unmaintained.
+
+## Related Minimalist projects
+
+[Everything](https://github.com/anstosa/Minimalist-Everything) · [Gmail](https://github.com/anstosa/Minimalist-Gmail) · [Facebook](https://github.com/anstosa/Minimalist-Facebook) · [Calendar](https://github.com/anstosa/Minimalist-Google-Calendar) · [Reader](https://github.com/anstosa/Minimalist-Google-Reader)
+
+## Original documentation and changelog
 
 ## What Does it Do?
   * Centralized script and style management
